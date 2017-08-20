@@ -10,6 +10,7 @@
 #include <condition_variable>
 #include <cassert>
 
+#define PIN RPI_GPIO_P1_15
 
 namespace rpibuttons
 {
@@ -86,6 +87,7 @@ void ButtonListener::gpioListen()
         returnedPinMask = bcm2835_gpio_eds_multi(maskGpioTest);
         if (returnedPinMask == 0)
         {
+            std::this_thread::sleep_for(std::chrono::seconds(1));
             continue;
 
         }

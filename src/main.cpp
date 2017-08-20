@@ -9,5 +9,6 @@ int main()
     ButtonListener bl;
     bl.run();
     cout << "Hello, Buttons" << endl;
+    while(1);
     return 0;
 }

@@ -1,5 +1,24 @@
 cmake_minimum_required(VERSION 2.8)
 
-add_executable(main main.cpp)
+project(Buttons VERSION 0.0.1 LANGUAGES CXX)
 
-target_link_libraries(main bcm2835)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
+
+include_directories("${CMAKE_SOURCE_DIR}/src")
+
+set(HEADERS
+#    "${CMAKE_SOURCE_DIR}/src/VehicleDataClient.hpp"
+#    "${CMAKE_SOURCE_DIR}/src/MsgProcessor.hpp"
+#    "${CMAKE_SOURCE_DIR}/src/ThreadPool.hpp"
+)
+
+set(SOURCES
+    ${HEADERS}
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
+#    "${CMAKE_CURRENT_SOURCE_DIR}/src/MsgProcessor.cpp"
+
+)
+
+add_executable(${PROJECT_NAME} ${SOURCES})
+
+target_link_libraries(${PROJECT_NAME} bcm2835)

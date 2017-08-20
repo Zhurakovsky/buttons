@@ -7,7 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror")
 include_directories("${CMAKE_SOURCE_DIR}/src")
 
 set(HEADERS
-#    "${CMAKE_SOURCE_DIR}/src/VehicleDataClient.hpp"
+    "${CMAKE_SOURCE_DIR}/src/buttonListener.hpp"
 #    "${CMAKE_SOURCE_DIR}/src/MsgProcessor.hpp"
 #    "${CMAKE_SOURCE_DIR}/src/ThreadPool.hpp"
 )
@@ -15,8 +15,7 @@ set(HEADERS
 set(SOURCES
     ${HEADERS}
     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
-#    "${CMAKE_CURRENT_SOURCE_DIR}/src/MsgProcessor.cpp"
-
+    "${CMAKE_CURRENT_SOURCE_DIR}/src/buttonListener.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

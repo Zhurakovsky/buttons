@@ -21,4 +21,4 @@ set(SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} bcm2835)
+target_link_libraries(${PROJECT_NAME} bcm2835 rt pthread)

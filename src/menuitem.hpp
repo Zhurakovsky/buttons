@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include "commontypes.hpp"
+#include <cinttypes>
 
 namespace rpibuttons
 {
@@ -9,7 +10,7 @@ namespace rpibuttons
 class MenuItem
 {
 public:
-    MenuItem();
+    MenuItem(int newId = 0);
     ~MenuItem();
 
     MenuItem* getNext();
@@ -47,7 +48,7 @@ private:
     MenuItemActionProperties prop;
     bool m_isActive;
     std::string m_itemName;
-
+    uint32_t itemId;
 };
 
 }

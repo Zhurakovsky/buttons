@@ -13,5 +13,6 @@ int main()
 
     bl.run();
     cout << "Hello, Buttons" << endl;
+    while(1);
     return 0;
 }

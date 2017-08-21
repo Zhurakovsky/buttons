@@ -11,6 +11,7 @@
 #include <condition_variable>
 #include <cassert>
 
+#define PIN RPI_GPIO_P1_15
 
 namespace rpibuttons
 {
@@ -101,6 +102,7 @@ void ButtonListener::gpioListen()
         if (returnedPinMask == 0)
         {
             std::cout << "Returned buttons mask == 0" << std::endl;
+            std::this_thread::sleep_for(std::chrono::seconds(1));
             continue;
         }
         processButton(returnedPinMask);

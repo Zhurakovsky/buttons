@@ -14,24 +14,24 @@ public:
     ~MenuItem();
 
     MenuItem* getNext();
-    void setNext(const MenuItem *newNext);
+    void setNext(MenuItem *newNext);
 
     MenuItem* getPrevious();
-    void setPrevious(const MenuItem *newPrevious);
+    void setPrevious(MenuItem *newPrevious);
 
     MenuItem* getParent();
-    void setParent(const MenuItem *newParent);
+    void setParent(MenuItem *newParent);
 
     MenuItem* getChild();
-    void setChild(const MenuItem *newChild);
+    void setChild(MenuItem *newChild);
 
     bool doAction();
 
     MenuItemActionType getActionType();
-    bool setActionType(const MenuItemActionType& act);
+    void setActionType(const MenuItemActionType& act);
 
     MenuItemActionProperties getMenuItemProperties();
-    bool setMenuItemProperties(const MenuItemActionProperties &newProp);
+    void setMenuItemProperties(const MenuItemActionProperties &newProp);
 
     bool isActive();
     void setActive(bool status);

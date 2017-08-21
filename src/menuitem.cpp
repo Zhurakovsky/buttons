@@ -23,7 +23,7 @@ MenuItem* MenuItem::getNext()
     return next;
 }
 
-void MenuItem::setNext(const MenuItem *newNext)
+void MenuItem::setNext(MenuItem *newNext)
 {
     next = newNext;
 }
@@ -33,7 +33,7 @@ MenuItem* MenuItem::getPrevious()
     return previous;
 }
 
-void MenuItem::setPrevious(const MenuItem *newPrevious)
+void MenuItem::setPrevious(MenuItem *newPrevious)
 {
     previous = newPrevious;
 }
@@ -43,7 +43,7 @@ MenuItem* MenuItem::getParent()
     return parent;
 }
 
-void MenuItem::setParent(const MenuItem *newParent)
+void MenuItem::setParent(MenuItem *newParent)
 {
     parent = newParent;
 }
@@ -53,7 +53,7 @@ MenuItem* MenuItem::getChild()
     return child;
 }
 
-void MenuItem::setChild(const MenuItem *newChild)
+void MenuItem::setChild(MenuItem *newChild)
 {
     child = newChild;
 }
@@ -68,7 +68,7 @@ MenuItemActionType MenuItem::getActionType()
     return actionType;
 }
 
-bool MenuItem::setActionType(const MenuItemActionType &act)
+void MenuItem::setActionType(const MenuItemActionType &act)
 {
     actionType = act;
 }
@@ -78,7 +78,7 @@ MenuItemActionProperties MenuItem::getMenuItemProperties()
     return prop;
 }
 
-bool MenuItem::setMenuItemProperties(const MenuItemActionProperties &newProp)
+void MenuItem::setMenuItemProperties(const MenuItemActionProperties &newProp)
 {
     prop = newProp;
 }

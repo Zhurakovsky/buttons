@@ -41,7 +41,7 @@ namespace rpibuttons
 
         void processButton(const uint32_t &valueMask);
         bool getPinMask(uint32_t &value);
-        std::unordered_map<int, std::function<void()> m_mapOfCallbacks;
+        std::unordered_map<int, std::function<void()>> m_mapOfCallbacks;
         std::unordered_map<int, int> m_mapOfPrevValues;
         int gepPinsPressed(const uint32_t &valueMask);
     };

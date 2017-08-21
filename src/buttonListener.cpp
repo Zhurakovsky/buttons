@@ -125,7 +125,8 @@ void ButtonListener::processButton(const uint32_t &valueMask)
     {
         for (auto pin : rpibuttons::RPiGPIOPins)
         {
-            if (valueMask & (1 << pin))
+            int pinIntValue = (int)pin;
+            if (valueMask & (1 << pinIntValue))
             {
                 auto it = m_mapOfCallbacks.find(pin);
                 if (it != m_mapOfCallbacks.end(pin))

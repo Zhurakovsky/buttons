@@ -70,10 +70,10 @@ const RPiGPIOPin RPiGPIOPins[] =
     RPiGPIOPin::RPI_V2_GPIO_P1_40
 };
 
-std::ostream& operator<<(std::ostream& o, RPiGPIOPin x)
-{
-	return o << std::underlying_type<RPiGPIOPin>::type(x);
-}
+//std::ostream& operator<<(std::ostream& o, RPiGPIOPin x)
+//{
+//	return o << std::underlying_type<RPiGPIOPin>::type(x);
+//}
 
 enum class MenuItemActionType
 {

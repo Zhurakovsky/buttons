@@ -1,4 +1,5 @@
 #include "menuitem.hpp"
+#include <iostream>
 namespace rpibuttons
 {
 MenuItem::MenuItem(int newId)

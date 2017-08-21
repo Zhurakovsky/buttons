@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <bcm2835.h>
+#include <iostream>
 
 namespace rpibuttons
 {

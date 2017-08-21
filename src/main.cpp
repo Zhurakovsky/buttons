@@ -37,10 +37,10 @@ int main()
     for (auto it = menu.begin(); it != menu.end(); ++it)
     {
         MenuItem *tmpItem = *it;
-        cout << tmpItem->itemName().c_str() << endl;
+        std::cout << tmpItem->itemName().c_str() << std::endl;
     }
 
     bl.run();
-    cout << "Hello, Buttons" << endl;
+    std::cout << "Hello, Buttons" << std::endl;
     return 0;
 }

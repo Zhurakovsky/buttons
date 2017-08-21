@@ -128,11 +128,11 @@ void ButtonListener::processButton(const uint32_t &valueMask)
             int pinIntValue = (int)pin;
             if (valueMask & (1 << pinIntValue))
             {
-                auto it = m_mapOfCallbacks.find(pin);
-                if (it != m_mapOfCallbacks.end(pin))
+                auto it = m_mapOfCallbacks.find(pinIntValue);
+                if (it != m_mapOfCallbacks.end(pinIntValue))
                 {
-                    auto iter = m_mapOfPrevValues.find(pin);
-                    if (iter != m_mapOfPrevValues.end(pin))
+                    auto iter = m_mapOfPrevValues.find(pinIntValue);
+                    if (iter != m_mapOfPrevValues.end(pinIntValue))
                     {
                         if (iter->second == 0)
                         {

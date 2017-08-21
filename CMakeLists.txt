@@ -8,14 +8,15 @@ include_directories("${CMAKE_SOURCE_DIR}/src")
 
 set(HEADERS
     "${CMAKE_SOURCE_DIR}/src/buttonListener.hpp"
-#    "${CMAKE_SOURCE_DIR}/src/MsgProcessor.hpp"
-#    "${CMAKE_SOURCE_DIR}/src/ThreadPool.hpp"
+    "${CMAKE_SOURCE_DIR}/src/commontypes.hpp"
+    "${CMAKE_SOURCE_DIR}/src/menuitem.hpp"
 )
 
 set(SOURCES
     ${HEADERS}
     "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
     "${CMAKE_CURRENT_SOURCE_DIR}/src/buttonListener.cpp"
+    "${CMAKE_SOURCE_DIR}/src/menuitem.cpp"
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})

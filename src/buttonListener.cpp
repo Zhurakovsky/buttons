@@ -1,4 +1,5 @@
 #include "buttonListener.hpp"
+#include "commontypes.hpp"
 
 #include <chrono>
 #include <utility>
@@ -65,14 +66,27 @@ void ButtonListener::gpioListen()
         if( !getPinMask(maskGpioTest))
         {
             m_condVar.notify_one();
+            bcm2835_close();
             return;
         }
-        // Set RPI pin P1-15 to be an input
-        bcm2835_gpio_fsel(PIN, BCM2835_GPIO_FSEL_INPT);
-        //  with a pullup
-        bcm2835_gpio_set_pud(PIN, BCM2835_GPIO_PUD_UP);
-        // And a low detect enable
-        bcm2835_gpio_len(PIN);
+        // Set RPI subscribed pins to be an input
+        // Do this for all pins from subscription
+        if (!m_mapOfCallbacks.size())
+        {
+            m_condVar.notify_one();
+            bcm2835_close();
+            std::cout << "List of subscribers empty" << std::endl;
+            return;
+        }
+        for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
+        {
+            int tmpPin = it->first;
+            bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
+            //  with a pullup
+            bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
+            // And a low detect enable
+            bcm2835_gpio_len(tmpPin);
+        }
 
         m_isRunning = true;
         m_isInit = true;
@@ -86,25 +100,92 @@ void ButtonListener::gpioListen()
         returnedPinMask = bcm2835_gpio_eds_multi(maskGpioTest);
         if (returnedPinMask == 0)
         {
+            std::cout << "Returned buttons mask == 0" << std::endl;
             continue;
-
         }
         processButton(returnedPinMask);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-
     }
+    bcm2835_close();
+}
+
+bool ButtonListener::subscribeOnPin(const int &pinNumber, const std::function<void()> &cbFunc)
+{
+    m_mapOfPrevValues.emplace(std::make_pair(pinNumber,0));
+    return m_mapOfCallbacks.emplace(std::make_pair(pinNumber,cbFunc)).second;
 }
 
 void ButtonListener::processButton(const uint32_t &valueMask)
 {
+    int pinsPressed = gepPinsPressed(valueMask);
+    if (pinsPressed <= 1)
+    {
+        for (auto pin : rpibuttons::RPiGPIOPins)
+        {
+            if (valueMask & (1 << pin))
+            {
+                auto it = m_mapOfCallbacks.find(pin);
+                if (it != m_mapOfCallbacks.end(pin))
+                {
+                    auto iter = m_mapOfPrevValues.find(pin);
+                    if (iter != m_mapOfPrevValues.end(pin))
+                    {
+                        if (iter->second == 0)
+                        {
+                            iter->second = 1;
+                            it->second();
+                        }
+                        else
+                        {
+                            //Protection from button slippage
+                        }
+                    }
 
+                }
+            }
+            else
+            {
+                auto it = m_mapOfPrevValues.find(pin);
+                if (it != m_mapOfPrevValues.end(pin))
+                {
+                    it->second = 0;
+                }
+            }
+        }
+    }
+    else
+    {
+        //Pressed more than one button
+        //Probably, need to clean pin mask
+        //Or some extended logic needed
+        std::cout << "More than one button pressed" << std::endl;
+    }
 }
 
 bool ButtonListener::getPinMask(uint32_t &value)
 {
-    value = 0;
-
+    uint32_t maskValues = 0;
+    for(auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
+    {
+        int tmpShift = it->first;
+        maskValues |= (1 << tmpShift);
+    }
+    value = maskValues;
+    //
     return true;
+}
+
+int ButtonListener::gepPinsPressed(const uint32_t &valueMask)
+{
+    int value = 0;
+    for (int i = 0; i < 32; i++)
+    {
+        if ((valueMask >> i) & 0x1)
+        {
+            value += 1;
+        }
+    }
+    return value;
 }
 }

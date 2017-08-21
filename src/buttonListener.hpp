@@ -30,6 +30,7 @@ namespace rpibuttons
         bool isRunning() const;
 
         void gpioListen();
+        bool subscribeOnPin(const int& pinNumber, const std::function<void()> &cbFunc);
 
     private:
         std::thread m_gpioThread;
@@ -38,10 +39,11 @@ namespace rpibuttons
         mutable std::condition_variable m_condVar;
         mutable std::mutex m_mtx;
 
-        //SubscribersSet m_subscribers;
-
         void processButton(const uint32_t &valueMask);
         bool getPinMask(uint32_t &value);
+        std::unordered_map<int, std::function<void()> m_mapOfCallbacks;
+        std::unordered_map<int, int> m_mapOfPrevValues;
+        int gepPinsPressed(const uint32_t &valueMask);
     };
 }
 

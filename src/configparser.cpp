@@ -1,4 +1,5 @@
 #include "configparser.hpp"
+//#include <cstring>
 
 namespace rpibuttons
 {
@@ -13,7 +14,7 @@ ConfigParser::~ConfigParser()
 
 }
 
-std::vector<std::string> ConfigParser::getConfigStrings(const std::string &filename, const std::__cxx11::string &searchMask)
+std::vector<std::string> ConfigParser::getConfigStrings(const std::string &filename, const std::string &searchMask)
 {
     m_ifs.open(filename, std::ifstream::in);
     std::string line;
@@ -21,7 +22,8 @@ std::vector<std::string> ConfigParser::getConfigStrings(const std::string &filen
     while(std::getline(m_ifs, line))
     {
         std::cout << "line:" << line << std::endl;
-        if (line[0] == "M")
+//        const char* mPattern = "M";
+        if (line[0] == 'M')
         {
             result.push_back(line);
         }

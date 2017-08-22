@@ -9,7 +9,7 @@
 
 #include <bcm2835.h>
 
-const std::string configFile = "~/FL/buttons/config.txt";
+const std::string configFile = "config.txt";
 
 using namespace std;
 using namespace rpibuttons;

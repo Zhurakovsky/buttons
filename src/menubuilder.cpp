@@ -11,7 +11,7 @@ void MenuBuilder::buildMenu(const std::string &fileName)
 
     for(auto it = menuList.begin(); it != menuList.end(); ++it )
     {
-        std::cout << it <<std::endl;
+        std::cout << *it <<std::endl;
     }
 }
 

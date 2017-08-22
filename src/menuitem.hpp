@@ -44,9 +44,10 @@ private:
     MenuItem* previous;
     MenuItem* parent;
     MenuItem* child;
-    MenuItemActionType actionType;
+
     MenuItemActionProperties prop;
     bool m_isActive;
+    MenuItemActionType actionType;
     std::string m_itemName;
     uint32_t itemId;
 };

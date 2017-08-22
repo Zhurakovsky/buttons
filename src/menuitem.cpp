@@ -9,7 +9,8 @@ MenuItem::MenuItem(int newId)
       child(nullptr),
       m_isActive(false),
       m_itemName(""),
-      itemId(newId)
+      itemId(newId),
+      actionType(MenuItemActionType::MenuDropdown)
 {
 
 }

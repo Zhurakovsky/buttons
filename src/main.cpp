@@ -2,11 +2,14 @@
 #include "buttonListener.hpp"
 #include "commontypes.hpp"
 #include "menuitem.hpp"
+#include "menubuilder.hpp"
 
 #include <vector>
 #include <iterator>
 
 #include <bcm2835.h>
+
+const std::string configFile = "~/FL/buttons/config.txt";
 
 using namespace std;
 using namespace rpibuttons;
@@ -39,6 +42,9 @@ int main()
         MenuItem *tmpItem = *it;
         std::cout << tmpItem->itemName().c_str() << std::endl;
     }
+
+    MenuBuilder mBuilder;
+    mBuilder.buildMenu(configFile);
 
     bl.run();
     std::cout << "Hello, Buttons" << std::endl;

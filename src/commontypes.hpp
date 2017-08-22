@@ -77,10 +77,11 @@ const RPiGPIOPin RPiGPIOPins[] =
 
 enum class MenuItemActionType
 {
-   DisplayText, //Display Text
-   ClearScreen, //Clear whole or part of the screen
-   DisplayClearGraphicsIcon, //Display / clear a graphics icon
-   RunProgram//Run a program / script
+    MenuDropdown, //Dropdown to submenu
+    DisplayText, //Display Text
+    ClearScreen, //Clear whole or part of the screen
+    DisplayClearGraphicsIcon, //Display / clear a graphics icon
+    RunProgram//Run a program / script
 };
 
 struct ScreenRect

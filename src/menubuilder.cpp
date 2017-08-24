@@ -13,10 +13,13 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
     for(auto it = menuList.begin(); it != menuList.end(); ++it )
     {
-        std::istringstream iss (*it);
+        std::string tmpString = *it;
+        std::istringstream iss(tmpString);
 
         menuParserString mps;
-        iss >> mps.itemId
+        std::string tmpM;
+        iss >> tmpM
+                >> mps.itemId
                 >> mps.parentId
                 >> mps.leftItemId
                 >> mps.rightItemId

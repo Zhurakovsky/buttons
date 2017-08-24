@@ -21,11 +21,15 @@ std::vector<std::string> ConfigParser::getConfigStrings(const std::string &filen
     std::vector<std::string> result;
     while(std::getline(m_ifs, line))
     {
-        std::cout << "line:" << line << std::endl;
+//        std::cout << "line:" << line << std::endl;
 //        const char* mPattern = "M";
         if (line[0] == 'M')
         {
             result.push_back(line);
+        }
+        else if (line[0] == '#')
+        {
+            continue;
         }
         // TODO: assign item_name based on line (or if the entire line is
         // the item name, replace line with item_name in the code above)

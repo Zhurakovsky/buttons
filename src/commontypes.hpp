@@ -79,9 +79,11 @@ enum class MenuItemActionType
 {
     MenuDropdown, //Dropdown to submenu
     DisplayText, //Display Text
+    DisplayGraphics, //Display / clear a graphics icon
+    PlayVideo,
+    RunProgram, //Run a program / script
     ClearScreen, //Clear whole or part of the screen
-    DisplayClearGraphicsIcon, //Display / clear a graphics icon
-    RunProgram//Run a program / script
+    WrongActionType // In case of error in config file
 };
 
 struct ScreenRect
@@ -94,10 +96,28 @@ struct ScreenRect
 
 struct MenuItemActionProperties
 {
+
+    std::string childMenuId;
     std::string textToShow;
     ScreenRect rectToClear;
-    std::string pathToGraphicIcon;
+    std::string pathToGraphics;
+    std::string pathToVideoFile;
     std::string pathToApplication;
+    void setScreenRect(const ScreenRect &sr)
+    {
+        rectToClear = sr;
+    }
+};
+
+struct menuParserString
+{
+    int itemId;
+    int parentId;
+    int leftItemId;
+    int rightItemId;
+    std::string itemCaption;
+    std::string itemActionType;
+    std::string itemActionParameter;
 };
 
 }

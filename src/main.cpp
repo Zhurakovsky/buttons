@@ -44,7 +44,7 @@ int main()
     }
 
     MenuBuilder mBuilder;
-    mBuilder.buildMenu(configFile);
+    mBuilder.buildMenu(configFile, menu);
 
     bl.run();
     std::cout << "Hello, Buttons" << std::endl;

@@ -16,7 +16,8 @@ ConfigParser::~ConfigParser()
 
 std::vector<std::string> ConfigParser::getConfigStrings(const std::string &filename, const std::string &searchMask)
 {
-    if (m_ifs.open(filename, std::ifstream::in) < 0)
+    m_ifs.open(filename, std::ifstream::in);
+    if ( !m_ifs.is_open())
     {
         std::cout << "Error opening " << filename.c_str() << std::endl;
     }
@@ -37,6 +38,7 @@ std::vector<std::string> ConfigParser::getConfigStrings(const std::string &filen
         // TODO: assign item_name based on line (or if the entire line is
         // the item name, replace line with item_name in the code above)
     }
+    m_ifs.close();
     return result;
 }
 

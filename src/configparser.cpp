@@ -16,7 +16,10 @@ ConfigParser::~ConfigParser()
 
 std::vector<std::string> ConfigParser::getConfigStrings(const std::string &filename, const std::string &searchMask)
 {
-    m_ifs.open(filename, std::ifstream::in);
+    if (m_ifs.open(filename, std::ifstream::in) < 0)
+    {
+        std::cout << "Error opening " << filename.c_str() << std::endl;
+    }
     std::string line;
     std::vector<std::string> result;
     while(std::getline(m_ifs, line))

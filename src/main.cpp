@@ -66,6 +66,13 @@ int main()
     std::map<int, int> mapPinGpio;
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
 
+    std::cout << "Size of mapPinGpio map == " << mapPinGpio.size() << std::endl;
+
+    for (auto it = mapPinGpio.begin(); it != mapPinGpio.end(); ++it)
+    {
+        std::cout << it->first << " " << it->second << std::endl;
+    }
+
     std::function<void()> callbackButtonUp = buttonUp;
     std::function<void()> callbackButtonDown = buttonDown;
     std::function<void()> callbackButtonLeft = buttonLeft;
@@ -75,6 +82,15 @@ int main()
 
     std::map<int, std::string> mapButtonsFuncAssigned;
     mBuilder.buildButtonsFuncAssigned(configFile, mapButtonsFuncAssigned);
+
+    std::cout << "Size of mapButtonsFuncAssigned map == " << mapButtonsFuncAssigned.size() << std::endl;
+
+    for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
+    {
+        int intValue = it->first;
+        std::string tmpString = it->secong;
+        std::cout << intValue << " " << tmpString.c_str() << std::endl;
+    }
 
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
     {

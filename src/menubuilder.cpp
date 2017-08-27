@@ -1,5 +1,6 @@
 #include "menubuilder.hpp"
 #include <sstream>
+#include <vector>
 #include <map>
 
 

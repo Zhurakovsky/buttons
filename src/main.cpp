@@ -9,6 +9,7 @@
 #include <iterator>
 #include <functional>
 #include <iterator>
+#include <string>
 
 #include <bcm2835.h>
 
@@ -23,9 +24,6 @@ void buttonLeft();
 void buttonRight();
 void buttonEnter();
 void buttonEsc();
-
-
-
 
 int main()
 {
@@ -51,8 +49,6 @@ int main()
 //    mi2->setPrevious(mi1);
 //    menu.push_back(mi2);
 }
-
-
 
     //Build menu
     MenuBuilder mBuilder;
@@ -84,33 +80,41 @@ int main()
     {
         int pinAssigned = it->first;
         std::string funcAssigned = it->second;
+
+        std::cout << pinAssigned << " pin assigned to func " << funcAssigned.c_str() << std::endl;
+
         auto iter = mapPinGpio.find(pinAssigned);
         if (iter != mapPinGpio.end())
         {
             int shiftAssigned = iter->second;
-            if (funcAssigned == "UP")
+            std::cout << " iter->second " << shiftAssigned << std::endl;
+            if (funcAssigned.compare("UP") == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonUp);
             }
-            else if (funcAssigned == "DOWN")
+            else if (funcAssigned.compare("DOWN") == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonDown);
             }
-            else if (funcAssigned == "LEFT")
+            else if (funcAssigned.compare("LEFT") == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonLeft);
             }
-            else if (funcAssigned == "RIGHT")
+            else if (funcAssigned.compare("RIGHT") == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonRight);
             }
-            else if (funcAssigned == "ENTER")
+            else if (funcAssigned.compare("ENTER") == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEnter);
             }
-            else if (funcAssigned == "ESC")
+            else if (funcAssigned.compare("ESC") == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEsc);
+            }
+            else
+            {
+                std::cout << " No FUNC found " << std::endl;
             }
         }
     }

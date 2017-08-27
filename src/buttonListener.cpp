@@ -79,9 +79,8 @@ void ButtonListener::gpioListen()
             std::cout << "List of subscribers empty" << std::endl;
             return;
         }
-        std::vector<int> tmpPinNumbers = {8, 10, 12, 16, 18, 22};
-        for (auto it = tmpPinNumbers.begin(); it != tmpPinNumbers.end(); ++it)
-        //for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
+
+        for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
         {
             int tmpPin = *it;
             //int tmpPin = it->first;
@@ -91,7 +90,7 @@ void ButtonListener::gpioListen()
             //  with a pullup
             bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
             // And a low detect enable
-            bcm2835_gpio_hen(tmpPin);
+            //bcm2835_gpio_hen(tmpPin);
         }
 
         m_isRunning = true;
@@ -128,12 +127,12 @@ bool ButtonListener::subscribeOnPin(const int &pinNumber, const std::function<vo
 void ButtonListener::processButton(const uint32_t &valueMask)
 {
     int pinsPressed = getPinsPressed(valueMask);
-    if (pinsPressed <= 1)
+    if (pinsPressed > 0)
     {
         for (auto pin : rpibuttons::RPiGPIOPins)
         {
             int pinIntValue = (int)pin;
-            if (valueMask & (1 << pinIntValue))
+            if (valueMask & (1 << pinIntValue) && (bcm2835_gpio_lev(pinIntValue) == 1))
             {
                 auto it = m_mapOfCallbacks.find(pinIntValue);
                 if (it != m_mapOfCallbacks.end())

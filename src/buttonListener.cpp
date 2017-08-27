@@ -82,9 +82,11 @@ void ButtonListener::gpioListen()
         for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
         {
             int tmpPin = it->first;
+
             bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
+            std::cout << "Set gpio_fsel for PIN " << tmpPin << std::endl;
             //  with a pullup
-            bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
+            //bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
             // And a low detect enable
             //bcm2835_gpio_len(tmpPin);
         }
@@ -96,7 +98,7 @@ void ButtonListener::gpioListen()
     while (m_isRunning)
     {
         uint32_t returnedPinMask = 0;
-        std::cout << "Hello from button listener" << std::endl;
+        //std::cout << "Hello from button listener" << std::endl;
 
         returnedPinMask = bcm2835_gpio_eds_multi(maskGpioTest);
         if (returnedPinMask == 0)
@@ -105,6 +107,7 @@ void ButtonListener::gpioListen()
             std::this_thread::sleep_for(std::chrono::seconds(1));
             continue;
         }
+
         processButton(returnedPinMask);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));

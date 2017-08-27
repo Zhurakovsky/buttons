@@ -6,6 +6,14 @@
 
 namespace rpibuttons
 {
+
+const char* const UP = "UP";
+const char* const DOWN = "DOWN";
+const char* const LEFT = "LEFT";
+const char* const RIGHT = "RIGHT";
+const char* const ENTER = "ENTER";
+const char* const ESC = "ESC";
+
 /*
  *
  * RPI_V2_GPIO_P1_11 == #17

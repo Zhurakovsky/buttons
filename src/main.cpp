@@ -105,35 +105,35 @@ int main()
         {
             int shiftAssigned = iter->second;
             std::cout << " iter->second " << shiftAssigned << std::endl;
-            if (funcAssigned.compare(UP) == 0)
+            if (funcAssigned.compare(rpibuttons::UP) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonUp);
-                std::cout << " found assign!!! " << UP << std::endl;
+                std::cout << " found assign!!! " << rpibuttons::UP << std::endl;
             }
-            else if (funcAssigned.compare(DOWN) == 0)
+            else if (funcAssigned.compare(rpibuttons::DOWN) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonDown);
-                std::cout << " found assign!!! " << DOWN << std::endl;
+                std::cout << " found assign!!! " << rpibuttons::DOWN << std::endl;
             }
-            else if (funcAssigned.compare(LEFT) == 0)
+            else if (funcAssigned.compare(rpibuttons::LEFT) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonLeft);
-                std::cout << " found assign!!! " << LEFT << std::endl;
+                std::cout << " found assign!!! " << rpibuttons::LEFT << std::endl;
             }
-            else if (funcAssigned.compare(RIGHT) == 0)
+            else if (funcAssigned.compare(rpibuttons::RIGHT) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonRight);
-                std::cout << " found assign!!! " << RIGHT << std::endl;
+                std::cout << " found assign!!! " << rpibuttons::RIGHT << std::endl;
             }
-            else if (funcAssigned.compare(ENTER) == 0)
+            else if (funcAssigned.compare(rpibuttons::ENTER) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEnter);
-                std::cout << " found assign!!! " << ENTER << std::endl;
+                std::cout << " found assign!!! " << rpibuttons::ENTER << std::endl;
             }
-            else if (funcAssigned.compare(ESC) == 0)
+            else if (funcAssigned.compare(rpibuttons::ESC) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEsc);
-                std::cout << " found assign!!! " << ESC << std::endl;
+                std::cout << " found assign!!! " << rpibuttons::ESC << std::endl;
             }
             else
             {

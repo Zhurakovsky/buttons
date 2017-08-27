@@ -88,7 +88,7 @@ int main()
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
     {
         int intValue = it->first;
-        std::string tmpString = it->secong;
+        std::string tmpString = it->second;
         std::cout << intValue << " " << tmpString.c_str() << std::endl;
     }
 

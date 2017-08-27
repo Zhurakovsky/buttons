@@ -96,6 +96,12 @@ int main()
     {
         int pinAssigned = it->first;
         std::string funcAssigned = it->second;
+        std::string stringUp = "UP";
+        std::string stringDown = "DOWN";
+        std::string stringLeft = "LEFT";
+        std::string stringRight = "RIGHT";
+        std::string stringEnter = "ENTER";
+        std::string stringEsc = "ESC";
 
         std::cout << pinAssigned << " pin assigned to func " << funcAssigned.c_str() << std::endl;
 
@@ -104,27 +110,27 @@ int main()
         {
             int shiftAssigned = iter->second;
             std::cout << " iter->second " << shiftAssigned << std::endl;
-            if (funcAssigned.c_str() == "UP")
+            if (funcAssigned == stringUp)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonUp);
             }
-            else if (funcAssigned.c_str() == "DOWN")
+            else if (funcAssigned == stringDown)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonDown);
             }
-            else if (funcAssigned.c_str() == "LEFT")
+            else if (funcAssigned == stringLeft)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonLeft);
             }
-            else if (funcAssigned.c_str() == "RIGHT")
+            else if (funcAssigned == stringRight)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonRight);
             }
-            else if (funcAssigned.c_str() == "ENTER")
+            else if (funcAssigned == stringEnter)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEnter);
             }
-            else if (funcAssigned.c_str() == "ESC")
+            else if (funcAssigned == stringEsc)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEsc);
             }

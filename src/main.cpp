@@ -104,33 +104,33 @@ int main()
         {
             int shiftAssigned = iter->second;
             std::cout << " iter->second " << shiftAssigned << std::endl;
-            if (funcAssigned.compare("UP") == 0)
+            if (funcAssigned.c_str() == "UP")
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonUp);
             }
-            else if (funcAssigned.compare("DOWN") == 0)
+            else if (funcAssigned.c_str() == "DOWN")
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonDown);
             }
-            else if (funcAssigned.compare("LEFT") == 0)
+            else if (funcAssigned.c_str() == "LEFT")
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonLeft);
             }
-            else if (funcAssigned.compare("RIGHT") == 0)
+            else if (funcAssigned.c_str() == "RIGHT")
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonRight);
             }
-            else if (funcAssigned.compare("ENTER") == 0)
+            else if (funcAssigned.c_str() == "ENTER")
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEnter);
             }
-            else if (funcAssigned.compare("ESC") == 0)
+            else if (funcAssigned.c_str() == "ESC")
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEsc);
             }
             else
             {
-                std::cout << " No FUNC found " << std::endl;
+                std::cout << " No FUNC found for " << funcAssigned.c_str() << std::endl;
             }
         }
     }

@@ -6,7 +6,16 @@
 
 namespace rpibuttons
 {
-
+/*
+ *
+ * RPI_V2_GPIO_P1_11 == #17
+ * RPI_V2_GPIO_P1_12 == #18
+ * RPI_V2_GPIO_P1_13 == #21/27
+ * RPI_V2_GPIO_P1_16 == #23
+ * RPI_V2_GPIO_P1_18 == #24
+ * RPI_V2_GPIO_P1_22 == #25
+ *
+ * */
 enum class RPiGPIOPin
  {
     RPI_V2_GPIO_P1_03 = 2,
@@ -96,7 +105,6 @@ struct ScreenRect
 
 struct MenuItemActionProperties
 {
-
     std::string childMenuId;
     std::string textToShow;
     ScreenRect rectToClear;

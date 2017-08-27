@@ -86,7 +86,7 @@ void ButtonListener::gpioListen()
             //  with a pullup
             bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
             // And a low detect enable
-            bcm2835_gpio_len(tmpPin);
+            //bcm2835_gpio_len(tmpPin);
         }
 
         m_isRunning = true;
@@ -179,7 +179,7 @@ bool ButtonListener::getPinMask(uint32_t &value)
     return true;
 }
 
-int ButtonListener::gepPinsPressed(const uint32_t &valueMask)
+int ButtonListener::getPinsPressed(const uint32_t &valueMask)
 {
     int value = 0;
     for (int i = 0; i < 32; i++)

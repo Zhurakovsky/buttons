@@ -30,6 +30,7 @@ namespace rpibuttons
         bool isRunning() const;
 
         void gpioListen();
+        //pinNumber - bcm2835 shift for bitmask
         bool subscribeOnPin(const int& pinNumber, const std::function<void()> &cbFunc);
 
     private:
@@ -43,7 +44,7 @@ namespace rpibuttons
         bool getPinMask(uint32_t &value);
         std::unordered_map<int, std::function<void()>> m_mapOfCallbacks;
         std::unordered_map<int, int> m_mapOfPrevValues;
-        int gepPinsPressed(const uint32_t &valueMask);
+        int getPinsPressed(const uint32_t &valueMask);
     };
 }
 

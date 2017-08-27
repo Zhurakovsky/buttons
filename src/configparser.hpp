@@ -12,6 +12,7 @@ class ConfigParser
 public:
     ConfigParser();
     ~ConfigParser();
+
     std::vector<std::string> getConfigStrings(const std::string &filename,
                                               const std::string &searchMask);
 

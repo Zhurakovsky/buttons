@@ -1,5 +1,24 @@
 #
 #
+G	3	RPI_V2_GPIO_P1_03
+G	5	RPI_V2_GPIO_P1_05 
+G	7	RPI_V2_GPIO_P1_07
+G	8	RPI_V2_GPIO_P1_08
+G	10	RPI_V2_GPIO_P1_10
+G	11	RPI_V2_GPIO_P1_11
+G	12	RPI_V2_GPIO_P1_12
+G	13	RPI_V2_GPIO_P1_13
+G	15	RPI_V2_GPIO_P1_15
+G	16	RPI_V2_GPIO_P1_16
+G	18	RPI_V2_GPIO_P1_18
+G	19	RPI_V2_GPIO_P1_19
+G	21	RPI_V2_GPIO_P1_21
+G	22	RPI_V2_GPIO_P1_22
+G	23	RPI_V2_GPIO_P1_23
+G	24	RPI_V2_GPIO_P1_24
+G	26	RPI_V2_GPIO_P1_26
+#
+#
 #
 # 1. First field 'M' means Menu building section
 # 2. Menu ID. 
@@ -24,4 +43,19 @@ M	10	3	9	0	"Item10" 	"ClearScreen"		"0 0 128 64"
 #
 #
 #
+# // 1. P set gpio pins section mark
+# // 2. GPIO pin
+# // 3. GPIO direction (0 - input, 1 - output)
+# // 4. Assigned function
+P	8	0	"UP"
+P	10	0	"DOWN"
+P	12	0	"LEFT"
+P	16	0	"RIGHT"
+P	18	0	"ENTER"
+P	22	0	"ESC"
+#P	18	1	"blink/blink.out"
 #
+#
+#
+
+

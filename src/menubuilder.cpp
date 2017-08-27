@@ -1,5 +1,7 @@
 #include "menubuilder.hpp"
 #include <sstream>
+#include <map>
+
 
 namespace rpibuttons
 {
@@ -73,9 +75,56 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         mi->setActionType(miat);
         mi->setMenuItemProperties(miaprop);
 
-        std::cout << "Created params for item " << mps.itemId <<std::endl;
+        menu.push_back(mi);
+
+        std::cout << "Created params for item " << mps.itemId << std::endl;
     }
-    //int menuItemCount = menuItemParams.size();
+    int menuItemCount = menuItemParams.size();
+    std::cout << "/nCreated " << menuItemCount << " menu items" << std::endl;
+}
+
+void MenuBuilder::buildPinGpioMap(const std::string &fileName, std::map<int, int> &mapPinGpio)
+{
+    const std::string searchPattern = "G";
+    std::vector<std::string> pinList;
+
+    pinList = confParser.getConfigStrings(fileName, searchPattern);
+
+    for(auto it = pinList.begin(); it != pinList.end(); ++it )
+    {
+        std::string tmpString = *it;
+        std::istringstream iss(tmpString);
+        int pinNumber;
+        int pinDescription;
+
+        std::string tmpG;
+        iss >> tmpG >> pinNumber >> pinDescription;
+
+        mapPinGpio.emplace(std::make_pair(pinNumber, pinDescription));
+
+    }
+}
+
+void MenuBuilder::buildButtonsFuncAssigned(const std::string &fileName, std::map<int, std::string> &mapButtonsFuncAssigned)
+{
+    const std::string searchPattern = "I";
+    std::vector<std::string> funcList;
+
+    funcList = confParser.getConfigStrings(fileName, searchPattern);
+
+    for(auto it = funcList.begin(); it != funcList.end(); ++it )
+    {
+        std::string tmpString = *it;
+        std::istringstream iss(tmpString);
+        int pinNumber;
+        std::string funcAssigned;
+
+        std::string tmpI;
+        iss >> tmpI >> pinNumber >> funcAssigned;
+
+        mapButtonsFuncAssigned.emplace(std::make_pair(pinNumber, funcAssigned));
+
+    }
 }
 
 

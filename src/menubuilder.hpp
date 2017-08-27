@@ -14,6 +14,10 @@ class MenuBuilder
 public:
     void buildMenu(const std::string &fileName, std::vector<MenuItem *> &menu);
 
+    void buildPinGpioMap(const std::string &fileName, std::map<int, int> &mapPinGpio);
+
+    void buildButtonsFuncAssigned(const std::string &fileName, std::map<int, std::string> &mapButtonsFuncAssigned);
+
 private:
     ConfigParser confParser;
 };

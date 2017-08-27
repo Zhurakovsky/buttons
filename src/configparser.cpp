@@ -27,7 +27,7 @@ std::vector<std::string> ConfigParser::getConfigStrings(const std::string &filen
     {
 //        std::cout << "line:" << line << std::endl;
 //        const char* mPattern = "M";
-        if (line[0] == 'M')
+        if (line[0] == searchMask)
         {
             result.push_back(line);
         }

@@ -82,8 +82,8 @@ void ButtonListener::gpioListen()
 
         for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
         {
-            int tmpPin = *it;
-            //int tmpPin = it->first;
+            //int tmpPin = *it;
+            int tmpPin = it->first;
             //8 10 12 16 18 22
             bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
             std::cout << "Set gpio_fsel for PIN " << tmpPin << std::endl;

@@ -120,7 +120,7 @@ bool ButtonListener::subscribeOnPin(const int &pinNumber, const std::function<vo
 
 void ButtonListener::processButton(const uint32_t &valueMask)
 {
-    int pinsPressed = gepPinsPressed(valueMask);
+    int pinsPressed = getPinsPressed(valueMask);
     if (pinsPressed <= 1)
     {
         for (auto pin : rpibuttons::RPiGPIOPins)

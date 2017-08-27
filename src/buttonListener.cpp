@@ -107,7 +107,7 @@ void ButtonListener::gpioListen()
             std::this_thread::sleep_for(std::chrono::seconds(1));
             continue;
         }
-
+        printBitMask(returnedPinMask);
         processButton(returnedPinMask);
 
         std::this_thread::sleep_for(std::chrono::milliseconds(1000));
@@ -193,6 +193,7 @@ int ButtonListener::getPinsPressed(const uint32_t &valueMask)
             value += 1;
         }
     }
+    std::cout << "Get mask values len == " << value << std::endl;
     return value;
 }
 

@@ -110,29 +110,35 @@ int main()
         {
             int shiftAssigned = iter->second;
             std::cout << " iter->second " << shiftAssigned << std::endl;
-            if (funcAssigned == stringUp)
+            if (funcAssigned.compare(stringUp) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonUp);
+                std::cout << " found assign!!! " << stringUp.c_str() << std::endl;
             }
-            else if (funcAssigned == stringDown)
+            else if (funcAssigned.compare(stringDown) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonDown);
+                std::cout << " found assign!!! " << stringDown.c_str() << std::endl;
             }
-            else if (funcAssigned == stringLeft)
+            else if (funcAssigned.compare(stringLeft) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonLeft);
+                std::cout << " found assign!!! " << stringLeft.c_str() << std::endl;
             }
-            else if (funcAssigned == stringRight)
+            else if (funcAssigned.compare(stringRight) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonRight);
+                std::cout << " found assign!!! " << stringRight.c_str() << std::endl;
             }
-            else if (funcAssigned == stringEnter)
+            else if (funcAssigned.compare(stringEnter) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEnter);
+                std::cout << " found assign!!! " << stringEnter.c_str() << std::endl;
             }
-            else if (funcAssigned == stringEsc)
+            else if (funcAssigned.compare(stringEsc) == 0)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEsc);
+                std::cout << " found assign!!! " << stringEsc.c_str() << std::endl;
             }
             else
             {

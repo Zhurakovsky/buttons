@@ -107,7 +107,7 @@ void ButtonListener::gpioListen()
             std::this_thread::sleep_for(std::chrono::seconds(1));
             continue;
         }
-        returnedPinMask = bcm2835_gpio_set_eds_multi(maskGpioTest);
+        bcm2835_gpio_set_eds_multi(maskGpioTest);
         printBitMask(returnedPinMask);
         processButton(returnedPinMask);
 

@@ -45,6 +45,7 @@ namespace rpibuttons
         std::unordered_map<int, std::function<void()>> m_mapOfCallbacks;
         std::unordered_map<int, int> m_mapOfPrevValues;
         int getPinsPressed(const uint32_t &valueMask);
+        void printBitMask(const uint32_t &mask);
     };
 }
 

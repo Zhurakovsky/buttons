@@ -80,12 +80,12 @@ void ButtonListener::gpioListen()
             return;
         }
 
-        std::vector<int> tmpPins = {8, 10, 12, 16, 18, 22};
-        //for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
-        for (int it : tmpPins)
+        //std::vector<int> tmpPins = {8, 10, 12, 16, 18, 22};
+        for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
+        //for (int it : tmpPins)
         {
-            int tmpPin = it;
-            //int tmpPin = it->first;
+            //int tmpPin = it;
+            int tmpPin = it->first;
             //8 10 12 16 18 22
             bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
             std::cout << "Set gpio_fsel for PIN " << tmpPin << std::endl;
@@ -101,9 +101,18 @@ void ButtonListener::gpioListen()
     }
     while (m_isRunning)
     {
-        uint32_t returnedPinMask = 0;
-        //std::cout << "Hello from button listener" << std::endl;
 
+        for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
+        {
+            int tmpPin = it->first;
+            uint8_t value = bcm2835_gpio_lev(tmpPin);
+            std::cout << " " << value;
+
+        }
+        std::cout << std::endl;
+        //uint32_t returnedPinMask = 0;
+        //std::cout << "Hello from button listener" << std::endl;
+/*
         returnedPinMask = bcm2835_gpio_eds_multi(maskGpioTest);
         if (returnedPinMask == 0)
         {
@@ -114,7 +123,7 @@ void ButtonListener::gpioListen()
         bcm2835_gpio_set_eds_multi(maskGpioTest);
         printBitMask(returnedPinMask);
         processButton(returnedPinMask);
-
+*/
         //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
     bcm2835_close();

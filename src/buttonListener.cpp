@@ -140,7 +140,6 @@ bool ButtonListener::subscribeOnPin(const int &pinNumber, const std::function<vo
 
 void ButtonListener::processButton(const uint32_t &valueMask)
 {
-    bool pressed = false;
     int pinsPressed = getPinsPressed(valueMask);
     if (pinsPressed <= 1)
     {
@@ -157,21 +156,24 @@ void ButtonListener::processButton(const uint32_t &valueMask)
                     {
                         if (iter->second == 0)
                         {
+                            it->second();
                             iter->second = 1;
-                            if(!pressed)
-                            {
-                                it->second();
-                                pressed = true;
-                            }
                         }
                         else
                         {
                             //std::this_thread::sleep_for(std::chrono::milliseconds(100));
-                            iter->second = 0;
-                            //Protection from button slippage
+                                //iter->second = 0;
+                                //Protection from button slippage
                         }
+                    }   
+                }
+                else
+                {
+                    auto it = m_mapOfPrevValues.find((int)pin);
+                    if (it != m_mapOfPrevValues.end())
+                    {
+                        it->second = 0;
                     }
-                    pressed = false;
                 }
             }
             else

@@ -161,6 +161,8 @@ void ButtonListener::processButton(const uint32_t &valueMask)
                         }
                         else
                         {
+                            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+                            iter->second = 0;
                             //Protection from button slippage
                         }
                     }

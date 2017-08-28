@@ -88,7 +88,7 @@ void ButtonListener::gpioListen()
             bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
             std::cout << "Set gpio_fsel for PIN " << tmpPin << std::endl;
             //  with a pullup
-            bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
+            bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_DOWN);
             // And a low detect enable
             //bcm2835_gpio_hen(tmpPin);
         }
@@ -127,7 +127,7 @@ bool ButtonListener::subscribeOnPin(const int &pinNumber, const std::function<vo
 void ButtonListener::processButton(const uint32_t &valueMask)
 {
     int pinsPressed = getPinsPressed(valueMask);
-    if (pinsPressed > 0)
+    if (pinsPressed <= 1)
     {
         for (auto pin : rpibuttons::RPiGPIOPins)
         {
@@ -181,7 +181,7 @@ bool ButtonListener::getPinMask(uint32_t &value)
         maskValues |= (1 << tmpShift);
     }
     value = maskValues;
-    printBitMask(value);
+    //printBitMask(value);
     //
     return true;
 }

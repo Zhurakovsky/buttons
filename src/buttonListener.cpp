@@ -146,7 +146,7 @@ void ButtonListener::processButton(const uint32_t &valueMask)
         for (auto pin : rpibuttons::RPiGPIOPins)
         {
             int pinIntValue = (int)pin;
-            if (valueMask & (1 << pinIntValue) && (bcm2835_gpio_lev(pinIntValue) == 1))
+            if (valueMask & (1 << pinIntValue))
             {
                 auto it = m_mapOfCallbacks.find(pinIntValue);
                 if (it != m_mapOfCallbacks.end())
@@ -210,7 +210,7 @@ int ButtonListener::getPinsPressed(const uint32_t &valueMask)
             value += 1;
         }
     }
-    std::cout << "Get mask values len == " << value << std::endl;
+    //std::cout << "Get mask values len == " << value << std::endl;
     return value;
 }
 

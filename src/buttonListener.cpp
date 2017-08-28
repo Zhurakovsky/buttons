@@ -84,7 +84,7 @@ void ButtonListener::gpioListen()
         //for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
         for (int it : tmpPins)
         {
-            int tmpPin = *it;
+            int tmpPin = it;
             //int tmpPin = it->first;
             //8 10 12 16 18 22
             bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
@@ -108,14 +108,14 @@ void ButtonListener::gpioListen()
         if (returnedPinMask == 0)
         {
             std::cout << "Returned buttons mask == 0" << std::endl;
-            std::this_thread::sleep_for(std::chrono::seconds(1));
+            //std::this_thread::sleep_for(std::chrono::seconds(1));
             continue;
         }
-        //bcm2835_gpio_set_eds_multi(maskGpioTest);
+        bcm2835_gpio_set_eds_multi(maskGpioTest);
         printBitMask(returnedPinMask);
         processButton(returnedPinMask);
 
-        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+        //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
     bcm2835_close();
 }

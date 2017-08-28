@@ -101,29 +101,32 @@ void ButtonListener::gpioListen()
     }
     while (m_isRunning)
     {
-
+        uint32_t returnedPinMask = 0;
         for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
         {
             int tmpPin = it->first;
-            uint8_t value = bcm2835_gpio_lev(tmpPin);
-            std::cout << " " << value;
 
+            if (bcm2835_gpio_lev(tmpPin) == 1)
+            {
+                returnedPinMask |= (1 << tmpPin);
+            }
+            //std::cout << " " << value;
         }
-        std::cout << std::endl;
-        //uint32_t returnedPinMask = 0;
+        //std::cout << std::endl;
+
         //std::cout << "Hello from button listener" << std::endl;
-/*
-        returnedPinMask = bcm2835_gpio_eds_multi(maskGpioTest);
+
+        //returnedPinMask = bcm2835_gpio_eds_multi(maskGpioTest);
         if (returnedPinMask == 0)
         {
-            std::cout << "Returned buttons mask == 0" << std::endl;
+            //std::cout << "Returned buttons mask == 0" << std::endl;
             //std::this_thread::sleep_for(std::chrono::seconds(1));
             continue;
         }
-        bcm2835_gpio_set_eds_multi(maskGpioTest);
-        printBitMask(returnedPinMask);
+        //bcm2835_gpio_set_eds_multi(maskGpioTest);
+        //printBitMask(returnedPinMask);
         processButton(returnedPinMask);
-*/
+
         //std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     }
     bcm2835_close();

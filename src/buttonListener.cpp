@@ -80,17 +80,19 @@ void ButtonListener::gpioListen()
             return;
         }
 
-        for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
+        std::vector<int> tmpPins = {8, 10, 12, 16, 18, 22};
+        //for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
+        for (int it : tmpPins)
         {
-            //int tmpPin = *it;
-            int tmpPin = it->first;
+            int tmpPin = *it;
+            //int tmpPin = it->first;
             //8 10 12 16 18 22
             bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
             std::cout << "Set gpio_fsel for PIN " << tmpPin << std::endl;
             //  with a pullup
             bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_DOWN);
             // And a low detect enable
-            //bcm2835_gpio_hen(tmpPin);
+            bcm2835_gpio_hen(tmpPin);
         }
 
         m_isRunning = true;

@@ -60,11 +60,15 @@ int main()
     {
         std::cout << "Button UP pressed" << std::endl;
         MenuItem *item = menuProcessor.getActive(menu);
-        if (item->getPrevious() != nullptr)
+        if (item->hasPrevious())
         {
             item->setActive(false);
             item = item->getPrevious();
             item->setActive(true);
+        }
+        else
+        {
+            std::cout << "Top UP item" << std::endl;
         }
         menuProcessor.printMenu();
     };
@@ -72,11 +76,15 @@ int main()
     {
         std::cout << "Button DOWN pressed" << std::endl;
         MenuItem *item = menuProcessor.getActive(menu);
-        if (item->getNext() != nullptr)
+        if (item->hasNext())
         {
             item->setActive(false);
             item = item->getNext();
             item->setActive(true);
+        }
+        else
+        {
+            std::cout << "Last BOTTOM item" << std::endl;
         }
         menuProcessor.printMenu();
     };
@@ -84,11 +92,15 @@ int main()
     {
         std::cout << "Button LEFT pressed" << std::endl;
         MenuItem *item = menuProcessor.getActive(menu);
-        if (item->getParent() != nullptr)
+        if (item->hasParent())
         {
             item->setActive(false);
             item = item->getParent();
             item->setActive(true);
+        }
+        else
+        {
+            std::cout << "No parent item" << std::endl;
         }
         menuProcessor.printMenu();
     };
@@ -96,11 +108,15 @@ int main()
     {
         std::cout << "Button RIGHT pressed" << std::endl;
         MenuItem *item = menuProcessor.getActive(menu);
-        if (item->getChild() != nullptr)
+        if (item->hasChild())
         {
             item->setActive(false);
             item = item->getChild();
             item->setActive(true);
+        }
+        else
+        {
+            std::cout << "No child item" << std::endl;
         }
         menuProcessor.printMenu();
     };

@@ -30,6 +30,11 @@ void MenuItem::setNext(MenuItem *newNext)
     next = newNext;
 }
 
+bool MenuItem::hasNext()
+{
+    return !(next == nullptr);
+}
+
 MenuItem* MenuItem::getPrevious()
 {
     return previous;
@@ -38,6 +43,11 @@ MenuItem* MenuItem::getPrevious()
 void MenuItem::setPrevious(MenuItem *newPrevious)
 {
     previous = newPrevious;
+}
+
+bool MenuItem::hasPrevious()
+{
+    return !(previous == nullptr);
 }
 
 MenuItem* MenuItem::getParent()
@@ -50,6 +60,11 @@ void MenuItem::setParent(MenuItem *newParent)
     parent = newParent;
 }
 
+bool MenuItem::hasParent()
+{
+    return !(parent == nullptr);
+}
+
 MenuItem* MenuItem::getChild()
 {
     return child;
@@ -58,6 +73,11 @@ MenuItem* MenuItem::getChild()
 void MenuItem::setChild(MenuItem *newChild)
 {
     child = newChild;
+}
+
+bool MenuItem::hasChild()
+{
+    return !(child == nullptr);
 }
 
 bool MenuItem::doAction()

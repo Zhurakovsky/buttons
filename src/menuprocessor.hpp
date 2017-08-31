@@ -16,14 +16,16 @@ public:
     ~MenuProcessor();
 
     MenuItem *getActive();
-    MenuItem *getHead(MenuItem *item) const;
-    MenuItem *getTail(MenuItem *item) const;
+    void setActive(MenuItem *newActive);
+    MenuItem *getHead(MenuItem *item);
+    MenuItem *getTail(MenuItem *item);
 
-    void printChain(MenuItem *activeItem) const;
-    void printMenu() const;
+    void printChain();
+    void printMenu();
 
 private:
     std::vector<MenuItem*> m_menu;
+    MenuItem *m_activeItem;
 
 };
 }

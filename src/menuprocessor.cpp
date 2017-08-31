@@ -16,48 +16,39 @@ MenuProcessor::~MenuProcessor()
 
 }
 
-MenuItem *MenuProcessor::getActive()
+MenuItem* MenuProcessor::getActive()
 {
-    MenuItem *activeMenuItem = nullptr;
-    for (auto it = m_menu.begin(); it != m_menu.end(); ++it)
-    {
-        MenuItem *tmpMenuItem = *it;
-        if (tmpMenuItem->isActive())
-        {
-            *activeMenuItem = *tmpMenuItem;
-            break;
-        }
-    }
-    if (*activeMenuItem == nullptr)
-    {
-        std::cout << "Active menu item empty" << std::endl;
-    }
-    return activeMenuItem;
+    return m_activeItem;
 }
 
-MenuItem* MenuProcessor::getHead(MenuItem *item) const
+void MenuProcessor::setActive(MenuItem *newActive)
+{
+    m_activeItem = newActive;
+}
+
+MenuItem* MenuProcessor::getHead(MenuItem *item)
 {
     MenuItem *headItem = item;
-    while (item->getPrevious() != nullptr)
+    while (headItem->hasPrevious())
     {
-        headItem = item->getPrevious();
+        headItem = headItem->getPrevious();
     }
     return headItem;
 }
 
-MenuItem *MenuProcessor::getTail(MenuItem *item) const
+MenuItem *MenuProcessor::getTail(MenuItem *item)
 {
     MenuItem *tailItem = item;
-    while (item->getNext() != nullptr)
+    while (tailItem->hasNext())
     {
-        tailItem = item->getNext();
+        tailItem = tailItem->getNext();
     }
     return tailItem;
 }
 
-void MenuProcessor::printChain(MenuItem *activeItem) const
+void MenuProcessor::printChain()
 {
-    MenuItem *item = getHead(activeItem);
+    MenuItem *item = getHead(m_activeItem);
     while (item != nullptr)
     {
         std::string itemCapture = item->itemName();
@@ -71,7 +62,7 @@ void MenuProcessor::printChain(MenuItem *activeItem) const
     }
 }
 
-void MenuProcessor::printMenu() const
+void MenuProcessor::printMenu()
 {
     MenuItem *activeItem = getActive();
     printChain(activeItem);

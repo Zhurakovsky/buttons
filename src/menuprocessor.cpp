@@ -16,17 +16,21 @@ MenuProcessor::~MenuProcessor()
 
 }
 
-MenuItem *MenuProcessor::getActive(const std::vector<MenuItem *> &menu) const
+MenuItem *MenuProcessor::getActive()
 {
     MenuItem *activeMenuItem = nullptr;
-    for (auto it = menu.begin(); it != menu.end(); ++it)
+    for (auto it = m_menu.begin(); it != m_menu.end(); ++it)
     {
         MenuItem *tmpMenuItem = *it;
         if (tmpMenuItem->isActive())
         {
-            activeMenuItem = tmpMenuItem;
+            *activeMenuItem = *tmpMenuItem;
             break;
         }
+    }
+    if (*activeMenuItem == nullptr)
+    {
+        std::cout << "Active menu item empty" << std::endl;
     }
     return activeMenuItem;
 }
@@ -69,7 +73,7 @@ void MenuProcessor::printChain(MenuItem *activeItem) const
 
 void MenuProcessor::printMenu() const
 {
-    MenuItem *activeItem = getActive(m_menu);
+    MenuItem *activeItem = getActive();
     printChain(activeItem);
 }
 

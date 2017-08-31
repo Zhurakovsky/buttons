@@ -15,7 +15,7 @@ public:
     MenuProcessor(const std::vector<MenuItem*> &menu);
     ~MenuProcessor();
 
-    MenuItem *getActive(const std::vector<MenuItem*> &menu) const;
+    MenuItem *getActive();
     MenuItem *getHead(MenuItem *item) const;
     MenuItem *getTail(MenuItem *item) const;
 

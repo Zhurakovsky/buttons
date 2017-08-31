@@ -59,7 +59,7 @@ int main()
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
-        MenuItem *item = menuProcessor.getActive(menu);
+        MenuItem *item = menuProcessor.getActive();
         if (item->hasPrevious())
         {
             item->setActive(false);
@@ -75,7 +75,7 @@ int main()
     std::function<void()> callbackButtonDown = [&]()
     {
         std::cout << "Button DOWN pressed" << std::endl;
-        MenuItem *item = menuProcessor.getActive(menu);
+        MenuItem *item = menuProcessor.getActive();
         if (item->hasNext())
         {
             item->setActive(false);
@@ -91,7 +91,7 @@ int main()
     std::function<void()> callbackButtonLeft = [&]()
     {
         std::cout << "Button LEFT pressed" << std::endl;
-        MenuItem *item = menuProcessor.getActive(menu);
+        MenuItem *item = menuProcessor.getActive();
         if (item->hasParent())
         {
             item->setActive(false);
@@ -107,7 +107,7 @@ int main()
     std::function<void()> callbackButtonRight = [&]()
     {
         std::cout << "Button RIGHT pressed" << std::endl;
-        MenuItem *item = menuProcessor.getActive(menu);
+        MenuItem *item = menuProcessor.getActive();
         if (item->hasChild())
         {
             item->setActive(false);

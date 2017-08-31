@@ -39,6 +39,8 @@ public:
     std::string itemName();
     void setItemName(const std::string& newName);
 
+    uint32_t getItemId() const;
+
 private:
     MenuItem* next;
     MenuItem* previous;

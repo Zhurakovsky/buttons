@@ -88,7 +88,7 @@ void ButtonListener::gpioListen()
             int tmpPin = it->first;
             //8 10 12 16 18 22
             bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
-            std::cout << "Set gpio_fsel for PIN " << tmpPin << std::endl;
+            //std::cout << "Set gpio_fsel for PIN " << tmpPin << std::endl;
             //  with a pullup
             bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_DOWN);
             // And a low detect enable
@@ -162,7 +162,7 @@ void ButtonListener::processButton(const uint32_t &valueMask)
         //Pressed more than one button
         //Probably, need to clean pin mask
         //Or some extended logic needed
-        std::cout << "More than one button pressed" << std::endl;
+        //std::cout << "More than one button pressed" << std::endl;
     }
 }
 

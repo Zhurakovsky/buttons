@@ -31,9 +31,9 @@ MenuItem *MenuProcessor::getActive(const std::vector<MenuItem *> &menu) const
     return activeMenuItem;
 }
 
-MenuItem *MenuProcessor::getHead(const MenuItem *item)
+MenuItem* MenuProcessor::getHead(MenuItem *item) const
 {
-    const MenuItem *headItem = item;
+    MenuItem *headItem = item;
     while (item->getPrevious() != nullptr)
     {
         headItem = item->getPrevious();
@@ -41,9 +41,9 @@ MenuItem *MenuProcessor::getHead(const MenuItem *item)
     return headItem;
 }
 
-MenuItem *MenuProcessor::getTail(const MenuItem *item)
+MenuItem *MenuProcessor::getTail(MenuItem *item) const
 {
-    const MenuItem *tailItem = item;
+    MenuItem *tailItem = item;
     while (item->getNext() != nullptr)
     {
         tailItem = item->getNext();
@@ -51,9 +51,9 @@ MenuItem *MenuProcessor::getTail(const MenuItem *item)
     return tailItem;
 }
 
-void MenuProcessor::printChain(const MenuItem *activeItem)
+void MenuProcessor::printChain(MenuItem *activeItem) const
 {
-    const MenuItem *item = getHead(activeItem);
+    MenuItem *item = getHead(activeItem);
     while (item != nullptr)
     {
         std::string itemCapture = item->itemName();
@@ -67,7 +67,7 @@ void MenuProcessor::printChain(const MenuItem *activeItem)
     }
 }
 
-void MenuProcessor::printMenu()
+void MenuProcessor::printMenu() const
 {
     MenuItem *activeItem = getActive(m_menu);
     printChain(activeItem);

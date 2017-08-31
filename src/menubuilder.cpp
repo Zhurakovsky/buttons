@@ -99,7 +99,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             MenuItem *processedMenuItem = *menuitemIter;
             uint32_t processedItemId = processedMenuItem->getItemId();
 
-            if (processedItemId == itemId)
+            if (processedItemId == static_cast<uint32_t>(itemId))
             {
                 setParentItem(menu, processedMenuItem, parentId);
                 setLeftItem(menu, processedMenuItem, leftItemId);

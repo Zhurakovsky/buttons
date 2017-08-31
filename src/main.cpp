@@ -59,6 +59,11 @@ int main()
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
+        if (!menuProcessor.menuHasActive())
+        {
+            std::cout << "No ective item" << std::endl;
+            return;
+        }
         MenuItem *item = menuProcessor.getActive();
         if (item->hasPrevious())
         {
@@ -75,6 +80,11 @@ int main()
     std::function<void()> callbackButtonDown = [&]()
     {
         std::cout << "Button DOWN pressed" << std::endl;
+        if (!menuProcessor.menuHasActive())
+        {
+            std::cout << "No ective item" << std::endl;
+            return;
+        }
         MenuItem *item = menuProcessor.getActive();
         if (item->hasNext())
         {
@@ -91,6 +101,11 @@ int main()
     std::function<void()> callbackButtonLeft = [&]()
     {
         std::cout << "Button LEFT pressed" << std::endl;
+        if (!menuProcessor.menuHasActive())
+        {
+            std::cout << "No ective item" << std::endl;
+            return;
+        }
         MenuItem *item = menuProcessor.getActive();
         if (item->hasParent())
         {
@@ -107,6 +122,11 @@ int main()
     std::function<void()> callbackButtonRight = [&]()
     {
         std::cout << "Button RIGHT pressed" << std::endl;
+        if (!menuProcessor.menuHasActive())
+        {
+            std::cout << "No ective item" << std::endl;
+            return;
+        }
         MenuItem *item = menuProcessor.getActive();
         if (item->hasChild())
         {
@@ -193,6 +213,7 @@ int main()
             }
         }
     }
+    menuProcessor.initActiveMenuItem();
 
     bl.run();
     while(1)

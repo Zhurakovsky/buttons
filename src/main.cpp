@@ -56,7 +56,7 @@ int main()
 //        std::cout << it->first << " " << it->second << std::endl;
 //    }
 
-    std::function<void()> callbackButtonUp = [&menu]()
+    std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
         MenuItem *item = menuProcessor.getActive(menu);
@@ -68,7 +68,7 @@ int main()
         }
         menuProcessor.printMenu();
     };
-    std::function<void()> callbackButtonDown = [&menu]()
+    std::function<void()> callbackButtonDown = [&]()
     {
         std::cout << "Button DOWN pressed" << std::endl;
         MenuItem *item = menuProcessor.getActive(menu);
@@ -80,7 +80,7 @@ int main()
         }
         menuProcessor.printMenu();
     };
-    std::function<void()> callbackButtonLeft = [&menu]()
+    std::function<void()> callbackButtonLeft = [&]()
     {
         std::cout << "Button LEFT pressed" << std::endl;
         MenuItem *item = menuProcessor.getActive(menu);
@@ -92,7 +92,7 @@ int main()
         }
         menuProcessor.printMenu();
     };
-    std::function<void()> callbackButtonRight = [&menu]()
+    std::function<void()> callbackButtonRight = [&]()
     {
         std::cout << "Button RIGHT pressed" << std::endl;
         MenuItem *item = menuProcessor.getActive(menu);
@@ -104,13 +104,13 @@ int main()
         }
         menuProcessor.printMenu();
     };
-    std::function<void()> callbackButtonEnter = [&menu]()
+    std::function<void()> callbackButtonEnter = [&]()
     {
         std::cout << "Button ENTER pressed" << std::endl;
         std::cout << "Realisation under construct" << std::endl;
         menuProcessor.printMenu();
     };
-    std::function<void()> callbackButtonEsc = [&menu]()
+    std::function<void()> callbackButtonEsc = [&]()
     {
         std::cout << "Button ESC pressed" << std::endl;
         std::cout << "Realisation under construct" << std::endl;

@@ -131,7 +131,7 @@ int main()
 
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
     {
-        //int pinAssigned = it->first;
+        int pinAssigned = it->first;
         const std::string funcAssigned(it->second);
 
         std::cout << int(it->first) << " pin assigned to func " << funcAssigned.c_str() << std::endl;

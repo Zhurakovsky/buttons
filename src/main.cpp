@@ -65,16 +65,20 @@ int main()
             return;
         }
         MenuItem *item = menuProcessor.getActive();
+        std::cout << "Live 1" << std::endl;
         if (item->hasPrevious())
         {
+            std::cout << "Live 2" << std::endl;
             item->setActive(false);
             item = item->getPrevious();
             item->setActive(true);
         }
         else
         {
+            std::cout << "Live 3" << std::endl;
             std::cout << "Top UP item" << std::endl;
         }
+        std::cout << "Live 4" << std::endl;
         menuProcessor.printMenu();
     };
     std::function<void()> callbackButtonDown = [&]()

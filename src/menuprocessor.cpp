@@ -65,6 +65,7 @@ void MenuProcessor::printChain()
 void MenuProcessor::printMenu()
 {
     //MenuItem *activeItem = getActive();
+    std::cout << "Live 5" << std::endl;
     printChain();
 }
 

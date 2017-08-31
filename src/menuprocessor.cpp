@@ -33,7 +33,7 @@ MenuItem *MenuProcessor::getActive(const std::vector<MenuItem *> &menu) const
 
 MenuItem *MenuProcessor::getHead(const MenuItem *item)
 {
-    MenuItem *headItem = item;
+    const MenuItem *headItem = item;
     while (item->getPrevious() != nullptr)
     {
         headItem = item->getPrevious();
@@ -43,7 +43,7 @@ MenuItem *MenuProcessor::getHead(const MenuItem *item)
 
 MenuItem *MenuProcessor::getTail(const MenuItem *item)
 {
-    MenuItem *tailItem = item;
+    const MenuItem *tailItem = item;
     while (item->getNext() != nullptr)
     {
         tailItem = item->getNext();
@@ -53,7 +53,7 @@ MenuItem *MenuProcessor::getTail(const MenuItem *item)
 
 void MenuProcessor::printChain(const MenuItem *activeItem)
 {
-    MenuItem *item = getHead(activeItem);
+    const MenuItem *item = getHead(activeItem);
     while (item != nullptr)
     {
         std::string itemCapture = item->itemName();

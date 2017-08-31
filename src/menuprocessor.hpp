@@ -23,6 +23,10 @@ public:
     void printChain();
     void printMenu();
 
+    bool menuHasActive();
+    void initActiveMenuItem();
+    uint32_t getMenuSIze();
+
 private:
     std::vector<MenuItem*> m_menu;
     MenuItem *m_activeItem;

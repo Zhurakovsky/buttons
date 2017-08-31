@@ -64,8 +64,49 @@ void MenuProcessor::printChain()
 
 void MenuProcessor::printMenu()
 {
-    MenuItem *activeItem = getActive();
-    printChain(activeItem);
+    //MenuItem *activeItem = getActive();
+    printChain();
+}
+
+bool MenuProcessor::menuHasActive()
+{
+    bool res = false;
+    for (auto it = m_menu.begin(); it != m_menu.end(); ++it)
+    {
+        MenuItem *tmpItem = *it;
+        if (tmpItem->isActive())
+        {
+            res = true;
+            break;
+        }
+    }
+    return res;
+}
+
+void MenuProcessor::initActiveMenuItem()
+{
+    if (getMenuSIze() > 0)
+    {
+        if (!menuHasActive())
+        {
+            auto it = m_menu.begin();
+            if (it != m_menu.end())
+            {
+                MenuItem *tmpItem = *it;
+                tmpItem->setActive(true);
+                m_activeItem = *it;
+            }
+        }
+        else
+        {
+            m_activeItem = getActive();
+        }
+    }
+}
+
+uint32_t MenuProcessor::getMenuSIze()
+{
+    return (uint32_t)m_menu.size();
 }
 
 }

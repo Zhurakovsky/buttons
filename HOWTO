@@ -1,0 +1,15 @@
+1. Extract archive buttons.tar.gz
+
+2. cd buttons
+
+3. mkdir build
+
+4. cd build
+
+5. cmake ..
+
+6. make
+
+7. cp ../config.txt .
+
+8. ./Buttons

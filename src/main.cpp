@@ -37,11 +37,11 @@ int main()
 
 //    MenuProcessor menuProcessor(menu);
 
-    for (auto it = menu.begin(); it != menu.end(); ++it)
-    {
-        MenuItem *tmpItem = *it;
-        std::cout << tmpItem->itemName().c_str() << std::endl;
-    }
+//    for (auto it = menu.begin(); it != menu.end(); ++it)
+//    {
+//        MenuItem *tmpItem = *it;
+//        std::cout << tmpItem->itemName().c_str() << std::endl;
+//    }
 
     // Assign input GPIO PINS according to config
     // First argument - phisically pin number on RPi

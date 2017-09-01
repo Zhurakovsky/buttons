@@ -50,9 +50,9 @@ bool MenuItem::hasPrevious()
     std::cout << "Live 7" << std::endl;
     std::cout << "Address" << &previous << std::endl;
     std::cout << "Live 8" << std::endl;
-    std::cout << "Value" << *previous << std::endl;
+    std::cout << "Value" << previous << std::endl;
     std::cout << "Live 9" << std::endl;
-    if (*previous)
+    if (previous)
     {
         std::cout << "Live 10" << std::endl;
         return true;

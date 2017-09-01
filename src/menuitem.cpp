@@ -3,16 +3,15 @@
 namespace rpibuttons
 {
 MenuItem::MenuItem(int newId)
-    : next(NULL),
-      previous(NULL),
-      parent(NULL),
-      child(NULL),
-      m_isActive(false),
+    : m_isActive(false),
       actionType(MenuItemActionType::MenuDropdown),
       m_itemName(""),
       itemId(newId)
 {
-
+    next = NULL;
+    previous = NULL;
+    parent = NULL;
+    child = NULL;
 }
 
 MenuItem::~MenuItem()
@@ -32,7 +31,7 @@ void MenuItem::setNext(MenuItem *newNext)
 
 bool MenuItem::hasNext()
 {
-    if (this->next == NULL)
+    if (!next)
     {
         return false;
     }
@@ -52,7 +51,7 @@ void MenuItem::setPrevious(MenuItem *newPrevious)
 
 bool MenuItem::hasPrevious()
 {
-    if (this->previous == NULL)
+    if (!previous)
     {
         return false;
     }
@@ -71,7 +70,7 @@ void MenuItem::setParent(MenuItem *newParent)
 
 bool MenuItem::hasParent()
 {
-    if (this->previous == NULL)
+    if (!previous)
     {
         return false;
     }
@@ -90,7 +89,7 @@ void MenuItem::setChild(MenuItem *newChild)
 
 bool MenuItem::hasChild()
 {
-    if (this->child == NULL)
+    if (!child)
     {
         return false;
     }

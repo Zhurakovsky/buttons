@@ -74,7 +74,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             miat = MenuItemActionType::WrongActionType;
         }
 
-        mi->setActionType(miat);
+         mi->setActionType(miat);
         mi->setMenuItemProperties(miaprop);
 
         menu.push_back(mi);
@@ -111,19 +111,26 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
     //Define first item of menu vector as active item
     if (menu.size() > 0)
     {
-        auto it = menu.begin();
-        MenuItem *startActiveMenuItem = *it;
-        startActiveMenuItem->setActive(true);
-        ++it;
-        // and all another items define as non-active
-        for(; it != menu.end(); ++it)
+        for(auto it = menu.begin(); it != menu.end(); ++it)
         {
             MenuItem *menuItem = *it;
             menuItem->setActive(false);
         }
+        auto it = menu.begin();
+        MenuItem *menuItem = *it;
+        menuItem->setActive(true);
+
+
     }
     //int menuItemCount = menuItemParams.size();
     //std::cout << "/nCreated " << menuItemCount << " menu items" << std::endl;
+    for(auto it = menu.begin(); it != menu.end(); ++it)
+    {
+        MenuItem *menuItem = *it;
+        std::string itemName = menuItem->itemName();
+        std::cout << itemName.c_str() << ", ";
+        std::cout << ((menuItem->isActive()) ? "Active" : "Passive") << std::endl;
+    }
 }
 
 void MenuBuilder::buildPinGpioMap(const std::string &fileName, std::map<int, int> &mapPinGpio)

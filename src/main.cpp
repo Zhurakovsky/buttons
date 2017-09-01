@@ -19,7 +19,7 @@ const std::string configFile = "config.txt";
 using namespace std;
 using namespace rpibuttons;
 
-void buttonUp(MenuProcessor &menuProcessor);
+//void buttonUp(MenuProcessor &menuProcessor);
 //void buttonDown();
 //void buttonLeft();
 //void buttonRight();
@@ -59,7 +59,28 @@ int main()
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
-        buttonUp(menuProcessor);
+        if (!menuProcessor.menuHasActive())
+        {
+            std::cout << "No ective item" << std::endl;
+            return;
+        }
+//        MenuItem *item = menuProcessor.getActive();
+//        if (!item)
+//        {
+//            std::cout << "item is NULL" << std::endl;
+//            return;
+//        }
+//        if (item->getPrevious())
+//        {
+//            item->setActive(false);
+//            item = item->getPrevious();
+//            item->setActive(true);
+//        }
+//        else
+//        {
+//            std::cout << "Top UP item" << std::endl;
+//        }
+        menuProcessor.printMenu();
     };
     std::function<void()> callbackButtonDown = [&]()
     {
@@ -69,22 +90,22 @@ int main()
             std::cout << "No active item" << std::endl;
             return;
         }
-        MenuItem *item = menuProcessor.getActive();
-        if (!item)
-        {
-            std::cout << "active item is NULL" << std::endl;
-            return;
-        }
-        if (item->getNext())
-        {
-            item->setActive(false);
-            item = item->getNext();
-            item->setActive(true);
-        }
-        else
-        {
-            std::cout << "Last BOTTOM item" << std::endl;
-        }
+//        MenuItem *item = menuProcessor.getActive();
+//        if (!item)
+//        {
+//            std::cout << "active item is NULL" << std::endl;
+//            return;
+//        }
+//        if (item->getNext())
+//        {
+//            item->setActive(false);
+//            item = item->getNext();
+//            item->setActive(true);
+//        }
+//        else
+//        {
+//            std::cout << "Last BOTTOM item" << std::endl;
+//        }
         menuProcessor.printMenu();
     };
     std::function<void()> callbackButtonLeft = [&]()
@@ -95,22 +116,22 @@ int main()
             std::cout << "No active item" << std::endl;
             return;
         }
-        MenuItem *item = menuProcessor.getActive();
-        if (!item)
-        {
-            std::cout << "active item is NULL" << std::endl;
-            return;
-        }
-        if ((item->getParent() != NULL))
-        {
-            item->setActive(false);
-            item = item->getParent();
-            item->setActive(true);
-        }
-        else
-        {
-            std::cout << "No parent item" << std::endl;
-        }
+//        MenuItem *item = menuProcessor.getActive();
+//        if (!item)
+//        {
+//            std::cout << "active item is NULL" << std::endl;
+//            return;
+//        }
+//        if ((item->getParent() != NULL))
+//        {
+//            item->setActive(false);
+//            item = item->getParent();
+//            item->setActive(true);
+//        }
+//        else
+//        {
+//            std::cout << "No parent item" << std::endl;
+//        }
         menuProcessor.printMenu();
     };
     std::function<void()> callbackButtonRight = [&]()
@@ -121,22 +142,22 @@ int main()
             std::cout << "No active item" << std::endl;
             return;
         }
-        MenuItem *item = menuProcessor.getActive();
-        if (!item)
-        {
-            std::cout << "active item is NULL" << std::endl;
-            return;
-        }
-        if ((item->getChild() != NULL)
-        {
-            item->setActive(false);
-            item = item->getChild();
-            item->setActive(true);
-        }
-        else
-        {
-            std::cout << "No child item" << std::endl;
-        }
+//        MenuItem *item = menuProcessor.getActive();
+//        if (!item)
+//        {
+//            std::cout << "active item is NULL" << std::endl;
+//            return;
+//        }
+//        if ((item->getChild() != NULL))
+//        {
+//            item->setActive(false);
+//            item = item->getChild();
+//            item->setActive(true);
+//        }
+//        else
+//        {
+//            std::cout << "No child item" << std::endl;
+//        }
         menuProcessor.printMenu();
     };
     std::function<void()> callbackButtonEnter = [&]()
@@ -220,32 +241,11 @@ int main()
     return 0;
 }
 
-void buttonUp(MenuProcessor &menuProcessor)
-{
-    std::cout << "Button UP pressed 2" << std::endl;
-    if (!menuProcessor.menuHasActive())
-    {
-        std::cout << "No ective item" << std::endl;
-        return;
-    }
-    MenuItem *item = menuProcessor.getActive();
-    if (!item)
-    {
-        std::cout << "item is NULL" << std::endl;
-        return;
-    }
-    if (item->getPrevious())
-    {
-        item->setActive(false);
-        item = item->getPrevious();
-        item->setActive(true);
-    }
-    else
-    {
-        std::cout << "Top UP item" << std::endl;
-    }
-    menuProcessor.printMenu();
-}
+//void buttonUp(MenuProcessor &menuProcessor)
+//{
+//    std::cout << "Button UP pressed 2" << std::endl;
+
+//}
 //void buttonDown()
 //{
 //    std::cout << "Button DOWN pressed" << std::endl;

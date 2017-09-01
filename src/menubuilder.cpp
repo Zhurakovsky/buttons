@@ -125,13 +125,13 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
     }
     //int menuItemCount = menuItemParams.size();
     //std::cout << "/nCreated " << menuItemCount << " menu items" << std::endl;
-    for(auto it = menu.begin(); it != menu.end(); ++it)
-    {
-        MenuItem *menuItem = *it;
-        std::string itemName = menuItem->itemName();
-        std::cout << itemName.c_str() << ", ";
-        std::cout << ((menuItem->isActive()) ? "Active" : "Passive") << std::endl;
-    }
+//    for(auto it = menu.begin(); it != menu.end(); ++it)
+//    {
+//        MenuItem *menuItem = *it;
+//        std::string itemName = menuItem->itemName();
+//        std::cout << itemName.c_str() << ", ";
+//        std::cout << ((menuItem->isActive()) ? "Active" : "Passive") << std::endl;
+//    }
 }
 
 void MenuBuilder::buildPinGpioMap(const std::string &fileName, std::map<int, int> &mapPinGpio)

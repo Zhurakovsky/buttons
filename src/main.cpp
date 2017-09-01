@@ -169,7 +169,7 @@ void printMenu(const std::vector<MenuItem*> &menu)
         uint32_t leftItemId;
         uint32_t rightItemId;
 
-        if (parentItemId)
+        if (parentItem)
         {
             parentItemId = parentItem->getItemId();
         }

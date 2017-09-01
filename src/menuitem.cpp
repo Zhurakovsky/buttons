@@ -48,7 +48,7 @@ void MenuItem::setPrevious(MenuItem *newPrevious)
 bool MenuItem::hasPrevious()
 {
     std::cout << "Live 7" << std::endl;
-    if (previous == nullptr)
+    if (!previous)
     {
         return false;
     }

@@ -90,7 +90,7 @@ int main()
             return;
         }
         MenuItem *item = menuProcessor.getActive();
-        if (item->hasNext())
+        if (item->getNext())
         {
             item->setActive(false);
             item = item->getNext();

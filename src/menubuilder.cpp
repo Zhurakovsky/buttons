@@ -1,7 +1,6 @@
 #include "menubuilder.hpp"
 #include <sstream>
 #include <vector>
-#include <iterator>
 #include <map>
 
 
@@ -79,8 +78,9 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
         menu.push_back(mi);
 
-        //std::cout << "Created params for item " << mps.itemId << std::endl;
+        std::cout << "Created params for item " << mps.itemId << std::endl;
     }
+<<<<<<< HEAD
     /*
      * Iterate through menu vector and set appropriate
      * pointers for "UP", "DOWN", "LEFT", "RIGHT" neighbours
@@ -124,6 +124,10 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
     }
     //int menuItemCount = menuItemParams.size();
     //std::cout << "/nCreated " << menuItemCount << " menu items" << std::endl;
+=======
+    int menuItemCount = menuItemParams.size();
+    std::cout << "/nCreated " << menuItemCount << " menu items" << std::endl;
+>>>>>>> parent of 076a533... New class menuprocessor added to project
 }
 
 void MenuBuilder::buildPinGpioMap(const std::string &fileName, std::map<int, int> &mapPinGpio)
@@ -144,6 +148,7 @@ void MenuBuilder::buildPinGpioMap(const std::string &fileName, std::map<int, int
         iss >> tmpG >> pinNumber >> pinDescription;
 
         mapPinGpio.emplace(std::make_pair(pinNumber, pinDescription));
+
     }
 }
 
@@ -169,85 +174,5 @@ void MenuBuilder::buildButtonsFuncAssigned(const std::string &fileName, std::map
     }
 }
 
-void MenuBuilder::setParentItem(std::vector<MenuItem*> &menu, MenuItem *processedMenuItem, uint32_t parentId)
-{
-    // By default menu item already have nullptr as parent
-    if (parentId == 0)
-    {
-        return;
-    }
 
-    for (auto it = menu.begin(); it != menu.end(); ++it)
-    {
-        MenuItem *testedItem = *it;
-        uint32_t testedParent = testedItem->getItemId();
-        if (parentId == testedParent)
-        {
-            if (processedMenuItem->getParent() == nullptr)
-            {
-                processedMenuItem->setParent(testedItem);
-            }
-            if (testedItem->getChild() == nullptr)
-            {
-                testedItem->setChild(processedMenuItem);
-            }
-        }
-    }
-}
-
-void MenuBuilder::setLeftItem(std::vector<MenuItem*> &menu, MenuItem *processedMenuItem, uint32_t leftId)
-{
-
-    // By default menu item already have nullptr as previous
-    if (leftId == 0)
-    {
-        return;
-    }
-
-    for (auto it = menu.begin(); it != menu.end(); ++it)
-    {
-        MenuItem *testedItem = *it;
-        uint32_t testedLeft = testedItem->getItemId();
-        if (leftId == testedLeft)
-        {
-            //In our context we consider Left as Previous
-            if (processedMenuItem->getPrevious() == nullptr)
-            {
-                processedMenuItem->setPrevious(testedItem);
-            }
-            if (testedItem->getNext() == nullptr)
-            {
-                testedItem->setNext(processedMenuItem);
-            }
-        }
-    }
-}
-
-void MenuBuilder::setRightItem(std::vector<MenuItem*> &menu, MenuItem *processedMenuItem, uint32_t rightId)
-{
-
-    // By default menu item already have nullptr as next
-    if (rightId == 0)
-    {
-        return;
-    }
-
-    for (auto it = menu.begin(); it != menu.end(); ++it)
-    {
-        MenuItem *testedItem = *it;
-        uint32_t testedRight = testedItem->getItemId();
-        if (rightId == testedRight)
-        {
-            //In our context we consider Left as Previous
-            if (processedMenuItem->getNext() == nullptr)
-            {
-                processedMenuItem->setNext(testedItem);
-            }
-            if (testedItem->getPrevious() == nullptr)
-            {
-                testedItem->setPrevious(processedMenuItem);
-            }
-        }
-    }
-}
 }

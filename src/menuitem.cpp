@@ -105,9 +105,4 @@ void MenuItem::setItemName(const std::string &newName)
     m_itemName = newName;
 }
 
-uint32_t MenuItem::getItemId() const
-{
-    return itemId;
-}
-
 }

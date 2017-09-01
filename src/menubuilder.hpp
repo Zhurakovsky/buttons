@@ -22,9 +22,5 @@ public:
 
 private:
     ConfigParser confParser;
-
-    void setParentItem(std::vector<MenuItem *> &menu, MenuItem *processedMenuItem, uint32_t parentId);
-    void setLeftItem(std::vector<MenuItem *> &menu, MenuItem *processedMenuItem, uint32_t leftId);
-    void setRightItem(std::vector<MenuItem *> &menu, MenuItem *processedMenuItem, uint32_t rightId);
 };
 }

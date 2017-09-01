@@ -334,7 +334,7 @@ void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirect
             uint32_t tmpId = tmpItem->getItemId();
             if ((tmpId == activeId) && (activeSet == true))
             {
-                tmpItem->setActive(true);
+                tmpItem->setActive(false);
             }
         }
     }

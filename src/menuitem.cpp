@@ -48,13 +48,19 @@ void MenuItem::setPrevious(MenuItem *newPrevious)
 bool MenuItem::hasPrevious()
 {
     std::cout << "Live 7" << std::endl;
-    if (!previous)
+    std::cout << "Address" << &previous << std::endl;
+    std::cout << "Live 8" << std::endl;
+    std::cout << "Value" << *previous << std::endl;
+    std::cout << "Live 9" << std::endl;
+    if (*previous)
     {
-        return false;
+        std::cout << "Live 10" << std::endl;
+        return true;
     }
     else
     {
-        return true;
+        std::cout << "Live 11" << std::endl;
+        return false;
     }
 }
 

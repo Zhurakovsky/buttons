@@ -3,19 +3,16 @@
 namespace rpibuttons
 {
 MenuItem::MenuItem(int newId)
-    : next(new MenuItem()),
-      previous(new MenuItem()),
-      parent(new MenuItem()),
-      child(new MenuItem()),
+    : next(NULL),
+      previous(NULL),
+      parent(NULL),
+      child(NULL),
       m_isActive(false),
       actionType(MenuItemActionType::MenuDropdown),
       m_itemName(""),
       itemId(newId)
 {
-    next = nullptr;
-    previous = nullptr;
-    parent = nullptr;
-    child = nullptr;
+
 }
 
 MenuItem::~MenuItem()
@@ -53,17 +50,17 @@ bool MenuItem::hasPrevious()
     std::cout << "Live 7" << std::endl;
     std::cout << "Address" << &previous << std::endl;
     std::cout << "Live 8" << std::endl;
-    std::cout << "Value" << previous << std::endl;
+    //std::cout << "Value" << previous << std::endl;
     std::cout << "Live 9" << std::endl;
-    if (previous)
+    if (previous == NULL)
     {
         std::cout << "Live 10" << std::endl;
-        return true;
+        return false;
     }
     else
     {
         std::cout << "Live 11" << std::endl;
-        return false;
+        return true;
     }
 }
 

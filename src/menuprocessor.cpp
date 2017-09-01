@@ -49,7 +49,7 @@ MenuItem *MenuProcessor::getTail(MenuItem *item)
 void MenuProcessor::printChain()
 {
     MenuItem *item = getHead(m_activeItem);
-    while (item != nullptr)
+    while (item != NULL)
     {
         std::string itemCapture = item->itemName();
         std::cout << itemCapture.c_str();

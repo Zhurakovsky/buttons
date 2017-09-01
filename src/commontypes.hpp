@@ -136,4 +136,13 @@ struct menuParserString
     std::string itemActionParameter;
 };
 
+enum class MenuFindDirection
+{
+    PARENT,
+    CHILD,
+    LEFT,
+    RIGHT,
+    CURRENT
+};
+
 }

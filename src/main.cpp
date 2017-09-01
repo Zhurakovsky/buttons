@@ -27,7 +27,9 @@ using namespace rpibuttons;
 //void buttonEsc();
 
 void printMenu(const std::vector<MenuItem*> &menu);
-
+uint32_t getActiveId(const std::vector<MenuItem*> &menu);
+uint32_t getNeighbourId(const std::vector<MenuItem*> &menu, const MenuFindDirection &findDirection);
+void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirection &findDirection);
 
 int main()
 {
@@ -62,18 +64,30 @@ int main()
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
+        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::PARENT;
+        setNeighbourActive(menu, findDirection);
+        printMenu(menu);
     };
     std::function<void()> callbackButtonDown = [&]()
     {
         std::cout << "Button DOWN pressed" << std::endl;
+        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::CHILD;
+        setNeighbourActive(menu, findDirection);
+        printMenu(menu);
      };
     std::function<void()> callbackButtonLeft = [&]()
     {
         std::cout << "Button LEFT pressed" << std::endl;
+        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::LEFT;
+        setNeighbourActive(menu, findDirection);
+        printMenu(menu);
     };
     std::function<void()> callbackButtonRight = [&]()
     {
         std::cout << "Button RIGHT pressed" << std::endl;
+        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::RIGHT;
+        setNeighbourActive(menu, findDirection);
+        printMenu(menu);
     };
     std::function<void()> callbackButtonEnter = [&]()
     {
@@ -145,7 +159,7 @@ int main()
         }
     }
 
-    printMenu(menu);
+    //printMenu(menu);
 
     bl.run();
     while(1)
@@ -168,6 +182,8 @@ void printMenu(const std::vector<MenuItem*> &menu)
         uint32_t childItemId;
         uint32_t leftItemId;
         uint32_t rightItemId;
+
+        bool currentActive = thisItem->isActive();
 
         if (parentItem)
         {
@@ -209,13 +225,120 @@ void printMenu(const std::vector<MenuItem*> &menu)
 
         std::cout << "*** \t *** \t ***" << std::endl;
         std::cout << "\t" << parentItemId << std::endl;
-        std::cout << leftItemId <<"\t" << thisItemId << "\t" << rightItemId << std::endl;
+        if (currentActive)
+        {
+            std::cout << leftItemId <<"\t >>" << thisItemId << "<<\t" << rightItemId << std::endl;
+        }
+        else
+        {
+            std::cout << leftItemId <<"\t" << thisItemId << "\t" << rightItemId << std::endl;
+        }
         std::cout << "\t" << childItemId << std::endl;
-        std::cout << "*** \t *** \t ***" << std::endl;
     }
 
 }
 
+uint32_t getActiveId(const std::vector<MenuItem*> &menu)
+{
+    uint32_t res = 0;
+    for (auto it = menu.begin(); it != menu.end(); ++it)
+    {
+        MenuItem *tmpItem = *it;
+        if (tmpItem)
+        {
+            if (tmpItem->isActive())
+            {
+                res = tmpItem->getItemId();
+            }
+        }
+    }
+    return res;
+}
+
+uint32_t getNeighbourId(const std::vector<MenuItem*> &menu, const MenuFindDirection &findDirection)
+{
+    uint32_t res = 0;
+    uint32_t activeId = getActiveId(menu);
+    for (auto it = menu.begin(); it != menu.end(); ++it)
+    {
+        MenuItem *tmpItem = *it;
+        if (tmpItem)
+        {
+            if(tmpItem->getItemId() == activeId)
+            {
+                if (findDirection == rpibuttons::MenuFindDirection::PARENT)
+                {
+                    MenuItem *neighbourItem = tmpItem->getParent();
+                    if (neighbourItem)
+                    {
+                        res = neighbourItem->getItemId();
+                    }
+                }
+                else if (findDirection == rpibuttons::MenuFindDirection::CHILD)
+                {
+                    MenuItem *neighbourItem = tmpItem->getChild();
+                    if (neighbourItem)
+                    {
+                        res = neighbourItem->getItemId();
+                    }
+                }
+                else if (findDirection == rpibuttons::MenuFindDirection::LEFT)
+                {
+                    MenuItem *neighbourItem = tmpItem->getPrevious();
+                    if (neighbourItem)
+                    {
+                        res = neighbourItem->getItemId();
+                    }
+                }
+                else if (findDirection == rpibuttons::MenuFindDirection::RIGHT)
+                {
+                    MenuItem *neighbourItem = tmpItem->getNext();
+                    if (neighbourItem)
+                    {
+                        res = neighbourItem->getItemId();
+                    }
+                }
+                else if (findDirection == rpibuttons::MenuFindDirection::CURRENT)
+            {
+                res = tmpItem->getItemId();
+            }
+            }
+        }
+    }
+    return res;
+}
+
+void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirection &findDirection)
+{
+    uint32_t activeId = getActiveId(menu);
+    uint32_t neighbourId = getNeighbourId(menu, findDirection);
+    bool activeSet = false;
+    for (auto it = menu.begin(); it != menu.end(); ++it)
+    {
+        MenuItem *tmpItem = *it;
+        if (tmpItem)
+        {
+            uint32_t tmpId = tmpItem->getItemId();
+            if (tmpId == neighbourId)
+            {
+                tmpItem->setActive(true);
+                activeSet = true;
+            }
+        }
+    }
+    for (auto it = menu.begin(); it != menu.end(); ++it)
+    {
+        MenuItem *tmpItem = *it;
+        if (tmpItem)
+        {
+            uint32_t tmpId = tmpItem->getItemId();
+            if ((tmpId == activeId) && (activeSet == true))
+            {
+                tmpItem->setActive(true);
+            }
+        }
+    }
+}
 //void buttonUp(MenuProcessor &menuProcessor)
 //{
 //    std::cout << "Button UP pressed 2" << std::endl;

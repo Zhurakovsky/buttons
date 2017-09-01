@@ -32,14 +32,12 @@ void MenuItem::setNext(MenuItem *newNext)
 
 bool MenuItem::hasNext()
 {
-    if (next == NULL)
+    if (this->next == NULL)
     {
         return false;
     }
-    else
-    {
-        return true;
-    }
+
+    return true;
 }
 
 MenuItem* MenuItem::getPrevious()
@@ -54,21 +52,11 @@ void MenuItem::setPrevious(MenuItem *newPrevious)
 
 bool MenuItem::hasPrevious()
 {
-    std::cout << "Live 7" << std::endl;
-    std::cout << "Address" << &previous << std::endl;
-    std::cout << "Live 8" << std::endl;
-    //std::cout << "Value" << previous << std::endl;
-    std::cout << "Live 9" << std::endl;
-    if (previous == NULL)
+    if (this->previous == NULL)
     {
-        std::cout << "Live 10" << std::endl;
         return false;
     }
-    else
-    {
-        std::cout << "Live 11" << std::endl;
-        return true;
-    }
+    return true;
 }
 
 MenuItem* MenuItem::getParent()
@@ -83,14 +71,11 @@ void MenuItem::setParent(MenuItem *newParent)
 
 bool MenuItem::hasParent()
 {
-    if (previous == NULL)
+    if (this->previous == NULL)
     {
         return false;
     }
-    else
-    {
-        return true;
-    }
+    return true;
 }
 
 MenuItem* MenuItem::getChild()
@@ -105,14 +90,11 @@ void MenuItem::setChild(MenuItem *newChild)
 
 bool MenuItem::hasChild()
 {
-    if (child == NULL)
+    if (this->child == NULL)
     {
         return false;
     }
-    else
-    {
-        return true;
-    }
+    return true;
 }
 
 bool MenuItem::doAction()

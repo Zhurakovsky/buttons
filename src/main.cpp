@@ -19,7 +19,7 @@ const std::string configFile = "config.txt";
 using namespace std;
 using namespace rpibuttons;
 
-//void buttonUp();
+void buttonUp(MenuProcessor &menuProcessor);
 //void buttonDown();
 //void buttonLeft();
 //void buttonRight();
@@ -59,27 +59,7 @@ int main()
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
-        if (!menuProcessor.menuHasActive())
-        {
-            std::cout << "No ective item" << std::endl;
-            return;
-        }
-        MenuItem *item = menuProcessor.getActive();
-        std::cout << "Live 1" << std::endl;
-        if (item->hasPrevious())
-        {
-            std::cout << "Live 2" << std::endl;
-            item->setActive(false);
-            item = item->getPrevious();
-            item->setActive(true);
-        }
-        else
-        {
-            std::cout << "Live 3" << std::endl;
-            std::cout << "Top UP item" << std::endl;
-        }
-        std::cout << "Live 4" << std::endl;
-        menuProcessor.printMenu();
+        buttonUp(menuProcessor);
     };
     std::function<void()> callbackButtonDown = [&]()
     {
@@ -225,10 +205,27 @@ int main()
     return 0;
 }
 
-//void buttonUp()
-//{
-//    std::cout << "Button UP pressed" << std::endl;
-//}
+void buttonUp(MenuProcessor &menuProcessor)
+{
+    std::cout << "Button UP pressed 2" << std::endl;
+    if (!menuProcessor.menuHasActive())
+    {
+        std::cout << "No ective item" << std::endl;
+        return;
+    }
+    MenuItem *item = menuProcessor.getActive();
+    if ((item->getPrevious()) != NULL)
+    {
+        item->setActive(false);
+        item = item->getPrevious();
+        item->setActive(true);
+    }
+    else
+    {
+        std::cout << "Top UP item" << std::endl;
+    }
+    menuProcessor.printMenu();
+}
 //void buttonDown()
 //{
 //    std::cout << "Button DOWN pressed" << std::endl;

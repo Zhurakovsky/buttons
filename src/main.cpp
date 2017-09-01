@@ -206,12 +206,14 @@ void printMenu(const std::vector<MenuItem*> &menu)
         {
             rightItemId = 0;
         }
+
+        std::cout << "*** \t *** \t ***" << std::endl;
+        std::cout << "\t" << parentItemId << std::endl;
+        std::cout << leftItemId <<"\t" << thisItemId << "\t" << rightItemId << std::endl;
+        std::cout << "\t" << childItemId << std::endl;
+        std::cout << "*** \t *** \t ***" << std::endl;
     }
-    std::cout << "*** \t *** \t ***" << std::endl;
-    std::cout << "\t" << parentItemId << std::endl;
-    std::cout << leftItemId <<"\t" << thisItemId << "\t" << rightItemId << std::endl;
-    std::cout << "\t" << childItemId << std::endl;
-    std::cout << "*** \t *** \t ***" << std::endl;
+
 }
 
 //void buttonUp(MenuProcessor &menuProcessor)

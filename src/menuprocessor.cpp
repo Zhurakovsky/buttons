@@ -29,7 +29,7 @@ void MenuProcessor::setActive(MenuItem *newActive)
 MenuItem* MenuProcessor::getHead(MenuItem *item)
 {
     MenuItem *headItem = item;
-    while (headItem->hasPrevious())
+    while ((headItem->getPrevious() != NULL))
     {
         headItem = headItem->getPrevious();
     }
@@ -39,7 +39,7 @@ MenuItem* MenuProcessor::getHead(MenuItem *item)
 MenuItem *MenuProcessor::getTail(MenuItem *item)
 {
     MenuItem *tailItem = item;
-    while (tailItem->hasNext())
+    while ((tailItem->getNext() != NULL))
     {
         tailItem = tailItem->getNext();
     }

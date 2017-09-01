@@ -66,10 +66,15 @@ int main()
         std::cout << "Button DOWN pressed" << std::endl;
         if (!menuProcessor.menuHasActive())
         {
-            std::cout << "No ective item" << std::endl;
+            std::cout << "No active item" << std::endl;
             return;
         }
         MenuItem *item = menuProcessor.getActive();
+        if (!item)
+        {
+            std::cout << "active item is NULL" << std::endl;
+            return;
+        }
         if (item->getNext())
         {
             item->setActive(false);
@@ -87,11 +92,16 @@ int main()
         std::cout << "Button LEFT pressed" << std::endl;
         if (!menuProcessor.menuHasActive())
         {
-            std::cout << "No ective item" << std::endl;
+            std::cout << "No active item" << std::endl;
             return;
         }
         MenuItem *item = menuProcessor.getActive();
-        if (item->hasParent())
+        if (!item)
+        {
+            std::cout << "active item is NULL" << std::endl;
+            return;
+        }
+        if ((item->getParent() != NULL))
         {
             item->setActive(false);
             item = item->getParent();
@@ -108,11 +118,16 @@ int main()
         std::cout << "Button RIGHT pressed" << std::endl;
         if (!menuProcessor.menuHasActive())
         {
-            std::cout << "No ective item" << std::endl;
+            std::cout << "No active item" << std::endl;
             return;
         }
         MenuItem *item = menuProcessor.getActive();
-        if (item->hasChild())
+        if (!item)
+        {
+            std::cout << "active item is NULL" << std::endl;
+            return;
+        }
+        if ((item->getChild() != NULL)
         {
             item->setActive(false);
             item = item->getChild();
@@ -214,7 +229,12 @@ void buttonUp(MenuProcessor &menuProcessor)
         return;
     }
     MenuItem *item = menuProcessor.getActive();
-    if ((item->getPrevious()) != NULL)
+    if (!item)
+    {
+        std::cout << "item is NULL" << std::endl;
+        return;
+    }
+    if (item->getPrevious())
     {
         item->setActive(false);
         item = item->getPrevious();

@@ -1,5 +1,4 @@
 #include "configparser.hpp"
-//#include <cstring>
 
 namespace rpibuttons
 {
@@ -25,8 +24,6 @@ std::vector<std::string> ConfigParser::getConfigStrings(const std::string &filen
     std::vector<std::string> result;
     while(std::getline(m_ifs, line))
     {
-//        std::cout << "line:" << line << std::endl;
-//        const char* mPattern = "M";
         if (line[0] == searchMask[0])
         {
             result.push_back(line);

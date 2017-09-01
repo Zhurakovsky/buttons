@@ -3,7 +3,6 @@
 #include "commontypes.hpp"
 #include "menuitem.hpp"
 #include "menubuilder.hpp"
-//#include "menuprocessor.hpp"
 
 #include <vector>
 #include <map>
@@ -19,13 +18,6 @@ const std::string configFile = "config.txt";
 using namespace std;
 using namespace rpibuttons;
 
-//void buttonUp(MenuProcessor &menuProcessor);
-//void buttonDown();
-//void buttonLeft();
-//void buttonRight();
-//void buttonEnter();
-//void buttonEsc();
-
 int main()
 {
     ButtonListener bl;
@@ -34,8 +26,6 @@ int main()
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
-
-//    MenuProcessor menuProcessor(menu);
 
     for (auto it = menu.begin(); it != menu.end(); ++it)
     {
@@ -49,13 +39,6 @@ int main()
     std::map<int, int> mapPinGpio;
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
 
-    //std::cout << "Size of mapPinGpio map == " << mapPinGpio.size() << std::endl;
-
-//    for (auto it = mapPinGpio.begin(); it != mapPinGpio.end(); ++it)
-//    {
-//        std::cout << it->first << " " << it->second << std::endl;
-//    }
-
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
@@ -63,7 +46,7 @@ int main()
     std::function<void()> callbackButtonDown = [&]()
     {
         std::cout << "Button DOWN pressed" << std::endl;
-     };
+    };
     std::function<void()> callbackButtonLeft = [&]()
     {
         std::cout << "Button LEFT pressed" << std::endl;
@@ -84,15 +67,6 @@ int main()
     std::map<int, std::string> mapButtonsFuncAssigned;
     mBuilder.buildButtonsFuncAssigned(configFile, mapButtonsFuncAssigned);
 
-    //std::cout << "Size of mapButtonsFuncAssigned map == " << mapButtonsFuncAssigned.size() << std::endl;
-
-//    for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
-//    {
-//        int intValue = it->first;
-//        std::string tmpString = it->second;
-//        std::cout << intValue << " " << tmpString.c_str() << std::endl;
-//    }
-
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
     {
         int pinAssigned = it->first;
@@ -104,36 +78,29 @@ int main()
         if (iter != mapPinGpio.end())
         {
             int shiftAssigned = iter->second;
-            //std::cout << " iter->second " << shiftAssigned << std::endl;
             if (funcAssigned == UP)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonUp);
-                //std::cout << " found assign!!! " << UP << std::endl;
             }
             else if (funcAssigned == DOWN)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonDown);
-                //std::cout << " found assign!!! " << DOWN << std::endl;
             }
             else if (funcAssigned == LEFT)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonLeft);
-                //std::cout << " found assign!!! " << LEFT << std::endl;
             }
             else if (funcAssigned == RIGHT)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonRight);
-                //std::cout << " found assign!!! " << RIGHT << std::endl;
             }
             else if (funcAssigned == ENTER)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEnter);
-                //std::cout << " found assign!!! " << ENTER << std::endl;
             }
             else if (funcAssigned == ESC)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEsc);
-                //std::cout << " found assign!!! " << ESC << std::endl;
             }
             else
             {
@@ -147,29 +114,3 @@ int main()
     {}
     return 0;
 }
-
-//void buttonUp(MenuProcessor &menuProcessor)
-//{
-//    std::cout << "Button UP pressed 2" << std::endl;
-
-//}
-//void buttonDown()
-//{
-//    std::cout << "Button DOWN pressed" << std::endl;
-//}
-//void buttonLeft()
-//{
-//    std::cout << "Button LEFT pressed" << std::endl;
-//}
-//void buttonRight()
-//{
-//    std::cout << "Button RIGHT pressed" << std::endl;
-//}
-//void buttonEnter()
-//{
-//    std::cout << "Button ENTER pressed" << std::endl;
-//}
-//void buttonEsc()
-//{
-//    std::cout << "Button ESC pressed" << std::endl;
-//}

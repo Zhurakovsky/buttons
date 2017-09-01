@@ -14,16 +14,6 @@ const char* const RIGHT = "RIGHT";
 const char* const ENTER = "ENTER";
 const char* const ESC = "ESC";
 
-/*
- *
- * RPI_V2_GPIO_P1_11 == #17
- * RPI_V2_GPIO_P1_12 == #18
- * RPI_V2_GPIO_P1_13 == #21/27
- * RPI_V2_GPIO_P1_16 == #23
- * RPI_V2_GPIO_P1_18 == #24
- * RPI_V2_GPIO_P1_22 == #25
- *
- * */
 enum class RPiGPIOPin
  {
     RPI_V2_GPIO_P1_03 = 2,
@@ -54,9 +44,6 @@ enum class RPiGPIOPin
     RPI_V2_GPIO_P1_40 = 21
 };
 
-//RPiGPIOPin
-
-//extern const RPiGPIOPin RPiGPIOPins[(int)RPiGPIOPin::Last+1];
 const RPiGPIOPin RPiGPIOPins[] = 
 {
 	RPiGPIOPin::RPI_V2_GPIO_P1_03,
@@ -86,11 +73,6 @@ const RPiGPIOPin RPiGPIOPins[] =
     RPiGPIOPin::RPI_V2_GPIO_P1_38,
     RPiGPIOPin::RPI_V2_GPIO_P1_40
 };
-
-//std::ostream& operator<<(std::ostream& o, RPiGPIOPin x)
-//{
-//	return o << std::underlying_type<RPiGPIOPin>::type(x);
-//}
 
 enum class MenuItemActionType
 {

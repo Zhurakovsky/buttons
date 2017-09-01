@@ -15,8 +15,6 @@ public:
 
     std::vector<std::string> getConfigStrings(const std::string &filename,
                                               const std::string &searchMask);
-
-
 private:
     std::ifstream m_ifs;
 

@@ -15,19 +15,19 @@ public:
 
     MenuItem* getNext();
     void setNext(MenuItem *newNext);
-    static bool hasNext();
+    bool hasNext();
 
     MenuItem* getPrevious();
     void setPrevious(MenuItem *newPrevious);
-    static bool hasPrevious();
+    bool hasPrevious();
 
     MenuItem* getParent();
     void setParent(MenuItem *newParent);
-    static bool hasParent();
+    bool hasParent();
 
     MenuItem* getChild();
     void setChild(MenuItem *newChild);
-    static bool hasChild();
+    bool hasChild();
 
     bool doAction();
 

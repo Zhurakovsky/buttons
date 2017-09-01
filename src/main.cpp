@@ -19,13 +19,6 @@ const std::string configFile = "config.txt";
 using namespace std;
 using namespace rpibuttons;
 
-//void buttonUp(MenuProcessor &menuProcessor);
-//void buttonDown();
-//void buttonLeft();
-//void buttonRight();
-//void buttonEnter();
-//void buttonEsc();
-
 void printMenu(const std::vector<MenuItem*> &menu);
 uint32_t getActiveId(const std::vector<MenuItem*> &menu);
 uint32_t getNeighbourId(const std::vector<MenuItem*> &menu, const MenuFindDirection &findDirection);
@@ -39,14 +32,6 @@ int main()
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
-
-//    MenuProcessor menuProcessor(menu);
-
-//    for (auto it = menu.begin(); it != menu.end(); ++it)
-//    {
-//        MenuItem *tmpItem = *it;
-//        std::cout << tmpItem->itemName().c_str() << std::endl;
-//    }
 
     // Assign input GPIO PINS according to config
     // First argument - phisically pin number on RPi
@@ -227,7 +212,7 @@ void printMenu(const std::vector<MenuItem*> &menu)
         std::cout << "\t" << parentItemId << std::endl;
         if (currentActive)
         {
-            std::cout << leftItemId <<"\t >>" << thisItemId << "<<\t" << rightItemId << std::endl;
+            std::cout << leftItemId <<"\t>" << thisItemId << "<\t" << rightItemId << std::endl;
         }
         else
         {
@@ -339,28 +324,4 @@ void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirect
         }
     }
 }
-//void buttonUp(MenuProcessor &menuProcessor)
-//{
-//    std::cout << "Button UP pressed 2" << std::endl;
 
-//}
-//void buttonDown()
-//{
-//    std::cout << "Button DOWN pressed" << std::endl;
-//}
-//void buttonLeft()
-//{
-//    std::cout << "Button LEFT pressed" << std::endl;
-//}
-//void buttonRight()
-//{
-//    std::cout << "Button RIGHT pressed" << std::endl;
-//}
-//void buttonEnter()
-//{
-//    std::cout << "Button ENTER pressed" << std::endl;
-//}
-//void buttonEsc()
-//{
-//    std::cout << "Button ESC pressed" << std::endl;
-//}

@@ -26,6 +26,9 @@ using namespace rpibuttons;
 //void buttonEnter();
 //void buttonEsc();
 
+void printMenu(const std::vector<MenuItem*> &menu);
+
+
 int main()
 {
     ButtonListener bl;
@@ -142,10 +145,73 @@ int main()
         }
     }
 
+    printMenu(menu);
+
     bl.run();
     while(1)
     {}
     return 0;
+}
+
+void printMenu(const std::vector<MenuItem*> &menu)
+{
+    for (auto it = menu.begin(); it != menu.end(); ++it)
+    {
+        MenuItem *thisItem = *it;
+        MenuItem *parentItem = thisItem->getParent();
+        MenuItem *childItem = thisItem->getChild();
+        MenuItem *leftItem = thisItem->getPrevious();
+        MenuItem *rightItem = thisItem->getNext();
+
+        uint32_t parentItemId;
+        uint32_t thisItemId;
+        uint32_t childItemId;
+        uint32_t leftItemId;
+        uint32_t rightItemId;
+
+        if (parentItemId)
+        {
+            parentItemId = parentItem->getItemId();
+        }
+        else
+        {
+            parentItemId = 0;
+        }
+
+        thisItemId = thisItem->getItemId();
+
+        if (childItem)
+        {
+            childItemId = childItem->getItemId();
+        }
+        else
+        {
+            childItemId = 0;
+        }
+
+        if (leftItem)
+        {
+            leftItemId = leftItem->getItemId();
+        }
+        else
+        {
+            leftItemId = 0;
+        }
+
+        if (rightItem)
+        {
+            rightItemId = rightItem->getItemId();
+        }
+        else
+        {
+            rightItemId = 0;
+        }
+    }
+    std::cout << "*** \t *** \t ***" << std::endl;
+    std::cout << "\t" << parentItemId << std::endl;
+    std::cout << leftItemId <<"\t" << thisItemId << "\t" << rightItemId << std::endl;
+    std::cout << "\t" << childItemId << std::endl;
+    std::cout << "*** \t *** \t ***" << std::endl;
 }
 
 //void buttonUp(MenuProcessor &menuProcessor)

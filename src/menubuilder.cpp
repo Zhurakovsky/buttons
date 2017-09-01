@@ -96,7 +96,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
         for (auto menuitemIter = menu.begin(); menuitemIter != menu.end(); ++menuitemIter)
         {
-            std::cout << itemId << " " << parentId << " " << leftItemId << " " << rightItemId << std::endl;
+            //std::cout << itemId << " " << parentId << " " << leftItemId << " " << rightItemId << std::endl;
             MenuItem *processedMenuItem = *menuitemIter;
             uint32_t processedItemId = processedMenuItem->getItemId();
 

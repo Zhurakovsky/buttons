@@ -89,9 +89,9 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
     {
         struct menuParserString menuItemParam = *it;
         int itemId = menuItemParam.itemId;
-        int parentId = menuItemParam.parentId;
-        int leftItemId = menuItemParam.leftItemId;
-        int rightItemId = menuItemParam.rightItemId;
+        //int parentId = menuItemParam.parentId;
+        //int leftItemId = menuItemParam.leftItemId;
+        //int rightItemId = menuItemParam.rightItemId;
 
 
         for (auto menuitemIter = menu.begin(); menuitemIter != menu.end(); ++menuitemIter)
@@ -101,9 +101,9 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
             if (processedItemId == static_cast<uint32_t>(itemId))
             {
-                setParentItem(menu, processedMenuItem, parentId);
-                setLeftItem(menu, processedMenuItem, leftItemId);
-                setRightItem(menu, processedMenuItem, rightItemId);
+                //setParentItem(menu, processedMenuItem, parentId);
+                //setLeftItem(menu, processedMenuItem, leftItemId);
+                //setRightItem(menu, processedMenuItem, rightItemId);
             }
         }
     }

@@ -5,8 +5,7 @@
 namespace rpibuttons
 {
 
-MenuProcessor::MenuProcessor(const std::vector<MenuItem*> &menu)
-    : m_menu(menu)
+MenuProcessor::MenuProcessor()
 {
 
 }
@@ -18,25 +17,18 @@ MenuProcessor::~MenuProcessor()
 
 MenuItem* MenuProcessor::getActive()
 {
-    return m_activeItem;
+
 }
 
 void MenuProcessor::setActive(MenuItem *newActive)
 {
-    m_activeItem = newActive;
 }
 
-MenuItem* MenuProcessor::getHead(MenuItem *item)
+MenuItem* MenuProcessor::getHead()
 {
-    MenuItem *headItem = item;
-    while ((headItem->getPrevious() != NULL))
-    {
-        headItem = headItem->getPrevious();
-    }
-    return headItem;
 }
 
-MenuItem *MenuProcessor::getTail(MenuItem *item)
+MenuItem *MenuProcessor::getTail()
 {
     MenuItem *tailItem = item;
     while ((tailItem->getNext() != NULL))

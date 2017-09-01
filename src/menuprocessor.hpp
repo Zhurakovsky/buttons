@@ -12,13 +12,13 @@ namespace rpibuttons
 class MenuProcessor
 {
 public:
-    MenuProcessor(const std::vector<MenuItem*> &menu);
+    MenuProcessor();
     ~MenuProcessor();
 
     MenuItem *getActive();
     void setActive(MenuItem *newActive);
-    MenuItem *getHead(MenuItem *item);
-    MenuItem *getTail(MenuItem *item);
+    MenuItem *getHead();
+    MenuItem *getTail();
 
     void printChain();
     void printMenu();
@@ -28,8 +28,6 @@ public:
     uint32_t getMenuSIze();
 
 private:
-    std::vector<MenuItem*> m_menu;
-    MenuItem *m_activeItem;
 
 };
 }

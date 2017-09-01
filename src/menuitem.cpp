@@ -3,16 +3,19 @@
 namespace rpibuttons
 {
 MenuItem::MenuItem(int newId)
-    : next(NULL),
-      previous(NULL),
-      parent(NULL),
-      child(NULL),
+    : next(new MenuItem()),
+      previous(new MenuItem()),
+      parent(new MenuItem()),
+      child(new MenuItem()),
       m_isActive(false),
       actionType(MenuItemActionType::MenuDropdown),
       m_itemName(""),
       itemId(newId)
 {
-
+    next = nullptr;
+    previous = nullptr;
+    parent = nullptr;
+    child = nullptr;
 }
 
 MenuItem::~MenuItem()

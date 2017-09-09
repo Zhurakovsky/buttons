@@ -166,11 +166,17 @@ void MenuBuilder::buildButtonsFuncAssigned(const std::string &fileName, std::map
     {
         std::string tmpString = *it;
         std::istringstream iss(tmpString);
-        int pinNumber;
+        uint32_t pinNumber;
+        uint32_t pullUpDown = 0; //read pull info from config string
         std::string funcAssigned;
 
         std::string tmpI;
-        iss >> tmpI >> pinNumber >> funcAssigned;
+        iss >> tmpI >> pinNumber >> funcAssigned >> pullUpDown;
+
+        if (pullUpDown == 1)
+        {
+            pinNumber |= (pullUpDown << 8);
+        }
 
         mapButtonsFuncAssigned.emplace(std::make_pair(pinNumber, funcAssigned));
 

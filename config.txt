@@ -47,12 +47,12 @@ M	10	3	9	0	Item10 	ClearScreen		"0 0 128 64"
 # // 1. I set input gpio pins section mark
 # // 2. GPIO pin
 # // 4. Assigned function
-I	8	UP
-I	10	DOWN
-I	12	LEFT
-I	16	RIGHT
-I	18	ENTER
-I	22	ESC
+I	8	UP	0
+I	10	DOWN	0
+I	12	LEFT	0
+I	16	RIGHT	0
+I	18	ENTER	0
+I	22	ESC 0
 #
 #
 #

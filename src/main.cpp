@@ -97,15 +97,25 @@ int main()
 
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
     {
-        int pinAssigned = it->first;
+        uint32_t pinAssigned = it->first;
+        uint32_t purePinAssigned = 0;
+        purePinAssigned |= (pinAssigned & 0x00FF);
+        std::string withPullUp = ((pinAssigned == purePinAssigned) ? " with pull-down" : " with pull-up");
         const std::string funcAssigned(it->second);
 
-        std::cout << int(it->first) << " pin assigned to func " << funcAssigned.c_str() << std::endl;
+        std::cout << purePinAssigned << " pin assigned to func "
+                  << funcAssigned.c_str()
+                  << withPullUp.c_str()
+                  << std::endl;
 
-        auto iter = mapPinGpio.find(pinAssigned);
+        auto iter = mapPinGpio.find(purePinAssigned);
         if (iter != mapPinGpio.end())
         {
-            int shiftAssigned = iter->second;
+            uint32_t shiftAssigned = iter->second;
+            if (pinAssigned != purePinAssigned) // if pull-up case
+            {
+                shiftAssigned |= (1 << 8); // add 1 to position 9 as pull-up marker
+            }
             //std::cout << " iter->second " << shiftAssigned << std::endl;
             if (funcAssigned == UP)
             {

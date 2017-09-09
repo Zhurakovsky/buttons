@@ -31,7 +31,7 @@ namespace rpibuttons
 
         void gpioListen();
         //pinNumber - bcm2835 shift for bitmask
-        bool subscribeOnPin(const int& pinNumber, const std::function<void()> &cbFunc);
+        bool subscribeOnPin(const uint32_t &pinNumber, const std::function<void()> &cbFunc);
 
     private:
         std::thread m_gpioThread;
@@ -42,10 +42,11 @@ namespace rpibuttons
 
         void processButton(const uint32_t &valueMask);
         bool getPinMask(uint32_t &value);
-        std::unordered_map<int, std::function<void()>> m_mapOfCallbacks;
-        std::unordered_map<int, int> m_mapOfPrevValues;
+        std::unordered_map<uint32_t, std::function<void()>> m_mapOfCallbacks;
+        std::unordered_map<uint32_t, uint32_t> m_mapOfPrevValues;
         int getPinsPressed(const uint32_t &valueMask);
         void printBitMask(const uint32_t &mask);
+        std::set<uint32_t> pullUpPinsSet;
     };
 }
 

@@ -90,9 +90,20 @@ void ButtonListener::gpioListen()
             bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
             std::cout << "Set gpio_fsel for PIN " << tmpPin << std::endl;
             //  with a pullup
-            bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_DOWN);
-            // And a low detect enable
-            bcm2835_gpio_hen(tmpPin);
+            auto iter = pullUpPinsSet.find(tmpPin);
+            if (iter != pullUpPinsSet.end())
+            {
+                bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
+                // And a low detect enable
+                bcm2835_gpio_hen(tmpPin);
+            }
+            else
+            {
+                bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_DOWN);
+                // And a low detect enable
+                bcm2835_gpio_hen(tmpPin);
+            }
+
         }
 
         m_isRunning = true;
@@ -104,11 +115,21 @@ void ButtonListener::gpioListen()
         uint32_t returnedPinMask = 0;
         for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
         {
-            int tmpPin = it->first;
-
-            if (bcm2835_gpio_lev(tmpPin) == 1)
+            uint32_t tmpPin = it->first;
+            auto itr = pullUpPinsSet.find(tmpPin);
+            if (itr != pullUpPinsSet.end())
             {
-                returnedPinMask |= (1 << tmpPin);
+                if (bcm2835_gpio_lev(tmpPin) == 1)
+                {
+                    returnedPinMask |= (1 << tmpPin);
+                }
+            }
+            else
+            {
+                if (bcm2835_gpio_lev(tmpPin) == 0)
+                {
+                    returnedPinMask |= (1 << tmpPin);
+                }
             }
         }
 
@@ -117,10 +138,16 @@ void ButtonListener::gpioListen()
     bcm2835_close();
 }
 
-bool ButtonListener::subscribeOnPin(const int &pinNumber, const std::function<void()> &cbFunc)
+bool ButtonListener::subscribeOnPin(const uint32_t &pinNumber, const std::function<void()> &cbFunc)
 {
-    m_mapOfPrevValues.emplace(std::make_pair(pinNumber,0));
-    return m_mapOfCallbacks.emplace(std::make_pair(pinNumber,cbFunc)).second;
+    uint32_t purePin = 0; // without pull info
+    purePin |= (pinNumber & 0xFF);
+    if ((pinNumber >> 8) == 1)
+    {
+        pullUpPinsSet.insert(purePin);
+    }
+    m_mapOfPrevValues.emplace(std::make_pair(purePin,0));
+    return m_mapOfCallbacks.emplace(std::make_pair(purePin,cbFunc)).second;
 }
 
 void ButtonListener::processButton(const uint32_t &valueMask)
@@ -130,7 +157,7 @@ void ButtonListener::processButton(const uint32_t &valueMask)
     {
         for (auto pin : rpibuttons::RPiGPIOPins)
         {
-            int pinIntValue = (int)pin;
+            uint32_t pinIntValue = (uint32_t)pin;
             if (valueMask & (1 << pinIntValue))
             {
                 auto it = m_mapOfCallbacks.find(pinIntValue);
@@ -149,7 +176,7 @@ void ButtonListener::processButton(const uint32_t &valueMask)
             }
             else
             {
-                auto it = m_mapOfPrevValues.find((int)pin);
+                auto it = m_mapOfPrevValues.find((uint32_t)pin);
                 if (it != m_mapOfPrevValues.end())
                 {
                     it->second = 0;
@@ -171,7 +198,7 @@ bool ButtonListener::getPinMask(uint32_t &value)
     uint32_t maskValues = 0;
     for(auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
     {
-        int tmpShift = it->first;
+        uint32_t tmpShift = it->first;
         maskValues |= (1 << tmpShift);
     }
     value = maskValues;

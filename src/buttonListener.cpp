@@ -80,30 +80,24 @@ void ButtonListener::gpioListen()
             return;
         }
 
-        //std::vector<int> tmpPins = {8, 10, 12, 16, 18, 22};
         for (auto it = m_mapOfCallbacks.begin(); it != m_mapOfCallbacks.end(); ++it)
-        //for (int it : tmpPins)
         {
-            //int tmpPin = it;
             int tmpPin = it->first;
-            //8 10 12 16 18 22
             bcm2835_gpio_fsel(tmpPin, BCM2835_GPIO_FSEL_INPT);
-            std::cout << "Set gpio_fsel for PIN " << tmpPin << std::endl;
             //  with a pullup
             auto iter = pullUpPinsSet.find(tmpPin);
             if (iter != pullUpPinsSet.end())
             {
                 bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
-                // And a low detect enable
+                // And low detect enable
                 bcm2835_gpio_len(tmpPin);
             }
             else
             {
                 bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_DOWN);
-                // And a low detect enable
+                // And high detect enable
                 bcm2835_gpio_hen(tmpPin);
             }
-
         }
 
         m_isRunning = true;
@@ -217,7 +211,6 @@ int ButtonListener::getPinsPressed(const uint32_t &valueMask)
             value += 1;
         }
     }
-    //std::cout << "Get mask values len == " << value << std::endl;
     return value;
 }
 

@@ -74,12 +74,10 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             miat = MenuItemActionType::WrongActionType;
         }
 
-         mi->setActionType(miat);
+        mi->setActionType(miat);
         mi->setMenuItemProperties(miaprop);
 
         menu.push_back(mi);
-
-        //std::cout << "Created params for item " << mps.itemId << std::endl;
     }
     /*
      * Iterate through menu vector and set appropriate
@@ -96,7 +94,6 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
         for (auto menuitemIter = menu.begin(); menuitemIter != menu.end(); ++menuitemIter)
         {
-            //std::cout << itemId << " " << parentId << " " << leftItemId << " " << rightItemId << std::endl;
             MenuItem *processedMenuItem = *menuitemIter;
             uint32_t processedItemId = processedMenuItem->getItemId();
 
@@ -123,8 +120,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
 
     }
-    //int menuItemCount = menuItemParams.size();
-    //std::cout << "/nCreated " << menuItemCount << " menu items" << std::endl;
+
     for(auto it = menu.begin(); it != menu.end(); ++it)
     {
         MenuItem *menuItem = *it;

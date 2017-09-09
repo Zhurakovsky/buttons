@@ -95,13 +95,13 @@ void ButtonListener::gpioListen()
             {
                 bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
                 // And a low detect enable
-                bcm2835_gpio_hen(tmpPin);
+                bcm2835_gpio_len(tmpPin);
             }
             else
             {
                 bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_DOWN);
                 // And a low detect enable
-                bcm2835_gpio_len(tmpPin);
+                bcm2835_gpio_hen(tmpPin);
             }
 
         }
@@ -119,14 +119,14 @@ void ButtonListener::gpioListen()
             auto itr = pullUpPinsSet.find(tmpPin);
             if (itr != pullUpPinsSet.end())
             {
-                if (bcm2835_gpio_lev(tmpPin) == 1)
+                if (bcm2835_gpio_lev(tmpPin) == 0)
                 {
                     returnedPinMask |= (1 << tmpPin);
                 }
             }
             else
             {
-                if (bcm2835_gpio_lev(tmpPin) == 0)
+                if (bcm2835_gpio_lev(tmpPin) == 1)
                 {
                     returnedPinMask |= (1 << tmpPin);
                 }

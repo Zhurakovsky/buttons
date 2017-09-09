@@ -101,7 +101,7 @@ void ButtonListener::gpioListen()
             {
                 bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_DOWN);
                 // And a low detect enable
-                bcm2835_gpio_hen(tmpPin);
+                bcm2835_gpio_len(tmpPin);
             }
 
         }

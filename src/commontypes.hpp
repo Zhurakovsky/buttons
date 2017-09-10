@@ -145,4 +145,11 @@ enum class MenuFindDirection
     CURRENT
 };
 
+// Oled display config option
+struct s_opts
+{
+    int oled;
+    int verbose;
+};
+
 }

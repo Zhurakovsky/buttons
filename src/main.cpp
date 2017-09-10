@@ -3,6 +3,7 @@
 #include "commontypes.hpp"
 #include "menuitem.hpp"
 #include "menubuilder.hpp"
+#include "displayoled.hpp"
 //#include "menuprocessor.hpp"
 
 #include <vector>
@@ -28,6 +29,9 @@ int main()
 {
     ButtonListener bl;
     std::vector<MenuItem*> menu;
+    DisplayOled displ;
+    displ.init();
+    displ.initTest();
 
     //Build menu
     MenuBuilder mBuilder;

@@ -44,7 +44,7 @@ bool ButtonListener::run()
     m_gpioThread = std::thread(&ButtonListener::gpioListen, this);
     std::cout << "After start thread" << std::endl;
     m_condVar.wait(lock, [&]() { return m_isInit; });
-
+    std::cout << "Thread started. m_isInit == " << (m_isInit ? "True" : "False") << std::endl;
     return m_isRunning;
 }
 
@@ -61,7 +61,7 @@ void ButtonListener::gpioListen()
     {
         std::lock_guard<std::mutex> lock(m_mtx);
 
-        if (!bcbcm2835_init())
+        if (!bcm2835_init())
         {
             std::cout << "bcm2835_init fails" << std::endl;
             m_condVar.notify_one();

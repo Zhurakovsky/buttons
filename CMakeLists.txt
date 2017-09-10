@@ -12,8 +12,8 @@ project(Buttons LANGUAGES CXX)
 
 #SET(CMAKE_SYSTEM_NAME Linux) 
 
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -lArduiPi_OLED")
+# -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -lbcm2835 -lArduiPi_OLED")
 
 include_directories("${CMAKE_SOURCE_DIR}/src")
 

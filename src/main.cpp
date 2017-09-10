@@ -27,23 +27,27 @@ void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirect
 
 int main()
 {
-    //ButtonListener bl;
-    //std::vector<MenuItem*> menu;
+    ButtonListener bl;
+    std::vector<MenuItem*> menu;
     DisplayOled displ;
     displ.init();
     displ.initTest();
-    displ.close();
-    return 0;
+    //displ.close();
+    //return 0;
 
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
+
+    std::cout << "Build menu OK" << std::endl;
 
     // Assign input GPIO PINS according to config
     // First argument - phisically pin number on RPi
     // Secong - bcm2835 shift value
     std::map<int, int> mapPinGpio;
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
+
+    std::cout << "Build PIN GPIO Map OK" << std::endl;
 
     //std::cout << "Size of mapPinGpio map == " << mapPinGpio.size() << std::endl;
 
@@ -89,8 +93,12 @@ int main()
         std::cout << "Button ESC pressed" << std::endl;
     };
 
+    std::cout << "Callbacks assigned OK" << std::endl;
+
     std::map<int, std::string> mapButtonsFuncAssigned;
     mBuilder.buildButtonsFuncAssigned(configFile, mapButtonsFuncAssigned);
+
+    std::cout << "Button funcs assigned OK" << std::endl;
 
     //std::cout << "Size of mapButtonsFuncAssigned map == " << mapButtonsFuncAssigned.size() << std::endl;
 
@@ -159,10 +167,14 @@ int main()
             }
         }
     }
+    std::cout << "FUnc Subscription OK" << std::endl;
 
     //printMenu(menu);
 
     bl.run();
+
+    std::cout << "Bl Run OK" << std::endl;
+
     while(1)
     {}
     return 0;

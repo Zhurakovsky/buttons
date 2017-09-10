@@ -5,7 +5,7 @@ namespace rpibuttons
 
 DisplayOled::DisplayOled()
 {
-    m_opts.oled = OLED_ADAFRUIT_SPI_128x64;
+    m_opts.oled = OLED_ADAFRUIT_I2C_128x64;
     m_opts.verbose = 0;
 }
 
@@ -37,14 +37,16 @@ void DisplayOled::initTest()
       display.setTextSize(1);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
-      display.print("Hello, world!\n");
+      display.print("MenuItem1\n");
       display.display();
-      sleep(2);
-      display.clearDisplay();   // clears the screen  buffer
-      display.display();
+      //sleep(2);
+      //display.clearDisplay();   // clears the screen  buffer
+      //display.display();
       display.setTextColor(BLACK, WHITE); // 'inverted' text
-      display.setTextSize(2);
-      display.print("Hello, world!\n");
+      //display.setTextSize(1);
+      display.print("MenuItem2\n");
+      display.setTextColor(WHITE, BLACK); // 'non-inverted' text
+      display.print("MenuItem3\n");
       //display.printf("%f\n", 3.141592);
       //display.setTextSize(2);
       //display.setTextColor(WHITE);

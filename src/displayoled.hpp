@@ -56,7 +56,7 @@ private:
     // default options values
     s_opts m_opts;
     // Instantiate the display
-    ArduiPi_OLED display;
+    ::ArduiPi_OLED display;
 
 };
 }

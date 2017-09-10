@@ -40,8 +40,9 @@ bool ButtonListener::run()
     {
         return true;
     }
-
+    std::cout << "Before start thread" << std::endl;
     m_gpioThread = std::thread(&ButtonListener::gpioListen, this);
+    std::cout << "After start thread" << std::endl;
     m_condVar.wait(lock, [&]() { return m_isInit; });
 
     return m_isRunning;
@@ -55,21 +56,26 @@ bool ButtonListener::isRunning() const
 void ButtonListener::gpioListen()
 {
     uint32_t maskGpioTest;
+    std::cout << "Inside thread function" << std::endl;
 
     {
         std::lock_guard<std::mutex> lock(m_mtx);
 
-        if (!bcm2835_init())
+        if (!bcbcm2835_init())
         {
+            std::cout << "bcm2835_init fails" << std::endl;
             m_condVar.notify_one();
             return;
         }
+        std::cout << "bcm2835_init passed" << std::endl;
         if( !getPinMask(maskGpioTest))
         {
+            std::cout << "getPinMask failed" << std::endl;
             m_condVar.notify_one();
             bcm2835_close();
             return;
         }
+        std::cout << "getPinMask passed" << std::endl;
         // Set RPI subscribed pins to be an input
         // Do this for all pins from subscription
         if (!m_mapOfCallbacks.size())

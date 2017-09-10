@@ -27,11 +27,13 @@ void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirect
 
 int main()
 {
-    ButtonListener bl;
-    std::vector<MenuItem*> menu;
+    //ButtonListener bl;
+    //std::vector<MenuItem*> menu;
     DisplayOled displ;
     displ.init();
     displ.initTest();
+    displ.close();
+    return 0;
 
     //Build menu
     MenuBuilder mBuilder;

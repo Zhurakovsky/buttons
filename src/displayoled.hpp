@@ -15,6 +15,7 @@
 
 #define LOGO16_GLCD_HEIGHT 16
 #define LOGO16_GLCD_WIDTH  16
+/*
 static unsigned char logo16_glcd_bmp[] =
 { 0b00000000, 0b11000000,
   0b00000001, 0b11000000,
@@ -32,7 +33,7 @@ static unsigned char logo16_glcd_bmp[] =
   0b01111100, 0b11110000,
   0b01110000, 0b01110000,
   0b00000000, 0b00110000 };
-
+*/
 
 namespace rpibuttons
 {
@@ -48,6 +49,7 @@ public:
 
     void init();
     void initTest();
+    void close();
 private:
 
 

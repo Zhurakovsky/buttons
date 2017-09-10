@@ -13,7 +13,7 @@ project(Buttons LANGUAGES CXX)
 #SET(CMAKE_SYSTEM_NAME Linux) 
 
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s -lArduiPi_OLED")
 
 include_directories("${CMAKE_SOURCE_DIR}/src")
 
@@ -40,4 +40,4 @@ set(SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} bcm2835 rt pthread ArduiPi_OLED)
+target_link_libraries(${PROJECT_NAME} bcm2835 rt pthread)

@@ -9,14 +9,19 @@ DisplayOled::DisplayOled()
     m_opts.verbose = 0;
 }
 
+DisplayOled::~DisplayOled()
+{
+
+}
+
 void DisplayOled::init()
 {
     // I2C change parameters to fit to your LCD
-    if ( !display.init(OLED_I2C_RESET, opts.oled) )
+    if ( !display.init(OLED_I2C_RESET, m_opts.oled) )
     {
         std::cout << "Error Init Display" << std::endl;
-        //exit(EXIT_FAILURE); // TODO: do we need exit? I guess - yes
-        return;
+        exit(EXIT_FAILURE); // TODO: do we need exit? I guess - yes
+        //return;
     }
     display.begin();
 
@@ -45,7 +50,12 @@ void DisplayOled::initTest()
       //display.setTextColor(WHITE);
       //display.printf("0x%8X\n", 0xDEADBEEF);
       display.display();
-      //sleep(2);
+      sleep(2);
+}
+
+void DisplayOled::close()
+{
+    display.close();
 }
 
 

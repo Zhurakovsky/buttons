@@ -6,7 +6,7 @@
 #include "displayoled.hpp"
 //#include "menuprocessor.hpp"
 
-#include <deque>
+//#include <deque>
 #include <vector>
 #include <map>
 #include <iterator>
@@ -394,34 +394,36 @@ MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId)
 
 std::vector<MenuItem*> getItemsRow(const MenuItem* &baseItem)
 {
-    std::deque<MenuItem*>myDeque;
+    //std::deque<MenuItem*>myDeque;
     MenuItem* centerItem = baseItem;
-    myDeque.push_front(centerItem);
+    std::vector<MenuItem*> v;
+    //myDeque.push_front(centerItem);
     MenuItem* tmpItem = centerItem;
-    while(tmpItem)
+
+    while(tmpItem->getPrevious())
     {
         tmpItem = tmpItem->getPrevious();
-        if (tmpItem)
-        {
-            myDeque.push_front(tmpItem);
-        }
+//        if (tmpItem)
+//        {
+//            myDeque.push_front(tmpItem);
+//        }
     }
-    tmpItem = centerItem;
+    v.push_back(tmpItem);
     while(tmpItem)
     {
         tmpItem = tmpItem->getNext();
         if (tmpItem)
         {
-            myDeque.push_back(tmpItem);
+            v.push_back(tmpItem);
         }
     }
 
-    std::vector<MenuItem*> v;
-    for (auto itt = myDeque.begin(); itt != myDeque.end(); ++itt)
-    {
-        MenuItem* tmpitt = *itt;
-        v.push_back(tmpitt);
-    }
+
+//    for (auto itt = myDeque.begin(); itt != myDeque.end(); ++itt)
+//    {
+//        MenuItem* tmpitt = *itt;
+//        v.push_back(tmpitt);
+//    }
     return v;
 }
 

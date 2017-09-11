@@ -4,6 +4,7 @@ namespace rpibuttons
 {
 
 DisplayOled::DisplayOled()
+    : m_textSize(2)
 {
     m_opts.oled = OLED_ADAFRUIT_I2C_128x64;
     m_opts.verbose = 0;
@@ -34,7 +35,7 @@ void DisplayOled::init()
 void DisplayOled::initTest()
 {
     // text display tests
-      display.setTextSize(2);
+      display.setTextSize(m_textSize);
       display.setTextColor(WHITE);
       display.setCursor(0,0);
       display.print("MenuItem1\n");
@@ -58,6 +59,16 @@ void DisplayOled::initTest()
 void DisplayOled::close()
 {
     display.close();
+}
+
+uint32_t DisplayOled::getTextSize()
+{
+    return m_textSize;
+}
+
+uint32_t DisplayOled::setTextSize(uint32_t newSize)
+{
+    m_textSize = newSize;
 }
 
 

@@ -50,6 +50,8 @@ public:
     void init();
     void initTest();
     void close();
+    uint32_t getTextSize();
+    uint32_t setTextSize(uint32_t newSize);
 private:
 
 
@@ -57,6 +59,6 @@ private:
     s_opts m_opts;
     // Instantiate the display
     ::ArduiPi_OLED display;
-
+    uint32_t m_textSize;
 };
 }

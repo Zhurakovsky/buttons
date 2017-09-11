@@ -66,7 +66,7 @@ uint32_t DisplayOled::getTextSize()
     return m_textSize;
 }
 
-uint32_t DisplayOled::setTextSize(uint32_t newSize)
+void DisplayOled::setTextSize(uint32_t newSize)
 {
     m_textSize = newSize;
 }

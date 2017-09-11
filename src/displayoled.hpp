@@ -51,7 +51,7 @@ public:
     void initTest();
     void close();
     uint32_t getTextSize();
-    uint32_t setTextSize(uint32_t newSize);
+    void setTextSize(uint32_t newSize);
 private:
 
 

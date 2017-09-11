@@ -50,6 +50,20 @@ public:
     void init();
     void initTest();
     void close();
+
+    // this must be defined by the subclass
+    virtual void drawPixel(int16_t x, int16_t y, uint16_t color);
+    virtual void invertDisplay(boolean i);
+
+    // these are 'generic' drawing functions, so we can share them!
+    virtual void drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1, uint16_t color);
+    virtual void drawFastVLine(int16_t x, int16_t y, int16_t h, uint16_t color);
+    virtual void drawFastHLine(int16_t x, int16_t y, int16_t w, uint16_t color);
+    virtual void drawRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
+    virtual void fillRect(int16_t x, int16_t y, int16_t w, int16_t h, uint16_t color);
+
+    virtual void fillScreen(uint16_t color);
+
     uint32_t getTextSize();
 private:
 

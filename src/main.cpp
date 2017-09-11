@@ -201,7 +201,13 @@ int main()
     std::cout << "Bl Run OK" << std::endl;
 
     while(1)
-    {}
+    {
+        char c = getch();
+        if (c == 'q')
+        {
+            break;
+        }
+    }
     return 0;
 }
 

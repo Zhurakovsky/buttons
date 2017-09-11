@@ -394,7 +394,7 @@ MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId)
 
 std::vector<MenuItem*> getItemsRow(const MenuItem* &baseItem)
 {
-    std::deque<MenuItem*> myDeque;
+    std::deque<MenuItem*>myDeque;
     MenuItem* centerItem = baseItem;
     myDeque.push_front(centerItem);
     MenuItem* tmpItem = centerItem;
@@ -416,7 +416,12 @@ std::vector<MenuItem*> getItemsRow(const MenuItem* &baseItem)
         }
     }
 
-    std::vector<MenuItem*> v(myDeque.begin(), myDeque.end());
+    std::vector<MenuItem*> v;
+    for (auto itt = myDeque.begin(); itt != myDeque.end(); ++itt)
+    {
+        MenuItem* tmpitt = *itt;
+        v.push_back(tmpitt);
+    }
     return v;
 }
 

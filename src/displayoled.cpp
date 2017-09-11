@@ -75,6 +75,8 @@ void DisplayOled::setTextSize(uint32_t newSize)
 
 void DisplayOled::printMenuList(const std::vector<MenuItem *> &menuItems)
 {
+    display.clearDisplay();
+    display.display();
     display.setTextSize(m_textSize);
     display.setCursor(0,0);
     display.setTextWrap(false);

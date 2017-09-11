@@ -28,7 +28,7 @@ uint32_t getActiveId(const std::vector<MenuItem*> &menu);
 uint32_t getNeighbourId(const std::vector<MenuItem*> &menu, const MenuFindDirection &findDirection);
 void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirection &findDirection);
 MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId);
-std::vector<MenuItem*> getItemsRow(const MenuItem *baseItem);
+std::vector<MenuItem*> getItemsRow(MenuItem *baseItem);
 
 int main()
 {
@@ -392,7 +392,7 @@ MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId)
     return tmpItem;
 }
 
-std::vector<MenuItem*> getItemsRow(const MenuItem* baseItem)
+std::vector<MenuItem*> getItemsRow(MenuItem* baseItem)
 {
     //std::deque<MenuItem*>myDeque;
     MenuItem* centerItem = baseItem;

@@ -12,7 +12,9 @@ DisplayOled::DisplayOled()
 
 DisplayOled::~DisplayOled()
 {
-
+    display.clearDisplay();   // clears the screen  buffer
+    display.display();        // display it (clear display)
+    display.close();
 }
 
 void DisplayOled::init()
@@ -71,5 +73,31 @@ void DisplayOled::setTextSize(uint32_t newSize)
     m_textSize = newSize;
 }
 
+void DisplayOled::printMenuList(const std::vector<MenuItem *> &menuItems)
+{
+    display.setTextSize(m_textSize);
+    display.setCursor(0,0);
+    display.setTextWrap(false);
+
+    for (auto it = menuItems.begin(); it != menuItems.end(); ++it)
+    {
+        MenuItem* tmpItem = *it;
+        if (tmpItem->isActive())
+        {
+            display.setTextColor(BLACK, WHITE);
+        }
+        else
+        {
+            display.setTextColor(WHITE, BLACK);
+        }
+        std::string stringItemName = tmpItem->itemName();
+        display.printf("%s\n", stringItemName.c_str());
+
+    }
+    display.display();
+}
+
 
 }
+
+

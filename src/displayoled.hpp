@@ -1,8 +1,11 @@
 #pragma once
 
 #include <iostream>
-
+#include <string>
+#include <vector>
+#include <iterator>
 #include "commontypes.hpp"
+#include "menuitem.hpp"
 
 #include "ArduiPi_OLED_lib.h"
 #include "Adafruit_GFX.h"
@@ -52,6 +55,7 @@ public:
     void close();
     uint32_t getTextSize();
     void setTextSize(uint32_t newSize);
+    void printMenuList(const std::vector<MenuItem *> &menuItems);
 private:
 
 

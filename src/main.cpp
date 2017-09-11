@@ -71,6 +71,7 @@ int main()
         MenuItem* activeItem = getItemById(menu, activeItemId);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         printMenuItemsRow(activeItemRow);
+        displ.printMenuList(activeItemRow);
     };
     std::function<void()> callbackButtonDown = [&]()
     {
@@ -82,6 +83,7 @@ int main()
         MenuItem* activeItem = getItemById(menu, activeItemId);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         printMenuItemsRow(activeItemRow);
+        displ.printMenuList(activeItemRow);
      };
     std::function<void()> callbackButtonLeft = [&]()
     {
@@ -93,6 +95,7 @@ int main()
         MenuItem* activeItem = getItemById(menu, activeItemId);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         printMenuItemsRow(activeItemRow);
+        displ.printMenuList(activeItemRow);
     };
     std::function<void()> callbackButtonRight = [&]()
     {
@@ -104,6 +107,7 @@ int main()
         MenuItem* activeItem = getItemById(menu, activeItemId);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         printMenuItemsRow(activeItemRow);
+        displ.printMenuList(activeItemRow);
     };
     std::function<void()> callbackButtonEnter = [&]()
     {

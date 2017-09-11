@@ -4,7 +4,6 @@
 #include "menuitem.hpp"
 #include "menubuilder.hpp"
 #include "displayoled.hpp"
-//#include "menuprocessor.hpp"
 
 #include <vector>
 #include <map>
@@ -32,6 +31,7 @@ int main()
     DisplayOled displ;
     displ.init();
     displ.initTest();
+    std::cout << "Text size == " << displ.getTextSize() << std::endl;
     //displ.close();
     //return 0;
 

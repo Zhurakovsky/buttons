@@ -60,5 +60,10 @@ void DisplayOled::close()
     display.close();
 }
 
+uint32_t DisplayOled::getTextSize()
+{
+    return static_cast<uint32_t>(Adafruit_GFX::textsize);
+}
+
 
 }

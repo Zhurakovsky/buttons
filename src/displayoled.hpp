@@ -38,7 +38,7 @@ static unsigned char logo16_glcd_bmp[] =
 namespace rpibuttons
 {
 
-class DisplayOled
+class DisplayOled : public Adafruit_GFX
 {
 public:
     DisplayOled(const DisplayOled&) = delete;
@@ -50,6 +50,7 @@ public:
     void init();
     void initTest();
     void close();
+    uint32_t getTextSize();
 private:
 
 

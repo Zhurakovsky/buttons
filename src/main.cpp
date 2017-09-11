@@ -6,13 +6,14 @@
 #include "displayoled.hpp"
 //#include "menuprocessor.hpp"
 
+#include <deque>
 #include <vector>
 #include <map>
 #include <iterator>
 #include <functional>
 #include <iterator>
 #include <string>
-#include <deque>
+
 
 #include <bcm2835.h>
 
@@ -393,16 +394,16 @@ MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId)
 
 std::vector<MenuItem*> getItemsRow(const MenuItem* &baseItem)
 {
-    std::deque<MenuItem*> deque;
+    std::deque<MenuItem*> myDeque;
     MenuItem* centerItem = baseItem;
-    deque.push_front(centerItem);
+    myDeque.push_front(centerItem);
     MenuItem* tmpItem = centerItem;
     while(tmpItem)
     {
         tmpItem = tmpItem->getPrevious();
         if (tmpItem)
         {
-            deque.push_front(tmpItem);
+            myDeque.push_front(tmpItem);
         }
     }
     tmpItem = centerItem;
@@ -411,11 +412,11 @@ std::vector<MenuItem*> getItemsRow(const MenuItem* &baseItem)
         tmpItem = tmpItem->getNext();
         if (tmpItem)
         {
-            deque.push_back(tmpItem);
+            myDeque.push_back(tmpItem);
         }
     }
 
-    std::vector<MenuItem*> v(deque.begin(), deque.end());
+    std::vector<MenuItem*> v(myDeque.begin(), myDeque.end());
     return v;
 }
 

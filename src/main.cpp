@@ -202,7 +202,7 @@ int main()
 
     while(1)
     {
-        char c = getch();
+        char c = getchar();
         if (c == 'q')
         {
             break;

@@ -72,7 +72,9 @@ int main()
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
+        std::cout << "After reset position" << std::endl;
         displ.printMenuList(activeItemRow);
+        std::cout << "After print menu" << std::endl;
     };
     std::function<void()> callbackButtonDown = [&]()
     {
@@ -206,11 +208,11 @@ int main()
 
     while(1)
     {
-        char c = getchar();
-        if (c == 'q')
-        {
-            break;
-        }
+//        char c = getchar();
+//        if (c == 'q')
+//        {
+//            break;
+//        }
     }
     return 0;
 }

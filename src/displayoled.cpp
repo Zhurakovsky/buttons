@@ -103,17 +103,19 @@ void DisplayOled::printMenuList(const std::vector<MenuItem *> &menuItems)
     if (m_currentActivePosition <= m_linesOnScreen)
     {
         m_currentMenuShift = 0;
-        for (auto it = menuItems.begin(); it != (menuItems.begin() + m_linesOnScreen); ++it)
+        for (auto it = menuItems.begin(); it != (menuItems.begin() + m_linesOnScreen - 1); ++it)
          {
-             workPrintItems.push_back(static_cast<MenuItem *>(*it));
+             MenuItem * tmpItem = *it;
+             workPrintItems.push_back(tmpItem);
          }
     }
     else if (m_currentActivePosition > m_linesOnScreen)
     {
         m_currentMenuShift = m_currentActivePosition - m_linesOnScreen;
-        for (auto it = (menuItems.begin() + m_currentMenuShift); it != (menuItems.begin() + m_currentMenuShift + m_linesOnScreen); ++it)
+        for (auto it = (menuItems.begin() + m_currentMenuShift); it != (menuItems.begin() + m_currentMenuShift + m_linesOnScreen - 1); ++it)
         {
-            workPrintItems.push_back(static_cast<MenuItem *>(*it));
+            MenuItem * tmpItem = *it;
+            workPrintItems.push_back(tmpItem);
         }
 
     }

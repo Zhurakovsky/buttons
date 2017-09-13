@@ -208,11 +208,11 @@ int main()
 
     while(1)
     {
-//        char c = getchar();
-//        if (c == 'q')
-//        {
-//            break;
-//        }
+        char c = getchar();
+        if (c == 'q')
+        {
+            break;
+        }
     }
     return 0;
 }

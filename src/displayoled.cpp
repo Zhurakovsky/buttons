@@ -8,6 +8,10 @@ DisplayOled::DisplayOled()
 {
     m_opts.oled = OLED_ADAFRUIT_I2C_128x64;
     m_opts.verbose = 0;
+    m_currentActivePosition = 0;
+    m_currentMenuShift = 0;
+    m_currentVectorSize = 0;
+    m_linesOnScreen = 4;
 }
 
 DisplayOled::~DisplayOled()
@@ -92,8 +96,8 @@ void DisplayOled::setTextSize(uint32_t newSize)
 
 void DisplayOled::printMenuList(const std::vector<MenuItem *> &menuItems)
 {
-    //display.clearDisplay();
-    //display.display();
+    display.clearDisplay();
+    display.display();
     display.setTextSize(m_textSize);
     display.setCursor(0,0);
     display.setTextWrap(false);
@@ -104,7 +108,7 @@ void DisplayOled::printMenuList(const std::vector<MenuItem *> &menuItems)
     {
         m_currentMenuShift = 0;
         int lines = (menuItems.size() > m_linesOnScreen) ? m_linesOnScreen : menuItems.size();
-        for (auto it = menuItems.begin(); it != (menuItems.begin() + lines - 1); ++it)
+        for (auto it = menuItems.begin(); it != (menuItems.begin() + lines); ++it)
          {
              MenuItem * tmpItem = *it;
              workPrintItems.push_back(tmpItem);
@@ -114,7 +118,8 @@ void DisplayOled::printMenuList(const std::vector<MenuItem *> &menuItems)
     else if (m_currentActivePosition > m_linesOnScreen)
     {
         m_currentMenuShift = m_currentActivePosition - m_linesOnScreen;
-        for (auto it = (menuItems.begin() + m_currentMenuShift); it != (menuItems.begin() + m_currentMenuShift + m_linesOnScreen - 1); ++it)
+        int lines = ((menuItems.size() - m_currentMenuShift)  > m_linesOnScreen) ? m_linesOnScreen : (menuItems.size() - m_currentMenuShift);
+        for (auto it = (menuItems.begin() + m_currentMenuShift); it != (menuItems.begin() + m_currentMenuShift + lines); ++it)
         {
             MenuItem * tmpItem = *it;
             workPrintItems.push_back(tmpItem);
@@ -169,7 +174,7 @@ void DisplayOled::increaseCurrentActivePosition(const std::vector<MenuItem *> &m
 void DisplayOled::decreaseCurrentActivePosition(const std::vector<MenuItem *> &menuItems)
 {
     m_currentVectorSize = menuItems.size();
-    if (m_currentActivePosition > 1)
+    if (m_currentActivePosition > 0)
     {
         m_currentActivePosition -= 1;
     }
@@ -177,7 +182,7 @@ void DisplayOled::decreaseCurrentActivePosition(const std::vector<MenuItem *> &m
 
 void DisplayOled::resetCurrentActivePosition()
 {
-    m_currentActivePosition = 1;
+    m_currentActivePosition = 0;
     m_currentMenuShift = 0;
 }
 

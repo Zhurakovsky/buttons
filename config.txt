@@ -46,13 +46,14 @@ M	10	3	9	0	Item10 	ClearScreen		"0 0 128 64"
 #
 # // 1. I set input gpio pins section mark
 # // 2. GPIO pin
-# // 4. Assigned function
+# // 3. Assigned function
+# // 4. Type of connection. 1 means pull-up, 0 means pull-down
 I	8	UP	0
 I	10	DOWN	0
 I	12	LEFT	0
-I	16	RIGHT	0
-I	18	ENTER	0
-I	22	ESC 0
+I	18	RIGHT	0
+I	22	ENTER	0
+I	24	ESC 0
 #
 #
 #

@@ -70,7 +70,8 @@ int main()
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        printMenuItemsRow(activeItemRow);
+        //printMenuItemsRow(activeItemRow);
+        displ.resetCurrentActivePosition();
         displ.printMenuList(activeItemRow);
     };
     std::function<void()> callbackButtonDown = [&]()
@@ -82,7 +83,8 @@ int main()
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        printMenuItemsRow(activeItemRow);
+        //printMenuItemsRow(activeItemRow);
+        displ.resetCurrentActivePosition();
         displ.printMenuList(activeItemRow);
      };
     std::function<void()> callbackButtonLeft = [&]()
@@ -94,7 +96,8 @@ int main()
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        printMenuItemsRow(activeItemRow);
+        //printMenuItemsRow(activeItemRow);
+        displ.decreaseCurrentActivePosition(activeItemRow);
         displ.printMenuList(activeItemRow);
     };
     std::function<void()> callbackButtonRight = [&]()
@@ -106,7 +109,8 @@ int main()
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        printMenuItemsRow(activeItemRow);
+        //printMenuItemsRow(activeItemRow);
+        displ.increaseCurrentActivePosition(activeItemRow);
         displ.printMenuList(activeItemRow);
     };
     std::function<void()> callbackButtonEnter = [&]()

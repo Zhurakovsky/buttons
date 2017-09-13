@@ -56,13 +56,25 @@ public:
     uint32_t getTextSize();
     void setTextSize(uint32_t newSize);
     void printMenuList(const std::vector<MenuItem *> &menuItems);
-private:
 
+
+    uint32_t getLinesOnScreen();
+    uint32_t getCurrentActivePosition();
+    uint32_t getCurrentMenuShift();
+
+    void increaseCurrentActivePosition(const std::vector<MenuItem *> &menuItems);
+    void decreaseCurrentActivePosition(const std::vector<MenuItem *> &menuItems);
+    void resetCurrentActivePosition();
+private:
 
     // default options values
     s_opts m_opts;
     // Instantiate the display
     ::ArduiPi_OLED display;
     uint32_t m_textSize;
+    uint32_t m_linesOnScreen;
+    uint32_t m_currentActivePosition;
+    uint32_t m_currentMenuShift;
+    uint32_t m_currentVectorSize;
 };
 }

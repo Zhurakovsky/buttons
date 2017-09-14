@@ -36,9 +36,7 @@ int main()
     std::vector<MenuItem*> menu;
     DisplayOled displ;
     displ.init();
-    displ.initTest();
-    //displ.close();
-    //return 0;
+    //displ.initTest();
 
     //Build menu
     MenuBuilder mBuilder;
@@ -72,9 +70,7 @@ int main()
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
-        std::cout << "After reset position" << std::endl;
         displ.printMenuList(activeItemRow);
-        std::cout << "After print menu" << std::endl;
     };
     std::function<void()> callbackButtonDown = [&]()
     {

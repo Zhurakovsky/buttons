@@ -28,14 +28,12 @@ void DisplayOled::init()
     {
         std::cout << "Error Init Display" << std::endl;
         exit(EXIT_FAILURE); // TODO: do we need exit? I guess - yes
-        //return;
     }
     display.begin();
 
     // init done
     display.clearDisplay();   // clears the screen  buffer
     display.display();        // display it (clear display)
-    std::cout << "Init Display Done" << std::endl;
 }
 
 void DisplayOled::initTest()
@@ -46,18 +44,10 @@ void DisplayOled::initTest()
       display.setCursor(0,0);
       display.print("MenuItem1\n");
       display.display();
-      //sleep(2);
-      //display.clearDisplay();   // clears the screen  buffer
-      //display.display();
       display.setTextColor(BLACK, WHITE); // 'inverted' text
-      //display.setTextSize(1);
       display.print("MenuItem2\n");
       display.setTextColor(WHITE, BLACK); // 'non-inverted' text
       display.print("MenuItem3\n");
-      //display.printf("%f\n", 3.141592);
-      //display.setTextSize(2);
-      //display.setTextColor(WHITE);
-      //display.printf("0x%8X\n", 0xDEADBEEF);
       display.display();
       sleep(2);
 }
@@ -127,8 +117,6 @@ void DisplayOled::printMenuList(const std::vector<MenuItem *> &menuItems)
 
     }
 
-    std::cout << "prepared lines for printing = " << workPrintItems.size() << std::endl;
-
     for (auto it = workPrintItems.begin(); it != workPrintItems.end(); ++it)
     {
         MenuItem* tmpItem = *it;
@@ -186,7 +174,20 @@ void DisplayOled::resetCurrentActivePosition()
     m_currentMenuShift = 0;
 }
 
-
+void DisplayOled::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color)
+{
+    display.drawBitmap(x, y, bitmap, w, h, color);
 }
 
+void DisplayOled::clear()
+{
+    display.fillScreen(0);
+}
 
+void DisplayOled::printText(const std::string &textToPrint)
+{
+    display.setTextWrap(true);
+    display.print(textToPrint);
+}
+
+}

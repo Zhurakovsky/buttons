@@ -65,6 +65,11 @@ public:
     void increaseCurrentActivePosition(const std::vector<MenuItem *> &menuItems);
     void decreaseCurrentActivePosition(const std::vector<MenuItem *> &menuItems);
     void resetCurrentActivePosition();
+
+    void drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color);
+    void clear();
+    void printText(const std::string &textToPrint);
+
 private:
 
     // default options values

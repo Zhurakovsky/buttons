@@ -62,6 +62,7 @@ void MenuItem::setChild(MenuItem *newChild)
 
 bool MenuItem::doAction()
 {
+
     return true;
 }
 

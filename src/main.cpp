@@ -4,16 +4,14 @@
 #include "menuitem.hpp"
 #include "menubuilder.hpp"
 #include "displayoled.hpp"
-//#include "menuprocessor.hpp"
 
-//#include <deque>
 #include <vector>
 #include <map>
 #include <iterator>
 #include <functional>
 #include <iterator>
 #include <string>
-
+#include <stack>
 
 #include <bcm2835.h>
 
@@ -34,15 +32,13 @@ int main()
 {
     ButtonListener bl;
     std::vector<MenuItem*> menu;
+    std::stack<MenuItem*> historyStack;
     DisplayOled displ;
     displ.init();
-    //displ.initTest();
 
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
-
-    std::cout << "Build menu OK" << std::endl;
 
     // Assign input GPIO PINS according to config
     // First argument - phisically pin number on RPi
@@ -50,23 +46,14 @@ int main()
     std::map<int, int> mapPinGpio;
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
 
-    std::cout << "Build PIN GPIO Map OK" << std::endl;
-
-    //std::cout << "Size of mapPinGpio map == " << mapPinGpio.size() << std::endl;
-
-//    for (auto it = mapPinGpio.begin(); it != mapPinGpio.end(); ++it)
-//    {
-//        std::cout << it->first << " " << it->second << std::endl;
-//    }
-
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
         MenuFindDirection findDirection = rpibuttons::MenuFindDirection::PARENT;
         setNeighbourActive(menu, findDirection);
-        //printMenu(menu);
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
+        historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
@@ -77,9 +64,9 @@ int main()
         std::cout << "Button DOWN pressed" << std::endl;
         MenuFindDirection findDirection = rpibuttons::MenuFindDirection::CHILD;
         setNeighbourActive(menu, findDirection);
-        //printMenu(menu);
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
+        historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
@@ -90,9 +77,9 @@ int main()
         std::cout << "Button LEFT pressed" << std::endl;
         MenuFindDirection findDirection = rpibuttons::MenuFindDirection::LEFT;
         setNeighbourActive(menu, findDirection);
-        //printMenu(menu);
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
+        historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.decreaseCurrentActivePosition(activeItemRow);
@@ -103,9 +90,9 @@ int main()
         std::cout << "Button RIGHT pressed" << std::endl;
         MenuFindDirection findDirection = rpibuttons::MenuFindDirection::RIGHT;
         setNeighbourActive(menu, findDirection);
-        //printMenu(menu);
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
+        historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.increaseCurrentActivePosition(activeItemRow);
@@ -114,27 +101,74 @@ int main()
     std::function<void()> callbackButtonEnter = [&]()
     {
         std::cout << "Button ENTER pressed" << std::endl;
+        uint32_t activeItemId = getActiveId(menu);
+        MenuItem* activeItem = getItemById(menu, activeItemId);
+        historyStack.push(activeItem);
+        MenuItemActionType actionType = activeItem->getActionType();
+        MenuItemActionProperties prop = activeItem->getMenuItemProperties();
+
+        if(actionType == MenuItemActionType::DisplayText)
+        {
+            std::string textForDisplay = prop.textToShow;
+
+            displ.printText(textForDisplay);
+
+        }
+        else if (actionType == MenuItemActionType::DisplayGraphics)
+        {
+            const unsigned char testBitmap [] = {
+            0xFF, 0xFE, 0x80, 0x02, 0xBF, 0xC3, 0xBF, 0xC3, 0xBF, 0xC3, 0xBF, 0xC3, 0x80, 0x02, 0xFF, 0xFE
+            };
+            displ.drawBitmap(0, 0, testBitmap, 16, 8, 1);
+
+        }
+        else if (actionType == MenuItemActionType::RunProgram)
+        {
+
+        }
+        else if (actionType == MenuItemActionType::ClearScreen)
+        {
+            displ.clear();
+        }
+        else if (actionType == MenuItemActionType::MenuDropdown)
+        {
+            uint32_t mId = (uint32_t)strtol(prop.childMenuId.c_str(), NULL, 10);
+
+            MenuItem* activeItem = getItemById(menu, mId);
+            activeItem->setActive(true);
+            historyStack.push(activeItem);
+            std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+            //printMenuItemsRow(activeItemRow);
+            displ.resetCurrentActivePosition();
+            displ.printMenuList(activeItemRow);
+        }
     };
     std::function<void()> callbackButtonEsc = [&]()
     {
         std::cout << "Button ESC pressed" << std::endl;
+        if(!historyStack.empty())
+        {
+            MenuItem* activeItem = historyStack.top();
+            historyStack.pop();
+            activeItem->setActive(true);
+            displ.resetCurrentActivePosition();
+            displ.printMenuList(activeItemRow);
+        }
+        else
+        {
+            std::cout << "History empty" << std::endl;
+            uint32_t activeItemId = getActiveId(menu);
+            MenuItem* activeItem = getItemById(menu, activeItemId);
+            historyStack.push(activeItem);
+            std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+            //printMenuItemsRow(activeItemRow);
+            displ.resetCurrentActivePosition();
+            displ.printMenuList(activeItemRow);
+        }
     };
-
-    std::cout << "Callbacks assigned OK" << std::endl;
 
     std::map<int, std::string> mapButtonsFuncAssigned;
     mBuilder.buildButtonsFuncAssigned(configFile, mapButtonsFuncAssigned);
-
-    std::cout << "Button funcs assigned OK" << std::endl;
-
-    //std::cout << "Size of mapButtonsFuncAssigned map == " << mapButtonsFuncAssigned.size() << std::endl;
-
-//    for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
-//    {
-//        int intValue = it->first;
-//        std::string tmpString = it->second;
-//        std::cout << intValue << " " << tmpString.c_str() << std::endl;
-//    }
 
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
     {
@@ -157,7 +191,6 @@ int main()
             {
                 shiftAssigned |= (1 << 8); // add 1 to position 9 as pull-up marker
             }
-            //std::cout << " iter->second " << shiftAssigned << std::endl;
             if (funcAssigned == UP)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonUp);
@@ -194,13 +227,8 @@ int main()
             }
         }
     }
-    std::cout << "FUnc Subscription OK" << std::endl;
-
-    //printMenu(menu);
 
     bl.run();
-
-    std::cout << "Bl Run OK" << std::endl;
 
     while(1)
     {
@@ -406,19 +434,13 @@ MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId)
 
 std::vector<MenuItem*> getItemsRow(MenuItem* baseItem)
 {
-    //std::deque<MenuItem*>myDeque;
     MenuItem* centerItem = baseItem;
     std::vector<MenuItem*> v;
-    //myDeque.push_front(centerItem);
     MenuItem* tmpItem = centerItem;
 
     while(tmpItem->getPrevious())
     {
         tmpItem = tmpItem->getPrevious();
-//        if (tmpItem)
-//        {
-//            myDeque.push_front(tmpItem);
-//        }
     }
     v.push_back(tmpItem);
     while(tmpItem)
@@ -430,12 +452,6 @@ std::vector<MenuItem*> getItemsRow(MenuItem* baseItem)
         }
     }
 
-
-//    for (auto itt = myDeque.begin(); itt != myDeque.end(); ++itt)
-//    {
-//        MenuItem* tmpitt = *itt;
-//        v.push_back(tmpitt);
-//    }
     return v;
 }
 

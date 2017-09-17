@@ -318,7 +318,7 @@ void MenuBuilder::setRightItem(std::vector<MenuItem*> &menu, MenuItem *processed
     }
 }
 
-std::string MenuBuilder::trim(const std::string& str, const std::string& whitespace = " \t")
+std::string MenuBuilder::trim(const std::string& str, const std::string& whitespace)
 {
     const auto strBegin = str.find_first_not_of(whitespace);
     if (strBegin == std::string::npos)

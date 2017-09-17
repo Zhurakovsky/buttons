@@ -187,7 +187,7 @@ void DisplayOled::clear()
 void DisplayOled::printText(const std::string &textToPrint)
 {
     display.setTextWrap(true);
-    display.print(textToPrint);
+    display.print(textToPrint.c_str());
 }
 
 }

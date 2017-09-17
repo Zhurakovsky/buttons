@@ -12,6 +12,7 @@
 #include <iterator>
 #include <string>
 #include <stack>
+#include <deque>
 
 #include <bcm2835.h>
 

@@ -1,6 +1,7 @@
 #include "menubuilder.hpp"
 #include <sstream>
 #include <fstream>
+
 #include <vector>
 #include <iterator>
 #include <map>
@@ -52,7 +53,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             miat = MenuItemActionType::DisplayGraphics;
             std::string rawGraphicProperty = mps.itemActionParameter;
             std::vector<std::string> displayImageParts;
-            istringstream ss(rawGraphicProperty);
+            std::istringstream ss(rawGraphicProperty);
             while (ss)
             {
               std::string s;
@@ -75,7 +76,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
             if (inputFile.is_open())
             {
-                cout << "File open" << endl;
+                std::cout << "File open" << std::endl;
                 while (!inputFile.eof())
                 {
                     std::string line;
@@ -94,7 +95,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                       records.push_back(const_cast<std::string>(trim(st.c_str())));
                     }
                 }
-                cout << "Loaded values:" << records.size() << endl;
+                std::cout << "Loaded values:" << records.size() << std::endl;
                 for(std::string line : records)
                 {
                     uint8_t number = (uint8_t)strtol(line.c_str(), NULL, 0);

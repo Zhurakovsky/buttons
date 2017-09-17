@@ -25,6 +25,7 @@ set(HEADERS
     #"${CMAKE_SOURCE_DIR}/src/menuprocessor.hpp"
     "${CMAKE_SOURCE_DIR}/src/configparser.hpp"
     "${CMAKE_SOURCE_DIR}/src/displayoled.hpp"
+    "${CMAKE_SOURCE_DIR}/src/bitmapimages.hpp"
 )
 
 set(SOURCES

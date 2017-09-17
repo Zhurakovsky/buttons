@@ -29,6 +29,7 @@ std::vector<MenuItem*> getItemsRow(MenuItem *baseItem);
 
 int main()
 {
+    std::cout << "Step 1" << std::endl;
     ButtonListener bl;
     std::vector<MenuItem*> menu;
  //   std::stack<MenuItem*> historyStack;
@@ -38,13 +39,13 @@ int main()
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
-
+std::cout << "Step 2" << std::endl;
     // Assign input GPIO PINS according to config
     // First argument - phisically pin number on RPi
     // Secong - bcm2835 shift value
     std::map<int, int> mapPinGpio;
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
-
+std::cout << "Step 3" << std::endl;
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
@@ -170,7 +171,7 @@ int main()
 
     std::map<int, std::string> mapButtonsFuncAssigned;
     mBuilder.buildButtonsFuncAssigned(configFile, mapButtonsFuncAssigned);
-
+std::cout << "Step 4" << std::endl;
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
     {
         uint32_t pinAssigned = it->first;
@@ -230,7 +231,7 @@ int main()
     }
 
     bl.run();
-
+std::cout << "Step 5" << std::endl;
     while(1)
     {
         char c = getchar();

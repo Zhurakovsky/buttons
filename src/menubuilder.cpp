@@ -72,7 +72,7 @@ std::cout << "Step 8" << std::endl;
             {
                 std::cout << myStr << std::endl;
             }
-            std::cout << "Step 11.1 graphicFilename.size == " << graphicFilename.size() << std::endl;
+            std::cout << "Step 11.1 displayImageParts.size == " << displayImageParts.size() << std::endl;
             std::string graphicFilename;
             if (graphicFilename.size() >= 3)
             {

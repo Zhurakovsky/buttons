@@ -4,15 +4,13 @@
 #include "menuitem.hpp"
 #include "menubuilder.hpp"
 #include "displayoled.hpp"
-
+#include <stack>
 #include <vector>
 #include <map>
 #include <iterator>
 #include <functional>
 #include <iterator>
 #include <string>
-#include <stack>
-#include <deque>
 
 #include <bcm2835.h>
 
@@ -31,6 +29,7 @@ std::vector<MenuItem*> getItemsRow(MenuItem *baseItem);
 
 int main()
 {
+    std::
     ButtonListener bl;
     std::vector<MenuItem*> menu;
     std::stack<MenuItem*> historyStack;

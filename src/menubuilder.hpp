@@ -25,6 +25,6 @@ private:
     void setParentItem(std::vector<MenuItem *> &menu, MenuItem *processedMenuItem, uint32_t parentId);
     void setLeftItem(std::vector<MenuItem *> &menu, MenuItem *processedMenuItem, uint32_t leftId);
     void setRightItem(std::vector<MenuItem *> &menu, MenuItem *processedMenuItem, uint32_t rightId);
-    std::string trim(const std::string &str, const std::string &whitespace =  \t);
+    std::string trim(const std::string &str, const std::string &whitespace = '\t ');
 };
 }

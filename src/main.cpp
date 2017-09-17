@@ -110,20 +110,17 @@ int main()
         if(actionType == MenuItemActionType::DisplayText)
         {
             std::string textForDisplay = prop.textToShow;
-
             displ.printText(textForDisplay);
-
         }
         else if (actionType == MenuItemActionType::DisplayGraphics)
         {
-
             uint32_t activeItemId = getActiveId(menu);
             MenuItem* activeItem = getItemById(menu, activeItemId);
             historyStack.push(activeItem);
             const uint8_t *testBitmap = activeItem->getMenuItemProperties().bitmap[0];
-            uint16_t tW = activeItem->getMenuItemProperties().
-            displ.drawBitmap(0, 0, testBitmap, 16, 8, 1);
-
+            uint16_t tW = activeItem->getBitmapW();
+            uint16_t tH = activeItem->getBitmapH();
+            displ.drawBitmap(0, 0, testBitmap, tW, tH, 1);
         }
         else if (actionType == MenuItemActionType::RunProgram)
         {

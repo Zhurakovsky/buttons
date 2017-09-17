@@ -232,9 +232,7 @@ void MenuBuilder::buildButtonsFuncAssigned(const std::string &fileName, std::map
         {
             pinNumber |= (pullUpDown << 8);
         }
-
         mapButtonsFuncAssigned.emplace(std::make_pair(pinNumber, funcAssigned));
-
     }
 }
 

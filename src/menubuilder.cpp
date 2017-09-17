@@ -60,9 +60,9 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
               if (!getline( ss, s, ',' )) break;
               displayImageParts.push_back(s);
             }
-            std::string graphicFilename = trim(displayImageParts[0].c_str());
-            uint16_t bitmapW = (uint16_t)strtol(trim(displayImageParts[1].c_str()), NULL, 10);
-            uint16_t bitmapH = (uint16_t)strtol(trim(displayImageParts[2].c_str()), NULL, 10);
+            std::string graphicFilename = displayImageParts[0];
+            uint16_t bitmapW = (uint16_t)strtol(displayImageParts[1].c_str(), NULL, 10);
+            uint16_t bitmapH = (uint16_t)strtol(displayImageParts[2].c_str(), NULL, 10);
 
             miaprop.pathToGraphics = graphicFilename;
             miaprop.imageW = bitmapW;
@@ -70,7 +70,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
             graphicFilename.append(".h");
 
-            ifstream inputFile(graphicFilename.c_str());
+            std::ifstream inputFile(graphicFilename.c_str());
             std::vector<std::string> records;
             std::vector<uint8_t> bitmapper;
 

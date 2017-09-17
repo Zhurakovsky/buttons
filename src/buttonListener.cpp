@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <condition_variable>
 #include <cassert>
+#include <iostream>
 
 #define PIN RPI_GPIO_P1_15
 
@@ -20,6 +21,7 @@ ButtonListener::ButtonListener() :
     m_isRunning(false),
     m_isInit(false)
 {
+    std::cout << "Step 6" << std::endl;
 }
 
 ButtonListener::~ButtonListener()

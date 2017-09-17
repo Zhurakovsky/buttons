@@ -31,13 +31,18 @@ int main()
 {
     std::cout << "Step 1" << std::endl;
     ButtonListener bl;
+    std::cout << "Step 1.1" << std::endl;
     std::vector<MenuItem*> menu;
  //   std::stack<MenuItem*> historyStack;
+    std::cout << "Step 1.2" << std::endl;
     DisplayOled displ;
+    std::cout << "Step 1.3" << std::endl;
     displ.init();
+    std::cout << "Step 1.4" << std::endl;
 
     //Build menu
     MenuBuilder mBuilder;
+    std::cout << "Step 1.5" << std::endl;
     mBuilder.buildMenu(configFile, menu);
 std::cout << "Step 2" << std::endl;
     // Assign input GPIO PINS according to config

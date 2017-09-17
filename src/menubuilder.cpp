@@ -57,13 +57,20 @@ std::cout << "Step 8" << std::endl;
             std::cout << "Step 11" << std::endl;
             miat = MenuItemActionType::DisplayGraphics;
             std::string rawGraphicProperty = mps.itemActionParameter;
+
+            std::cout << "Step 11.01  rawGraphicProperty = " << rawGraphicProperty.c_str() << std::endl;
             std::vector<std::string> displayImageParts;
             std::istringstream ss(rawGraphicProperty);
             while (ss)
             {
-              std::string s;
+              std::cout << "Step 11.02" << std::endl;
+                std::string s;
               if (!getline( ss, s, ',' )) break;
               displayImageParts.push_back(s);
+            }
+            for (std::string myStr : displayImageParts)
+            {
+                std::cout << myStr << std::endl;
             }
             std::cout << "Step 11.1 graphicFilename.size == " << graphicFilename.size() << std::endl;
             std::string graphicFilename;

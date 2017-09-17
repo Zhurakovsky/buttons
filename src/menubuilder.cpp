@@ -61,8 +61,8 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
               displayImageParts.push_back(s);
             }
             std::string graphicFilename = trim(displayImageParts[0].c_str());
-            uint16 bitmapW = (uint16_t)strtol(trim(displayImageParts[1].c_str()), NULL, 10);
-            uint16 bitmapH = (uint16_t)strtol(trim(displayImageParts[2].c_str()), NULL, 10);
+            uint16_t bitmapW = (uint16_t)strtol(trim(displayImageParts[1].c_str()), NULL, 10);
+            uint16_t bitmapH = (uint16_t)strtol(trim(displayImageParts[2].c_str()), NULL, 10);
 
             miaprop.pathToGraphics = graphicFilename;
             miaprop.imageW = bitmapW;
@@ -86,7 +86,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                         continue;
                     }
 
-                    istringstream sss(line);
+                    std::istringstream sss(line);
 
                     while (sss)
                     {

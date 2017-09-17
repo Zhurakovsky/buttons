@@ -113,7 +113,10 @@ uint32_t MenuItem::getItemId() const
 
 uint8_t *MenuItem::getBitmapData()
 {
-    return getMenuItemProperties().bitmap.begin();
+
+    auto it = getMenuItemProperties().bitmap.begin();
+    uint8_t* tmp = const_cast<uint8_t*>(*it);
+    return tmp;
 }
 
 void MenuItem::setBitmapData(const uint8_t *bitmapData)

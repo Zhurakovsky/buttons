@@ -65,15 +65,28 @@ std::cout << "Step 8" << std::endl;
               if (!getline( ss, s, ',' )) break;
               displayImageParts.push_back(s);
             }
-            std::string graphicFilename = displayImageParts[0];
-            uint16_t bitmapW = (uint16_t)strtol(displayImageParts[1].c_str(), NULL, 10);
-            uint16_t bitmapH = (uint16_t)strtol(displayImageParts[2].c_str(), NULL, 10);
+            std::cout << "Step 11.1 graphicFilename.size == " << graphicFilename.size() << std::endl;
+            std::string graphicFilename;
+            if (graphicFilename.size() >= 3)
+            {
+            graphicFilename = displayImageParts[0];
+            uint16_t bitmapW = (uint16_t)atoi(displayImageParts[1].c_str());
+            uint16_t bitmapH = (uint16_t)atoi(displayImageParts[2].c_str());
 
             miaprop.pathToGraphics = graphicFilename;
             miaprop.imageW = bitmapW;
             miaprop.imageH = bitmapH;
+            }
+            else
+            {
+                std::cout << "Step 11.2 Return " << std::endl;
+                return;
+            }
+
+            std::cout << "Step 11.3" << std::endl;
 
             graphicFilename.append(".h");
+            std::cout << "Step 11.4 graphicFilename == " << graphicFilename.c_str() << std::endl;
 
             std::ifstream inputFile(graphicFilename.c_str());
             std::vector<std::string> records;

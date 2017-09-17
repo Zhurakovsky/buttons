@@ -92,7 +92,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                     {
                       std::string st;
                       if (!getline( sss, st, ',' )) break;
-                      records.push_back(const_cast<std::string>(trim(st.c_str())));
+                      records.push_back(st);
                     }
                 }
                 std::cout << "Loaded values:" << records.size() << std::endl;

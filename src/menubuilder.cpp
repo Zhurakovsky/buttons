@@ -12,11 +12,12 @@ namespace rpibuttons
 
 void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> &menu)
 {
+    std::cout << "Step 7" << std::endl;
     const std::string searchPattern = "M";
     std::vector<std::string> menuList;
     std::vector<menuParserString> menuItemParams;
     menuList = confParser.getConfigStrings(fileName, searchPattern);
-
+std::cout << "Step 8" << std::endl;
     for(auto it = menuList.begin(); it != menuList.end(); ++it )
     {
         std::string tmpString = *it;
@@ -38,18 +39,22 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
         MenuItemActionType miat;
         MenuItemActionProperties miaprop;
+
         if (mps.itemActionType == "MenuDropdown")
         {
+            std::cout << "Step 9" << std::endl;
             miat = MenuItemActionType::MenuDropdown;
             miaprop.childMenuId = mps.itemActionParameter;
         }
         else if (mps.itemActionType == "DisplayText")
         {
+            std::cout << "Step 10" << std::endl;
             miat = MenuItemActionType::DisplayText;
             miaprop.textToShow = mps.itemActionParameter;
         }
         else if (mps.itemActionType == "DisplayGraphics")
         {
+            std::cout << "Step 11" << std::endl;
             miat = MenuItemActionType::DisplayGraphics;
             std::string rawGraphicProperty = mps.itemActionParameter;
             std::vector<std::string> displayImageParts;
@@ -108,16 +113,20 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         }
         else if (mps.itemActionType == "PlayVideo")
         {
+
+            std::cout << "Step 13" << std::endl;
             miat = MenuItemActionType::PlayVideo;
             miaprop.pathToVideoFile = mps.itemActionParameter;
         }
         else if (mps.itemActionType == "RunProgram")
         {
+            std::cout << "Step 14" << std::endl;
             miat = MenuItemActionType::RunProgram;
             miaprop.pathToApplication = mps.itemActionParameter;
         }
         else if (mps.itemActionType == "ClearScreen")
         {
+            std::cout << "Step 15" << std::endl;
             miat = MenuItemActionType::ClearScreen;
             std::istringstream screenRectIss(mps.itemActionParameter);
             ScreenRect sr;
@@ -126,14 +135,16 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         }
         else
         {
+            std::cout << "Step 16" << std::endl;
             miat = MenuItemActionType::WrongActionType;
         }
 
          mi->setActionType(miat);
+         std::cout << "Step 17" << std::endl;
         mi->setMenuItemProperties(miaprop);
-
+std::cout << "Step 18" << std::endl;
         menu.push_back(mi);
-
+std::cout << "Step 19" << std::endl;
         //std::cout << "Created params for item " << mps.itemId << std::endl;
     }
     /*

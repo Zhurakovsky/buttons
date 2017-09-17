@@ -68,7 +68,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             miaprop.imageH = bitmapH;
 
             graphicFilename.append(".h");
-//*******
+
             ifstream inputFile(graphicFilename.c_str());
             std::vector<std::string> records;
             std::vector<uint8_t> bitmapper;
@@ -104,7 +104,6 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             inputFile.close();
             const uint8_t* pictureBitmap = bitmapper.data();
             miaprop.bitmap.emplace(miaprop.bitmap.end(), pictureBitmap);
-//***************
         }
         else if (mps.itemActionType == "PlayVideo")
         {

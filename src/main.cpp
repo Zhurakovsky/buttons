@@ -4,7 +4,7 @@
 #include "menuitem.hpp"
 #include "menubuilder.hpp"
 #include "displayoled.hpp"
-#include <stack>
+//#include <stack>
 #include <vector>
 #include <map>
 #include <iterator>
@@ -31,7 +31,7 @@ int main()
 {
     ButtonListener bl;
     std::vector<MenuItem*> menu;
-    std::stack<MenuItem*> historyStack;
+ //   std::stack<MenuItem*> historyStack;
     DisplayOled displ;
     displ.init();
 
@@ -52,7 +52,7 @@ int main()
         setNeighbourActive(menu, findDirection);
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
-        historyStack.push(activeItem);
+  //      historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
@@ -65,7 +65,7 @@ int main()
         setNeighbourActive(menu, findDirection);
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
-        historyStack.push(activeItem);
+   //     historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
@@ -78,7 +78,7 @@ int main()
         setNeighbourActive(menu, findDirection);
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
-        historyStack.push(activeItem);
+    //    historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.decreaseCurrentActivePosition(activeItemRow);
@@ -91,7 +91,7 @@ int main()
         setNeighbourActive(menu, findDirection);
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
-        historyStack.push(activeItem);
+     //   historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         //printMenuItemsRow(activeItemRow);
         displ.increaseCurrentActivePosition(activeItemRow);
@@ -102,7 +102,7 @@ int main()
         std::cout << "Button ENTER pressed" << std::endl;
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
-        historyStack.push(activeItem);
+      //  historyStack.push(activeItem);
         MenuItemActionType actionType = activeItem->getActionType();
         MenuItemActionProperties prop = activeItem->getMenuItemProperties();
 
@@ -115,7 +115,7 @@ int main()
         {
             uint32_t activeItemId = getActiveId(menu);
             MenuItem* activeItem = getItemById(menu, activeItemId);
-            historyStack.push(activeItem);
+      //      historyStack.push(activeItem);
             const uint8_t *testBitmap = activeItem->getMenuItemProperties().bitmap[0];
             uint16_t tW = activeItem->getBitmapW();
             uint16_t tH = activeItem->getBitmapH();
@@ -135,7 +135,7 @@ int main()
 
             MenuItem* activeItem = getItemById(menu, mId);
             activeItem->setActive(true);
-            historyStack.push(activeItem);
+      //      historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
             //printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();

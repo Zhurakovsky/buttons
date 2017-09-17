@@ -121,7 +121,7 @@ uint8_t *MenuItem::getBitmapData()
 
 void MenuItem::setBitmapData(const uint8_t *bitmapData)
 {
-    prop.bitmap.emplace(bitmap.end(), bitmapData);
+    prop.bitmap.emplace(prop.bitmap.end(), bitmapData);
 }
 
 uint16_t MenuItem::getBitmapW()

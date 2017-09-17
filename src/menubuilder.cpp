@@ -50,7 +50,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         else if (mps.itemActionType == "DisplayGraphics")
         {
             miat = MenuItemActionType::DisplayGraphics;
-            std:string rawGraphicProperty = mps.itemActionParameter;
+            std::string rawGraphicProperty = mps.itemActionParameter;
             std::vector<std::string> displayImageParts;
             istringstream ss(rawGraphicProperty);
             while (ss)

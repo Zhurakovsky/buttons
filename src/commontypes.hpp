@@ -117,6 +117,9 @@ struct MenuItemActionProperties
     std::string textToShow;
     ScreenRect rectToClear;
     std::string pathToGraphics;
+    std::vector<const uint8_t*>bitmap;
+    uint16_t imageW;
+    uint16_t imageH;
     std::string pathToVideoFile;
     std::string pathToApplication;
     void setScreenRect(const ScreenRect &sr)

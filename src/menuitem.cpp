@@ -111,4 +111,24 @@ uint32_t MenuItem::getItemId() const
     return itemId;
 }
 
+uint8_t *MenuItem::getBitmapData()
+{
+    return getMenuItemProperties().bitmap.begin();
+}
+
+void MenuItem::setBitmapData(const uint8_t *bitmapData)
+{
+    prop.bitmap.emplace(bitmap.end(), bitmapData);
+}
+
+uint16_t MenuItem::getBitmapW()
+{
+    return getMenuItemProperties().imageW;
+}
+
+uint16_t MenuItem::getBitmapH()
+{
+    return getMenuItemProperties().imageH;
+}
+
 }

@@ -116,9 +116,12 @@ int main()
         }
         else if (actionType == MenuItemActionType::DisplayGraphics)
         {
-            const unsigned char testBitmap [] = {
-            0xFF, 0xFE, 0x80, 0x02, 0xBF, 0xC3, 0xBF, 0xC3, 0xBF, 0xC3, 0xBF, 0xC3, 0x80, 0x02, 0xFF, 0xFE
-            };
+
+            uint32_t activeItemId = getActiveId(menu);
+            MenuItem* activeItem = getItemById(menu, activeItemId);
+            historyStack.push(activeItem);
+            const uint8_t *testBitmap = activeItem->getMenuItemProperties().bitmap[0];
+            uint16_t tW = activeItem->getMenuItemProperties().
             displ.drawBitmap(0, 0, testBitmap, 16, 8, 1);
 
         }

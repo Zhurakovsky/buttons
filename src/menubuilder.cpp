@@ -1,5 +1,6 @@
 #include "menubuilder.hpp"
 #include <sstream>
+#include <fstream>
 #include <vector>
 #include <iterator>
 #include <map>
@@ -49,7 +50,61 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         else if (mps.itemActionType == "DisplayGraphics")
         {
             miat = MenuItemActionType::DisplayGraphics;
-            miaprop.pathToGraphics = mps.itemActionParameter;
+            std:string rawGraphicProperty = mps.itemActionParameter;
+            std::vector<std::string> displayImageParts;
+            istringstream ss(rawGraphicProperty);
+            while (ss)
+            {
+              std::string s;
+              if (!getline( ss, s, ',' )) break;
+              displayImageParts.push_back(s);
+            }
+            std::string graphicFilename = trim(displayImageParts[0].c_str());
+            uint16 bitmapW = (uint16_t)strtol(trim(displayImageParts[1].c_str()), NULL, 10);
+            uint16 bitmapH = (uint16_t)strtol(trim(displayImageParts[2].c_str()), NULL, 10);
+
+            miaprop.pathToGraphics = graphicFilename;
+            miaprop.imageW = bitmapW;
+            miaprop.imageH = bitmapH;
+
+            graphicFilename.append(".h");
+//*******
+            ifstream inputFile(graphicFilename.c_str());
+            std::vector<std::string> records;
+            std::vector<uint8_t> bitmapper;
+
+            if (inputFile.is_open())
+            {
+                cout << "File open" << endl;
+                while (!inputFile.eof())
+                {
+                    std::string line;
+                    getline(inputFile, line);
+                    if (line[0] != '0')
+                    {
+                        continue;
+                    }
+
+                    istringstream sss(line);
+
+                    while (sss)
+                    {
+                      std::string st;
+                      if (!getline( sss, st, ',' )) break;
+                      records.push_back(const_cast<std::string>(trim(st.c_str())));
+                    }
+                }
+                cout << "Loaded values:" << records.size() << endl;
+                for(std::string line : records)
+                {
+                    uint8_t number = (uint8_t)strtol(line.c_str(), NULL, 0);
+                    bitmapper.push_back(number);
+                }
+            }
+            inputFile.close();
+            const uint8_t* pictureBitmap = bitmapper.data();
+            miaprop.bitmap.emplace(miaprop.bitmap.end(), pictureBitmap);
+//***************
         }
         else if (mps.itemActionType == "PlayVideo")
         {
@@ -263,5 +318,17 @@ void MenuBuilder::setRightItem(std::vector<MenuItem*> &menu, MenuItem *processed
             }
         }
     }
+}
+
+std::string MenuBuilder::trim(const std::string& str, const std::string& whitespace = " \t")
+{
+    const auto strBegin = str.find_first_not_of(whitespace);
+    if (strBegin == std::string::npos)
+        return ""; // no content
+
+    const auto strEnd = str.find_last_not_of(whitespace);
+    const auto strRange = strEnd - strBegin + 1;
+
+    return str.substr(strBegin, strRange);
 }
 }

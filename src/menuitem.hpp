@@ -3,7 +3,7 @@
 #include <iostream>
 #include "commontypes.hpp"
 #include <cinttypes>
-
+#include <vector>
 
 namespace rpibuttons
 {
@@ -41,6 +41,11 @@ public:
     void setItemName(const std::string& newName);
 
     uint32_t getItemId() const;
+
+    uint8_t *getBitmapData();
+    void  setBitmapData(const uint8_t * bitmapData);
+    uint16_t getBitmapW();
+    uint16_t getBitmapH();
 
 private:
     MenuItem* next;

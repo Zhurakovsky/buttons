@@ -105,7 +105,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             }
             std::cout << "Step 11.1 displayImageParts.size == " << displayImageParts.size() << std::endl;
             std::string graphicFilename;
-            if (graphicFilename.size() >= 3)
+            if (displayImageParts.size() >= 3)
             {
             graphicFilename = displayImageParts[0];
             std::string value1 = displayImageParts.at(1);
@@ -123,7 +123,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                 return;
             }
 
-            std::cout << "Step 11.3" << std::endl;
+            std::cout << "Step 11.3 Ok" << std::endl;
 
             graphicFilename.append(".h");
             std::cout << "Step 11.4 graphicFilename == " << graphicFilename.c_str() << std::endl;

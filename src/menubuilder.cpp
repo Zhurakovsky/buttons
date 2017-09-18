@@ -40,7 +40,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
          *
          */
         std::istringstream iss(tmpString);
-        std::istringstream issParams(paramString);
+        //std::istringstream issParams(paramString);
 
         menuParserString mps;
         std::string tmpM;
@@ -51,7 +51,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                 >> mps.rightItemId
                 >> mps.itemCaption
                 >> mps.itemActionType;
-        issParams >> mps.itemActionParameter;
+        mps.itemActionParameter = paramString;
         menuItemParams.push_back(mps);
         MenuItem *mi = new MenuItem(mps.itemId);
         mi->setItemName(mps.itemCaption);

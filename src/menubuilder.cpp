@@ -27,7 +27,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         std::string tmpString = *it;
         std::size_t foundFirst = tmpString.find_first_of("\"");
         std::size_t foundLast = tmpString.find_last_of("\"");
-        std::string paramString = tmpString.substr(foundFirst, (foundLast - foundFirst));
+        std::string paramString = tmpString.substr(foundFirst + 1, (foundLast - foundFirst));
         tmpString = tmpString.substr(0, (foundFirst-1));
 
         std::cout << "Param String: " << paramString.c_str() << std::endl;
@@ -52,7 +52,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                 >> mps.itemCaption
                 >> mps.itemActionType;
         std::cout << " aaaaaaaaaaaaa Param string:" << paramString.c_str()  << std::endl;
-        mps.itemActionParameter = paramString;
+        mps.itemActionParameter.append(paramString);
         menuItemParams.push_back(mps);
         MenuItem *mi = new MenuItem(mps.itemId);
         mi->setItemName(mps.itemCaption);

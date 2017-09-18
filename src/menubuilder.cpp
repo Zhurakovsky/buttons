@@ -81,7 +81,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             {
               std::cout << "Step 11.02" << std::endl;
                 std::string s;
-              if (!getline( ss, s, ',' )) break;
+              if (!getline( ss, s, ':' )) break;
               displayImageParts.push_back(s);
             }
             for (std::string myStr : displayImageParts)

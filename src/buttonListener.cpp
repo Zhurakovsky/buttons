@@ -21,7 +21,7 @@ ButtonListener::ButtonListener() :
     m_isRunning(false),
     m_isInit(false)
 {
-    std::cout << "Step 6" << std::endl;
+
 }
 
 ButtonListener::~ButtonListener()

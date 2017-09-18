@@ -12,12 +12,16 @@ namespace rpibuttons
 
 void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> &menu)
 {
-    std::cout << "Step 7" << std::endl;
     const std::string searchPattern = "M";
     std::vector<std::string> menuList;
     std::vector<menuParserString> menuItemParams;
     menuList = confParser.getConfigStrings(fileName, searchPattern);
-std::cout << "Step 8" << std::endl;
+    std::cout << "Read from config:" << std::endl;
+    for (std::string listItem : menuList)
+    {
+        std::cout << listItem.c_str() << std::endl;
+    }
+
     for(auto it = menuList.begin(); it != menuList.end(); ++it )
     {
         std::string tmpString = *it;
@@ -37,29 +41,41 @@ std::cout << "Step 8" << std::endl;
         MenuItem *mi = new MenuItem(mps.itemId);
         mi->setItemName(mps.itemCaption);
 
+
+        std::cout << "Parsed item parameters:" << std::endl;
+        std::cout << "itemId:" << mps.itemId << std::endl;
+        std::cout << "parentId:" << mps.parentId << std::endl;
+        std::cout << "leftId:" << mps.leftItemId << std::endl;
+        std::cout << "rightId:" << mps.rightItemId << std::endl;
+
+        std::cout << "Caption:" << mps.itemCaption.c_str() << std::endl;
+        std::cout << "ActionType:" << mps.itemActionType.c_str() << std::endl;
+        std::cout << "Action parameter:" << mps.itemActionParameter.c_str() << std::endl;
+
+
         MenuItemActionType miat;
         MenuItemActionProperties miaprop;
 
         if (mps.itemActionType == "MenuDropdown")
         {
-            std::cout << "Step 9" << std::endl;
+
             miat = MenuItemActionType::MenuDropdown;
             miaprop.childMenuId = mps.itemActionParameter;
         }
         else if (mps.itemActionType == "DisplayText")
         {
-            std::cout << "Step 10" << std::endl;
             miat = MenuItemActionType::DisplayText;
             miaprop.textToShow = mps.itemActionParameter;
         }
         else if (mps.itemActionType == "DisplayGraphics")
         {
-            std::cout << "Step 11" << std::endl;
             miat = MenuItemActionType::DisplayGraphics;
             std::string rawGraphicProperty = mps.itemActionParameter;
 
             std::cout << "Step 11.01  rawGraphicProperty = " << rawGraphicProperty.c_str() << std::endl;
+
             std::vector<std::string> displayImageParts;
+
             std::istringstream ss(rawGraphicProperty);
             while (ss)
             {

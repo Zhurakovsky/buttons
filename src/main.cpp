@@ -29,28 +29,21 @@ std::vector<MenuItem*> getItemsRow(MenuItem *baseItem);
 
 int main()
 {
-    std::cout << "Step 1" << std::endl;
     ButtonListener bl;
-    std::cout << "Step 1.1" << std::endl;
     std::vector<MenuItem*> menu;
  //   std::stack<MenuItem*> historyStack;
-    std::cout << "Step 1.2" << std::endl;
     DisplayOled displ;
-    std::cout << "Step 1.3" << std::endl;
     displ.init();
-    std::cout << "Step 1.4" << std::endl;
 
     //Build menu
     MenuBuilder mBuilder;
-    std::cout << "Step 1.5" << std::endl;
     mBuilder.buildMenu(configFile, menu);
-std::cout << "Step 2" << std::endl;
+    printMenu(menu);
     // Assign input GPIO PINS according to config
     // First argument - phisically pin number on RPi
     // Secong - bcm2835 shift value
     std::map<int, int> mapPinGpio;
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
-std::cout << "Step 3" << std::endl;
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
@@ -60,7 +53,7 @@ std::cout << "Step 3" << std::endl;
         MenuItem* activeItem = getItemById(menu, activeItemId);
   //      historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        //printMenuItemsRow(activeItemRow);
+        printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
         displ.printMenuList(activeItemRow);
     };
@@ -73,7 +66,7 @@ std::cout << "Step 3" << std::endl;
         MenuItem* activeItem = getItemById(menu, activeItemId);
    //     historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        //printMenuItemsRow(activeItemRow);
+        printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
         displ.printMenuList(activeItemRow);
      };
@@ -86,7 +79,7 @@ std::cout << "Step 3" << std::endl;
         MenuItem* activeItem = getItemById(menu, activeItemId);
     //    historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        //printMenuItemsRow(activeItemRow);
+        printMenuItemsRow(activeItemRow);
         displ.decreaseCurrentActivePosition(activeItemRow);
         displ.printMenuList(activeItemRow);
     };
@@ -99,7 +92,7 @@ std::cout << "Step 3" << std::endl;
         MenuItem* activeItem = getItemById(menu, activeItemId);
      //   historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        //printMenuItemsRow(activeItemRow);
+        printMenuItemsRow(activeItemRow);
         displ.increaseCurrentActivePosition(activeItemRow);
         displ.printMenuList(activeItemRow);
     };
@@ -119,13 +112,21 @@ std::cout << "Step 3" << std::endl;
         }
         else if (actionType == MenuItemActionType::DisplayGraphics)
         {
-            uint32_t activeItemId = getActiveId(menu);
-            MenuItem* activeItem = getItemById(menu, activeItemId);
+            //uint32_t activeItemId = getActiveId(menu);
+            //MenuItem* activeItem = getItemById(menu, activeItemId);
       //      historyStack.push(activeItem);
-            const uint8_t *testBitmap = activeItem->getMenuItemProperties().bitmap[0];
-            uint16_t tW = activeItem->getBitmapW();
-            uint16_t tH = activeItem->getBitmapH();
-            displ.drawBitmap(0, 0, testBitmap, tW, tH, 1);
+            auto itrtr = prop.bitmap.begin();
+            if (itrtr != prop.bitmap.end())
+            {
+                const uint8_t *testBitmap = *itrtr;
+                uint16_t tW = prop.imageW;
+                uint16_t tH = prop.imageH;
+                std::cout << "Going to print bitmap size = "
+                          << prop.bitmap.size()
+                          << " W = " << tW
+                          << " H = " << th << std::endl;
+                displ.drawBitmap(0, 0, testBitmap, tW, tH, 1);
+            }
         }
         else if (actionType == MenuItemActionType::RunProgram)
         {
@@ -137,13 +138,13 @@ std::cout << "Step 3" << std::endl;
         }
         else if (actionType == MenuItemActionType::MenuDropdown)
         {
-            uint32_t mId = (uint32_t)strtol(prop.childMenuId.c_str(), NULL, 10);
+            uint32_t mId = (uint32_t)atoi(prop.childMenuId.c_str());
 
             MenuItem* activeItem = getItemById(menu, mId);
             activeItem->setActive(true);
       //      historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-            //printMenuItemsRow(activeItemRow);
+            printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();
             displ.printMenuList(activeItemRow);
         }
@@ -176,7 +177,6 @@ std::cout << "Step 3" << std::endl;
 
     std::map<int, std::string> mapButtonsFuncAssigned;
     mBuilder.buildButtonsFuncAssigned(configFile, mapButtonsFuncAssigned);
-std::cout << "Step 4" << std::endl;
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
     {
         uint32_t pinAssigned = it->first;
@@ -236,7 +236,6 @@ std::cout << "Step 4" << std::endl;
     }
 
     bl.run();
-std::cout << "Step 5" << std::endl;
     while(1)
     {
         char c = getchar();

@@ -25,7 +25,22 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
     for(auto it = menuList.begin(); it != menuList.end(); ++it )
     {
         std::string tmpString = *it;
+        std::size_t foundFirst = tmpString.find_first_of("\"");
+        std::size_t foundLast = tmpString.find_last_of("\"");
+        std::string paramString = tmpString.substr(foundFirst, (foundLast - foundFirst));
+        tmpString = tmpString.substr(0, (foundFirst-1));
+
+        std::cout << "Param String: " << paramString.c_str() << std::endl;
+        std::cout << "Work String: " << tmpString.c_str() << std::endl;
+        /*
+         *
+  std::size_t found = str.find_last_of("/\\");
+  std::cout << " path: " << str.substr(0,found) << '\n';
+  std::cout << " file: " << str.substr(found+1) << '\n';
+         *
+         */
         std::istringstream iss(tmpString);
+        std::istringstream issParams(paramString);
 
         menuParserString mps;
         std::string tmpM;
@@ -35,8 +50,8 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                 >> mps.leftItemId
                 >> mps.rightItemId
                 >> mps.itemCaption
-                >> mps.itemActionType
-                >> mps.itemActionParameter;
+                >> mps.itemActionType;
+        issParams >> mps.itemActionParameter;
         menuItemParams.push_back(mps);
         MenuItem *mi = new MenuItem(mps.itemId);
         mi->setItemName(mps.itemCaption);
@@ -58,7 +73,6 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
         if (mps.itemActionType == "MenuDropdown")
         {
-
             miat = MenuItemActionType::MenuDropdown;
             miaprop.childMenuId = mps.itemActionParameter;
         }
@@ -81,7 +95,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             {
               std::cout << "Step 11.02" << std::endl;
                 std::string s;
-              if (!getline( ss, s, ':' )) break;
+              if (!getline( ss, s, ',' )) break;
               displayImageParts.push_back(s);
             }
             for (std::string myStr : displayImageParts)

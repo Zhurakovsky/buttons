@@ -27,7 +27,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         std::string tmpString = *it;
         std::size_t foundFirst = tmpString.find_first_of("\"");
         std::size_t foundLast = tmpString.find_last_of("\"");
-        std::string paramString = tmpString.substr(foundFirst + 1, (foundLast - foundFirst));
+        std::string paramString = tmpString.substr(foundFirst + 1, (foundLast - foundFirst - 1));
         tmpString = tmpString.substr(0, (foundFirst-1));
 
         std::cout << "Param String: " << paramString.c_str() << std::endl;

@@ -149,20 +149,16 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         }
         else if (mps.itemActionType == "PlayVideo")
         {
-
-            std::cout << "Step 13" << std::endl;
             miat = MenuItemActionType::PlayVideo;
             miaprop.pathToVideoFile = mps.itemActionParameter;
         }
         else if (mps.itemActionType == "RunProgram")
         {
-            std::cout << "Step 14" << std::endl;
             miat = MenuItemActionType::RunProgram;
             miaprop.pathToApplication = mps.itemActionParameter;
         }
         else if (mps.itemActionType == "ClearScreen")
         {
-            std::cout << "Step 15" << std::endl;
             miat = MenuItemActionType::ClearScreen;
             std::istringstream screenRectIss(mps.itemActionParameter);
             ScreenRect sr;
@@ -171,16 +167,12 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         }
         else
         {
-            std::cout << "Step 16" << std::endl;
             miat = MenuItemActionType::WrongActionType;
         }
 
-         mi->setActionType(miat);
-         std::cout << "Step 17" << std::endl;
+        mi->setActionType(miat);
         mi->setMenuItemProperties(miaprop);
-std::cout << "Step 18" << std::endl;
         menu.push_back(mi);
-std::cout << "Step 19" << std::endl;
         //std::cout << "Created params for item " << mps.itemId << std::endl;
     }
     /*

@@ -124,7 +124,7 @@ int main()
                 std::cout << "Going to print bitmap size = "
                           << prop.bitmap.size()
                           << " W = " << tW
-                          << " H = " << th << std::endl;
+                          << " H = " << tH << std::endl;
                 displ.drawBitmap(0, 0, testBitmap, tW, tH, 1);
             }
         }

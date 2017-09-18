@@ -51,6 +51,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                 >> mps.rightItemId
                 >> mps.itemCaption
                 >> mps.itemActionType;
+        std::cout << " aaaaaaaaaaaaa Param string:" << paramString.c_str()  << std::endl;
         mps.itemActionParameter = paramString;
         menuItemParams.push_back(mps);
         MenuItem *mi = new MenuItem(mps.itemId);
@@ -107,8 +108,10 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             if (graphicFilename.size() >= 3)
             {
             graphicFilename = displayImageParts[0];
-            uint16_t bitmapW = (uint16_t)atoi(displayImageParts[1].c_str());
-            uint16_t bitmapH = (uint16_t)atoi(displayImageParts[2].c_str());
+            std::string value1 = displayImageParts.at(1);
+            std::string value2 = displayImageParts.at(2);
+            uint16_t bitmapW = (uint16_t)std::stoi(value1, nullptr, 10);
+            uint16_t bitmapH = (uint16_t)std::stoi(value2, nullptr, 10);
 
             miaprop.pathToGraphics = graphicFilename;
             miaprop.imageW = bitmapW;

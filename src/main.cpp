@@ -236,6 +236,13 @@ int main()
     }
 
     bl.run();
+    uint32_t actItemId = getActiveId(menu);
+    MenuItem* acItem = getItemById(menu, actItemId);
+ //   historyStack.push(activeItem);
+    std::vector<MenuItem*> acItemRow = getItemsRow(acItem);
+    //printMenuItemsRow(activeItemRow);
+    displ.resetCurrentActivePosition();
+    displ.printMenuList(acItemRow);
     while(1)
     {
         char c = getchar();

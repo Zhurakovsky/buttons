@@ -32,15 +32,8 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
         std::cout << "Param String: " << paramString.c_str() << std::endl;
         std::cout << "Work String: " << tmpString.c_str() << std::endl;
-        /*
-         *
-  std::size_t found = str.find_last_of("/\\");
-  std::cout << " path: " << str.substr(0,found) << '\n';
-  std::cout << " file: " << str.substr(found+1) << '\n';
-         *
-         */
+
         std::istringstream iss(tmpString);
-        //std::istringstream issParams(paramString);
 
         menuParserString mps;
         std::string tmpM;
@@ -105,17 +98,18 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             }
             std::cout << "Step 11.1 displayImageParts.size == " << displayImageParts.size() << std::endl;
             std::string graphicFilename;
-            if (displayImageParts.size() >= 3)
-            {
-            graphicFilename = displayImageParts[0];
-            std::string value1 = displayImageParts.at(1);
-            std::string value2 = displayImageParts.at(2);
-            uint16_t bitmapW = (uint16_t)std::stoi(value1, nullptr, 10);
-            uint16_t bitmapH = (uint16_t)std::stoi(value2, nullptr, 10);
 
-            miaprop.pathToGraphics = graphicFilename;
-            miaprop.imageW = bitmapW;
-            miaprop.imageH = bitmapH;
+            if (displayImageParts.size() == 3)
+            {
+                graphicFilename = displayImageParts[0];
+                std::string value1 = displayImageParts.at(1);
+                std::string value2 = displayImageParts.at(2);
+                uint16_t bitmapW = (uint16_t)std::stoi(value1, nullptr, 10);
+                uint16_t bitmapH = (uint16_t)std::stoi(value2, nullptr, 10);
+
+                miaprop.pathToGraphics = graphicFilename;
+                miaprop.imageW = bitmapW;
+                miaprop.imageH = bitmapH;
             }
             else
             {
@@ -159,10 +153,15 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                     uint8_t number = (uint8_t)strtol(line.c_str(), NULL, 0);
                     bitmapper.push_back(number);
                 }
+                inputFile.close();
             }
-            inputFile.close();
+            else
+            {
+                std::cout << "Outer bitmap file " << graphicFilename.c_str() << " open ERROR" << std::endl;
+            }
+            std::cout << "Vector bitmapper has  " << bitmapper.size() << " enties" << std::endl;
             const uint8_t* pictureBitmap = bitmapper.data();
-            miaprop.bitmap.emplace(miaprop.bitmap.end(), pictureBitmap);
+            miaprop.bitmap.emplace(miaprop.bitmap.begin(), pictureBitmap);
         }
         else if (mps.itemActionType == "PlayVideo")
         {

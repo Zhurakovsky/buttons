@@ -19,6 +19,24 @@ const std::string configFile = "config.txt";
 using namespace std;
 using namespace rpibuttons;
 
+static const unsigned char example_bmp[] =
+{ B00000000, B11000000,
+  B00000001, B11000000,
+  B00000001, B11000000,
+  B00000011, B11100000,
+  B11110011, B11100000,
+  B11111110, B11111000,
+  B01111110, B11111111,
+  B00110011, B10011111,
+  B00011111, B11111100,
+  B00001101, B01110000,
+  B00011011, B10100000,
+  B00111111, B11100000,
+  B00111111, B11110000,
+  B01111100, B11110000,
+  B01110000, B01110000,
+B00000000, B00110000 };
+
 void printMenu(const std::vector<MenuItem*> &menu);
 void printMenuItemsRow(const std::vector<MenuItem*> &menuItems);
 uint32_t getActiveId(const std::vector<MenuItem*> &menu);
@@ -27,6 +45,7 @@ void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirect
 MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId);
 std::vector<MenuItem*> getItemsRow(MenuItem *baseItem);
 
+
 int main()
 {
     ButtonListener bl;
@@ -34,7 +53,7 @@ int main()
  //   std::stack<MenuItem*> historyStack;
     DisplayOled displ;
     displ.init();
-
+    std::atomic<bool> bShowImage = false;
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
@@ -118,15 +137,20 @@ int main()
             auto itrtr = prop.bitmap.begin();
             if (itrtr != prop.bitmap.end())
             {
-                const uint8_t *testBitmap = *itrtr;
+                //const uint8_t *testBitmap = *itrtr;
                 uint16_t tW = prop.imageW;
                 uint16_t tH = prop.imageH;
                 std::cout << "Going to print bitmap size = "
                           << prop.bitmap.size()
                           << " W = " << tW
                           << " H = " << tH << std::endl;
-                displ.drawBitmap(0, 0, testBitmap, tW, tH, 1);
+                //displ.drawBitmap(0, 0, example_bmp, tW, tH, 1);
+
             }
+            displ.drawBitmap(56, 24, example_bmp, 16, 16, 1);
+            bShowImage = true;
+            while(bShowImage)
+            {}
         }
         else if (actionType == MenuItemActionType::RunProgram)
         {
@@ -152,6 +176,19 @@ int main()
     std::function<void()> callbackButtonEsc = [&]()
     {
         std::cout << "Button ESC pressed" << std::endl;
+        if (bShowImage == true)
+        {
+            bShowImage = false;
+        }
+
+        std::cout << "Go to print menu" << std::endl;
+        uint32_t activeItemId = getActiveId(menu);
+        MenuItem* activeItem = getItemById(menu, activeItemId);
+        //historyStack.push(activeItem);
+        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+        //printMenuItemsRow(activeItemRow);
+        displ.resetCurrentActivePosition();
+        displ.printMenuList(activeItemRow);
         /*
         if(!historyStack.empty())
         {

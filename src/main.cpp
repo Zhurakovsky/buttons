@@ -74,7 +74,7 @@ int main()
  //   std::stack<MenuItem*> historyStack;
     DisplayOled displ;
     displ.init();
-    std::atomic<bool> bShowImage = false;
+    bool bShowImage = false;
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);

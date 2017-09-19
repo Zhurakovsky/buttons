@@ -154,10 +154,10 @@ int main()
                           << i
                           << " W = " << tW
                           << " H = " << tH << std::endl;
-                //displ.drawBitmap(0, 0, testBitmap, tW, tH, 1);
+                displ.drawBitmap(0, 0, testBitmap, tW, tH, 1);
 
 
-            displ.drawBitmap(43, 7, example_bmp, 42, 50, 1);
+            //displ.drawBitmap(43, 7, example_bmp, 42, 50, 1);
 
         }
         else if (actionType == MenuItemActionType::RunProgram)

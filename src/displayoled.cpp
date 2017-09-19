@@ -178,42 +178,46 @@ void DisplayOled::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_
 {
 
 
-    uint8_t icons[NUMFLAKES][3];
-    srandom(666);     // whatever seed
-    (void)bitmap;
+//    uint8_t icons[NUMFLAKES][3];
+//    srandom(666);     // whatever seed
+    //(void)bitmap;
 
     // initialize
-    for (uint8_t f=0; f< NUMFLAKES; f++) {
-      icons[f][XPOS] = random() % display.width();
-      icons[f][YPOS] = 0;
-      icons[f][DELAY] = random() % 5 + 1;
+//    for (uint8_t f=0; f< NUMFLAKES; f++) {
+//      icons[f][XPOS] = random() % display.width();
+//      icons[f][YPOS] = 0;
+//      icons[f][DELAY] = random() % 5 + 1;
 
-      printf("x: %d", icons[f][XPOS]);
-      printf("y: %d", icons[f][YPOS]);
-      printf("dy: %d\n", icons[f][DELAY]);
-    }
+//      printf("x: %d", icons[f][XPOS]);
+//      printf("y: %d", icons[f][YPOS]);
+//      printf("dy: %d\n", icons[f][DELAY]);
+//    }
+    display.fillScreen(0);
+    display.drawBitmap(x, y, bitmap, w, h, 1);
+    display.display();
+    //while (1) {
 
-    while (1) {
+
+        //usleep(100000);
       // draw each icon
-      for (uint8_t f=0; f< NUMFLAKES; f++) {
-        display.drawBitmap(icons[f][XPOS], icons[f][YPOS], logo_bmp, w, h, WHITE);
-      }
-      display.display();
-      usleep(100000);
+//      for (uint8_t f=0; f< NUMFLAKES; f++) {
+
+//      }
+
 
       // then erase it + move it
-      for (uint8_t f=0; f< NUMFLAKES; f++) {
-        display.drawBitmap(icons[f][XPOS], icons[f][YPOS],  logo_bmp, w, h, BLACK);
-        // move it
-        icons[f][YPOS] += icons[f][DELAY];
-        // if its gone, reinit
-        if (icons[f][YPOS] > display.height()) {
-      icons[f][XPOS] = random() % display.width();
-      icons[f][YPOS] = 0;
-      icons[f][DELAY] = random() % 5 + 1;
-        }
-      }
-     }
+//      for (uint8_t f=0; f< NUMFLAKES; f++) {
+//        display.drawBitmap(icons[f][XPOS], icons[f][YPOS],  logo_bmp, w, h, BLACK);
+//        // move it
+//        icons[f][YPOS] += icons[f][DELAY];
+//        // if its gone, reinit
+//        if (icons[f][YPOS] > display.height()) {
+//      icons[f][XPOS] = random() % display.width();
+//      icons[f][YPOS] = 0;
+//      icons[f][DELAY] = random() % 5 + 1;
+//        }
+//      }
+     //}
 }
 
 void DisplayOled::clear()

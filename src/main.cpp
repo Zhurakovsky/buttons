@@ -165,10 +165,10 @@ int main()
                           << prop.bitmap.size()
                           << " W = " << tW
                           << " H = " << tH << std::endl;
-                //displ.drawBitmap(0, 0, example_bmp, tW, tH, 1);
+                displ.drawBitmap(0, 0, example_bmp, tW, tH, 1);
 
             }
-            displ.drawBitmap(56, 24, example_bmp, 10, 10, 1);
+            //displ.drawBitmap(56, 24, example_bmp, 10, 10, 1);
 
         }
         else if (actionType == MenuItemActionType::RunProgram)

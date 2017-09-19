@@ -155,19 +155,23 @@ int main()
             //uint32_t activeItemId = getActiveId(menu);
             //MenuItem* activeItem = getItemById(menu, activeItemId);
       //      historyStack.push(activeItem);
-            auto itrtr = prop.bitmap.begin();
-            if (itrtr != prop.bitmap.end())
-            {
-                const uint8_t *testBitmap = *itrtr;
+            std::vector<const uint8_t*>tmpBitmap = prop.bitmap;
+
+
+
+                const uint8_t *testBitmap = tmpBitmap[0];
+                int i = 0;
+                fot (; testBitmap[i] != '\0'; i++);
+
                 uint16_t tW = prop.imageW;
                 uint16_t tH = prop.imageH;
                 std::cout << "Going to print bitmap size = "
-                          << prop.bitmap.size()
+                          << i
                           << " W = " << tW
                           << " H = " << tH << std::endl;
                 displ.drawBitmap(0, 0, testBitmap, tW, tH, 1);
 
-            }
+
             //displ.drawBitmap(56, 24, example_bmp, 10, 10, 1);
 
         }

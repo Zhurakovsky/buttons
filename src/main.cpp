@@ -17,8 +17,8 @@
 const std::string configFile = "config.txt";
 
 using namespace std;
-namespace rpibuttons
-{
+using namespace rpibuttons;
+
 const unsigned char example_bmp[] =
 { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -534,4 +534,4 @@ void printMenuItemsRow(const std::vector<MenuItem*> &menuItems)
         }
     }
 }
-}
+

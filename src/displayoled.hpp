@@ -23,7 +23,7 @@ namespace rpibuttons
 #define LOGO16_GLCD_HEIGHT 16
 #define LOGO16_GLCD_WIDTH  16
 
-const unsigned char logo_bmp[] =
+static const unsigned char logo_bmp[] =
 { 0b00000000, 0b11000000,
   0b00000001, 0b11000000,
   0b00000001, 0b11000000,

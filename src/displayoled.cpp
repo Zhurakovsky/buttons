@@ -178,6 +178,7 @@ void DisplayOled::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_
 {
     uint8_t icons[NUMFLAKES][3];
     srandom(666);     // whatever seed
+    (void)bitmap;
 
     // initialize
     for (uint8_t f=0; f< NUMFLAKES; f++) {
@@ -193,7 +194,7 @@ void DisplayOled::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_
     while (1) {
       // draw each icon
       for (uint8_t f=0; f< NUMFLAKES; f++) {
-        display.drawBitmap(icons[f][XPOS], icons[f][YPOS], logo16_glcd_bmp, w, h, WHITE);
+        display.drawBitmap(icons[f][XPOS], icons[f][YPOS], logo_bmp, w, h, WHITE);
       }
       display.display();
       usleep(100000/sleep_divisor);

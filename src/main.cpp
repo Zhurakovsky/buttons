@@ -19,7 +19,7 @@ const std::string configFile = "config.txt";
 using namespace std;
 using namespace rpibuttons;
 
-static const unsigned char example_bmp[] =
+const unsigned char example_bmp[] =
 { 0x00,0x00,0x00,0x00,0x00,0x00,0x00,
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,
   0x00,0x00,0x00,0x00,0x00,0x00,0x00,
@@ -74,7 +74,7 @@ int main()
  //   std::stack<MenuItem*> historyStack;
     DisplayOled displ;
     displ.init();
-    bool bShowImage = false;
+
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
@@ -169,9 +169,7 @@ int main()
 
             }
             displ.drawBitmap(56, 24, example_bmp, 16, 16, 1);
-            bShowImage = true;
-            while(bShowImage)
-            {}
+
         }
         else if (actionType == MenuItemActionType::RunProgram)
         {
@@ -197,10 +195,7 @@ int main()
     std::function<void()> callbackButtonEsc = [&]()
     {
         std::cout << "Button ESC pressed" << std::endl;
-        if (bShowImage == true)
-        {
-            bShowImage = false;
-        }
+
 
         std::cout << "Go to print menu" << std::endl;
         uint32_t activeItemId = getActiveId(menu);

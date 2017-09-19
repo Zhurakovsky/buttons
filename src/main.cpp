@@ -158,14 +158,14 @@ int main()
             auto itrtr = prop.bitmap.begin();
             if (itrtr != prop.bitmap.end())
             {
-                //const uint8_t *testBitmap = *itrtr;
+                const uint8_t *testBitmap = *itrtr;
                 uint16_t tW = prop.imageW;
                 uint16_t tH = prop.imageH;
                 std::cout << "Going to print bitmap size = "
                           << prop.bitmap.size()
                           << " W = " << tW
                           << " H = " << tH << std::endl;
-                displ.drawBitmap(0, 0, example_bmp, tW, tH, 1);
+                displ.drawBitmap(0, 0, testBitmap, tW, tH, 1);
 
             }
             //displ.drawBitmap(56, 24, example_bmp, 10, 10, 1);

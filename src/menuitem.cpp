@@ -119,10 +119,10 @@ uint32_t MenuItem::getItemId() const
 //    return tmp;
 //}
 
-void MenuItem::setBitmapData(const uint8_t *bitmapData)
-{
-    prop.bitmap.emplace(prop.bitmap.end(), bitmapData);
-}
+//void MenuItem::setBitmapData(const uint8_t *bitmapData)
+//{
+//    prop.bitmap.emplace(prop.bitmap.end(), bitmapData);
+//}
 
 uint16_t MenuItem::getBitmapW()
 {

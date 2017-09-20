@@ -117,10 +117,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                 return;
             }
 
-            std::cout << "Step 11.3 Ok" << std::endl;
-
             graphicFilename.append(".h");
-            std::cout << "Step 11.4 graphicFilename == " << graphicFilename.c_str() << std::endl;
 
             std::ifstream inputFile(graphicFilename.c_str());
             std::vector<std::string> records;
@@ -160,8 +157,11 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                 std::cout << "Outer bitmap file " << graphicFilename.c_str() << " open ERROR" << std::endl;
             }
             std::cout << "Vector bitmapper has  " << bitmapper.size() << " enties" << std::endl;
-            const uint8_t* pictureBitmap = bitmapper.data();
-            miaprop.bitmap.emplace(miaprop.bitmap.begin(), pictureBitmap);
+            //const uint8_t* pictureBitmap = bitmapper.data();
+            for (uint8_t bm : bitmapper)
+            {
+                miaprop.bitmap.push_back(bm);
+            }
         }
         else if (mps.itemActionType == "PlayVideo")
         {

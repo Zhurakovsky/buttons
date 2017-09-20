@@ -223,12 +223,14 @@ void DisplayOled::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_
 void DisplayOled::clear()
 {
     display.fillScreen(0);
+    display.display();
 }
 
 void DisplayOled::printText(const std::string &textToPrint)
 {
     display.setTextWrap(true);
     display.print(textToPrint.c_str());
+    display.display();
 }
 
 }

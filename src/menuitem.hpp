@@ -42,7 +42,7 @@ public:
 
     uint32_t getItemId() const;
 
-    uint8_t *getBitmapData();
+    //uint8_t *getBitmapData();
     void  setBitmapData(const uint8_t * bitmapData);
     uint16_t getBitmapW();
     uint16_t getBitmapH();

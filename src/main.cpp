@@ -149,8 +149,8 @@ int main()
 
                 uint16_t tW = prop.imageW;
                 uint16_t tH = prop.imageH;
-                uint8_t bitmapData* = new uint8_t[tW * tH +1]
-                uint8_t bitmapData* = prop.bitmap.data();
+                uint8_t* bitmapData = new uint8_t[tW * tH +1];
+                bitmapData = prop.bitmap.data();
                 std::cout << "Going to print bitmap size "
                           << " W = " << tW
                           << " H = " << tH << std::endl;

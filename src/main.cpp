@@ -143,13 +143,14 @@ int main()
 
             //std::vector<const uint8_t>tmpBitmap(prop.bitmap);
 
-            uint8_t bitmapData* = prop.bitmap.data();
             //const uint8_t *testBitmap = tmpBitmap[0];
             //int i = 0;
             //for (; testBitmap[i] != '\0'; i++);
 
                 uint16_t tW = prop.imageW;
                 uint16_t tH = prop.imageH;
+                uint8_t bitmapData* = new uint8_t[tW * tH +1]
+                uint8_t bitmapData* = prop.bitmap.data();
                 std::cout << "Going to print bitmap size "
                           << " W = " << tW
                           << " H = " << tH << std::endl;

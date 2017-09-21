@@ -209,7 +209,6 @@ void DisplayOled::drawBitmap(int16_t shift_x, int16_t shift_y)
     clear();
     display.drawBitmap(m_x, m_y, bitmapData, m_w, m_h, m_color);
     display.display();
-    delete bitmapData;
 }
 
 void DisplayOled::clear()
@@ -220,7 +219,7 @@ void DisplayOled::clear()
 
 void DisplayOled::printText(const std::string &textToPrint)
 {
-    display.clear();
+    clear();
     display.setTextSize(m_textSize);
     display.setTextColor(WHITE);
     display.setCursor(0,0);

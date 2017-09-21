@@ -154,7 +154,6 @@ int main()
                       << " W = " << tW
                       << " H = " << tH << std::endl;
             displ.drawBitmap((128 - tW)/2, (64 - tH)/2, bitmapData, tW, tH, 1);
-            delete bitmapData;
         }
         else if (actionType == MenuItemActionType::RunProgram)
         {

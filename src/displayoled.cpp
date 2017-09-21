@@ -182,7 +182,8 @@ void DisplayOled::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_
     int bitmapPixels = x * y;
     for (int i = 0; i < bitmapPixels; i++)
     {
-        m_pictureBitmap.push_back(bitmap[i]);
+        uint8_t tmpChar = bitmap[i];
+        m_pictureBitmap.push_back(tmpChar);
     }
     m_w = w;
     m_h = h;
@@ -206,6 +207,7 @@ void DisplayOled::drawBitmap(int16_t shift_x, int16_t shift_y)
     }
     uint8_t* bitmapData = new uint8_t[m_w * m_h +1];
     bitmapData = m_pictureBitmap.data();
+    bitmapData[m_w * m_h +1] = '\0';
     clear();
     display.drawBitmap(m_x, m_y, bitmapData, m_w, m_h, m_color);
     display.display();

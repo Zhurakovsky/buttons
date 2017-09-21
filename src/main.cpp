@@ -36,7 +36,7 @@ int main()
     DisplayOled displ;
     displ.init();
 
-    OledExecMode oledMode = rpibuttons::OledExecMode::MENU_MODE;
+    rpibuttons::OledExecMode oledMode = rpibuttons::OledExecMode::MENU_MODE;
 
     //Build menu
     MenuBuilder mBuilder;
@@ -50,8 +50,9 @@ int main()
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
-        switch (oledMode) {
-        case rpibuttons::OledExecMode::MENU_MODE:
+
+        if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
+        {
             MenuFindDirection findDirection = rpibuttons::MenuFindDirection::PARENT;
             setNeighbourActive(menu, findDirection);
             uint32_t activeItemId = getActiveId(menu);
@@ -61,24 +62,17 @@ int main()
             printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();
             displ.printMenuList(activeItemRow);
-            break;
-        case rpibuttons::OledExecMode::GRAPHICS_MODE:
-            displ.drawBitmap(0, -1);
-            break;
-        case rpibuttons::OledExecMode::TEXT_MODE:
-
-            break;
-        default:
-            break;
         }
-
-
+        else if (oledMode == rpibuttons::OledExecMode::GRAPHICS_MODE)
+        {
+            displ.drawBitmap(0, -1);
+        }
     };
     std::function<void()> callbackButtonDown = [&]()
     {
         std::cout << "Button DOWN pressed" << std::endl;
-        switch (oledMode) {
-        case rpibuttons::OledExecMode::MENU_MODE:
+        if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
+        {
             MenuFindDirection findDirection = rpibuttons::MenuFindDirection::CHILD;
             setNeighbourActive(menu, findDirection);
             uint32_t activeItemId = getActiveId(menu);
@@ -88,23 +82,17 @@ int main()
             printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();
             displ.printMenuList(activeItemRow);
-            break;
-        case rpibuttons::OledExecMode::GRAPHICS_MODE:
+        }
+        else if (oledMode == rpibuttons::OledExecMode::GRAPHICS_MODE)
+        {
             displ.drawBitmap(0, 1);
-            break;
-        case rpibuttons::OledExecMode::TEXT_MODE:
-
-            break;
-        default:
-            break;
         }
      };
     std::function<void()> callbackButtonLeft = [&]()
     {
         std::cout << "Button LEFT pressed" << std::endl;
-        switch (oledMode) {
-        case rpibuttons::OledExecMode::MENU_MODE:
-
+        if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
+        {
             MenuFindDirection findDirection = rpibuttons::MenuFindDirection::LEFT;
             setNeighbourActive(menu, findDirection);
             uint32_t activeItemId = getActiveId(menu);
@@ -114,22 +102,17 @@ int main()
             printMenuItemsRow(activeItemRow);
             displ.decreaseCurrentActivePosition(activeItemRow);
             displ.printMenuList(activeItemRow);
-            break;
-        case rpibuttons::OledExecMode::GRAPHICS_MODE:
+        }
+        else if (oledMode == rpibuttons::OledExecMode::GRAPHICS_MODE)
+        {
             displ.drawBitmap(-1, 0);
-            break;
-        case rpibuttons::OledExecMode::TEXT_MODE:
-
-            break;
-        default:
-            break;
         }
     };
     std::function<void()> callbackButtonRight = [&]()
     {
         std::cout << "Button RIGHT pressed" << std::endl;
-        switch (oledMode) {
-        case rpibuttons::OledExecMode::MENU_MODE:
+        if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
+        {
             MenuFindDirection findDirection = rpibuttons::MenuFindDirection::RIGHT;
             setNeighbourActive(menu, findDirection);
             uint32_t activeItemId = getActiveId(menu);
@@ -139,15 +122,10 @@ int main()
             printMenuItemsRow(activeItemRow);
             displ.increaseCurrentActivePosition(activeItemRow);
             displ.printMenuList(activeItemRow);
-            break;
-        case rpibuttons::OledExecMode::GRAPHICS_MODE:
+        }
+        else if (oledMode == rpibuttons::OledExecMode::GRAPHICS_MODE)
+        {
             displ.drawBitmap(1, 0);
-            break;
-        case rpibuttons::OledExecMode::TEXT_MODE:
-
-            break;
-        default:
-            break;
         }
     };
     std::function<void()> callbackButtonEnter = [&]()

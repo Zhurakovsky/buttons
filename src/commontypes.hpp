@@ -156,4 +156,13 @@ struct s_opts
     int verbose;
 };
 
+enum class OledExecMode
+{
+    MENU_MODE,
+    TEXT_MODE,
+    GRAPHICS_MODE,
+    VIDEO_MODE,
+    EXEC_MODE
+};
+
 }

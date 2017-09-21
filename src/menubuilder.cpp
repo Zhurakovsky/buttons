@@ -79,24 +79,16 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         {
             miat = MenuItemActionType::DisplayGraphics;
             std::string rawGraphicProperty = mps.itemActionParameter;
-
-            std::cout << "Step 11.01  rawGraphicProperty = " << rawGraphicProperty.c_str() << std::endl;
-
             std::vector<std::string> displayImageParts;
 
             std::istringstream ss(rawGraphicProperty);
             while (ss)
             {
-              std::cout << "Step 11.02" << std::endl;
                 std::string s;
               if (!getline( ss, s, ',' )) break;
               displayImageParts.push_back(s);
             }
-            for (std::string myStr : displayImageParts)
-            {
-                std::cout << myStr << std::endl;
-            }
-            std::cout << "Step 11.1 displayImageParts.size == " << displayImageParts.size() << std::endl;
+
             std::string graphicFilename;
 
             if (displayImageParts.size() == 3)
@@ -113,7 +105,6 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             }
             else
             {
-                std::cout << "Step 11.2 Return " << std::endl;
                 return;
             }
 

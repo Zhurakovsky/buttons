@@ -176,48 +176,40 @@ void DisplayOled::resetCurrentActivePosition()
 
 void DisplayOled::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color)
 {
+    //Store parameters of bitmap to local parameters
+    m_x = x;
+    m_y = y;
+    int bitmapPixels = x * y;
+    for (int i = 0; i < bitmapPixels; i++)
+    {
+        m_pictureBitmap.push_back(bitmap[i]);
+    }
+    m_w = w;
+    m_h = h;
+    m_color = color;
 
-
-//    uint8_t icons[NUMFLAKES][3];
-//    srandom(666);     // whatever seed
-    //(void)bitmap;
-
-    // initialize
-//    for (uint8_t f=0; f< NUMFLAKES; f++) {
-//      icons[f][XPOS] = random() % display.width();
-//      icons[f][YPOS] = 0;
-//      icons[f][DELAY] = random() % 5 + 1;
-
-//      printf("x: %d", icons[f][XPOS]);
-//      printf("y: %d", icons[f][YPOS]);
-//      printf("dy: %d\n", icons[f][DELAY]);
-//    }
-    display.fillScreen(0);
+    clear();
     display.drawBitmap(x, y, bitmap, w, h, 1);
     display.display();
-    //while (1) {
 
+}
 
-        //usleep(100000);
-      // draw each icon
-//      for (uint8_t f=0; f< NUMFLAKES; f++) {
-
-//      }
-
-
-      // then erase it + move it
-//      for (uint8_t f=0; f< NUMFLAKES; f++) {
-//        display.drawBitmap(icons[f][XPOS], icons[f][YPOS],  logo_bmp, w, h, BLACK);
-//        // move it
-//        icons[f][YPOS] += icons[f][DELAY];
-//        // if its gone, reinit
-//        if (icons[f][YPOS] > display.height()) {
-//      icons[f][XPOS] = random() % display.width();
-//      icons[f][YPOS] = 0;
-//      icons[f][DELAY] = random() % 5 + 1;
-//        }
-//      }
-     //}
+void DisplayOled::drawBitmap(int16_t shift_x, int16_t shift_y)
+{
+    if(!((m_x + shift_x) <= 0 || (m_x + shift_x) > 128))
+    {
+        m_x += shift_x;
+    }
+    if(!((m_y + shift_y) <= 0 || (m_y + shift_y) > 64))
+    {
+        m_y += shift_y;
+    }
+    uint8_t* bitmapData = new uint8_t[m_w * m_h +1];
+    bitmapData = m_pictureBitmap.data();
+    clear();
+    display.drawBitmap(m_x, m_y, bitmapData, m_w, m_h, m_color);
+    display.display();
+    delete bitmapData;
 }
 
 void DisplayOled::clear()
@@ -228,6 +220,10 @@ void DisplayOled::clear()
 
 void DisplayOled::printText(const std::string &textToPrint)
 {
+    display.clear();
+    display.setTextSize(m_textSize);
+    display.setTextColor(WHITE);
+    display.setCursor(0,0);
     display.setTextWrap(true);
     display.print(textToPrint.c_str());
     display.display();

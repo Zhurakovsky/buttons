@@ -19,30 +19,6 @@ const std::string configFile = "config.txt";
 using namespace std;
 using namespace rpibuttons;
 
-//42x50
-
-const unsigned char example_bmp[] =
-{
-0x2A, 0x00, 0x32, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x1B, 0xDC, 0xDD, 0xDE, 0xDF, 0xDF,
-0xE0, 0xE1, 0xE2, 0xE3, 0xE4, 0xE5,
-};
-
 void printMenu(const std::vector<MenuItem*> &menu);
 void printMenuItemsRow(const std::vector<MenuItem*> &menuItems);
 uint32_t getActiveId(const std::vector<MenuItem*> &menu);
@@ -60,6 +36,8 @@ int main()
     DisplayOled displ;
     displ.init();
 
+    OledExecMode oledMode = rpibuttons::OledExecMode::MENU_MODE;
+
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
@@ -72,54 +50,105 @@ int main()
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
-        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::PARENT;
-        setNeighbourActive(menu, findDirection);
-        uint32_t activeItemId = getActiveId(menu);
-        MenuItem* activeItem = getItemById(menu, activeItemId);
-  //      historyStack.push(activeItem);
-        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        printMenuItemsRow(activeItemRow);
-        displ.resetCurrentActivePosition();
-        displ.printMenuList(activeItemRow);
+        switch (oledMode) {
+        case rpibuttons::OledExecMode::MENU_MODE:
+            MenuFindDirection findDirection = rpibuttons::MenuFindDirection::PARENT;
+            setNeighbourActive(menu, findDirection);
+            uint32_t activeItemId = getActiveId(menu);
+            MenuItem* activeItem = getItemById(menu, activeItemId);
+      //      historyStack.push(activeItem);
+            std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+            printMenuItemsRow(activeItemRow);
+            displ.resetCurrentActivePosition();
+            displ.printMenuList(activeItemRow);
+            break;
+        case rpibuttons::OledExecMode::GRAPHICS_MODE:
+            displ.drawBitmap(0, -1);
+            break;
+        case rpibuttons::OledExecMode::TEXT_MODE:
+
+            break;
+        default:
+            break;
+        }
+
+
     };
     std::function<void()> callbackButtonDown = [&]()
     {
         std::cout << "Button DOWN pressed" << std::endl;
-        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::CHILD;
-        setNeighbourActive(menu, findDirection);
-        uint32_t activeItemId = getActiveId(menu);
-        MenuItem* activeItem = getItemById(menu, activeItemId);
-   //     historyStack.push(activeItem);
-        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        printMenuItemsRow(activeItemRow);
-        displ.resetCurrentActivePosition();
-        displ.printMenuList(activeItemRow);
+        switch (oledMode) {
+        case rpibuttons::OledExecMode::MENU_MODE:
+            MenuFindDirection findDirection = rpibuttons::MenuFindDirection::CHILD;
+            setNeighbourActive(menu, findDirection);
+            uint32_t activeItemId = getActiveId(menu);
+            MenuItem* activeItem = getItemById(menu, activeItemId);
+       //     historyStack.push(activeItem);
+            std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+            printMenuItemsRow(activeItemRow);
+            displ.resetCurrentActivePosition();
+            displ.printMenuList(activeItemRow);
+            break;
+        case rpibuttons::OledExecMode::GRAPHICS_MODE:
+            displ.drawBitmap(0, 1);
+            break;
+        case rpibuttons::OledExecMode::TEXT_MODE:
+
+            break;
+        default:
+            break;
+        }
      };
     std::function<void()> callbackButtonLeft = [&]()
     {
         std::cout << "Button LEFT pressed" << std::endl;
-        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::LEFT;
-        setNeighbourActive(menu, findDirection);
-        uint32_t activeItemId = getActiveId(menu);
-        MenuItem* activeItem = getItemById(menu, activeItemId);
-    //    historyStack.push(activeItem);
-        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        printMenuItemsRow(activeItemRow);
-        displ.decreaseCurrentActivePosition(activeItemRow);
-        displ.printMenuList(activeItemRow);
+        switch (oledMode) {
+        case rpibuttons::OledExecMode::MENU_MODE:
+
+            MenuFindDirection findDirection = rpibuttons::MenuFindDirection::LEFT;
+            setNeighbourActive(menu, findDirection);
+            uint32_t activeItemId = getActiveId(menu);
+            MenuItem* activeItem = getItemById(menu, activeItemId);
+        //    historyStack.push(activeItem);
+            std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+            printMenuItemsRow(activeItemRow);
+            displ.decreaseCurrentActivePosition(activeItemRow);
+            displ.printMenuList(activeItemRow);
+            break;
+        case rpibuttons::OledExecMode::GRAPHICS_MODE:
+            displ.drawBitmap(-1, 0);
+            break;
+        case rpibuttons::OledExecMode::TEXT_MODE:
+
+            break;
+        default:
+            break;
+        }
     };
     std::function<void()> callbackButtonRight = [&]()
     {
         std::cout << "Button RIGHT pressed" << std::endl;
-        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::RIGHT;
-        setNeighbourActive(menu, findDirection);
-        uint32_t activeItemId = getActiveId(menu);
-        MenuItem* activeItem = getItemById(menu, activeItemId);
-     //   historyStack.push(activeItem);
-        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        printMenuItemsRow(activeItemRow);
-        displ.increaseCurrentActivePosition(activeItemRow);
-        displ.printMenuList(activeItemRow);
+        switch (oledMode) {
+        case rpibuttons::OledExecMode::MENU_MODE:
+            MenuFindDirection findDirection = rpibuttons::MenuFindDirection::RIGHT;
+            setNeighbourActive(menu, findDirection);
+            uint32_t activeItemId = getActiveId(menu);
+            MenuItem* activeItem = getItemById(menu, activeItemId);
+         //   historyStack.push(activeItem);
+            std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+            printMenuItemsRow(activeItemRow);
+            displ.increaseCurrentActivePosition(activeItemRow);
+            displ.printMenuList(activeItemRow);
+            break;
+        case rpibuttons::OledExecMode::GRAPHICS_MODE:
+            displ.drawBitmap(1, 0);
+            break;
+        case rpibuttons::OledExecMode::TEXT_MODE:
+
+            break;
+        default:
+            break;
+        }
     };
     std::function<void()> callbackButtonEnter = [&]()
     {
@@ -137,28 +166,17 @@ int main()
         }
         else if (actionType == MenuItemActionType::DisplayGraphics)
         {
-            //uint32_t activeItemId = getActiveId(menu);
-            //MenuItem* activeItem = getItemById(menu, activeItemId);
-      //      historyStack.push(activeItem);
+            oledMode = rpibuttons::OledExecMode::GRAPHICS_MODE;
 
-            //std::vector<const uint8_t>tmpBitmap(prop.bitmap);
-
-            //const uint8_t *testBitmap = tmpBitmap[0];
-            //int i = 0;
-            //for (; testBitmap[i] != '\0'; i++);
-
-                uint16_t tW = prop.imageW;
-                uint16_t tH = prop.imageH;
-                uint8_t* bitmapData = new uint8_t[tW * tH +1];
-                bitmapData = prop.bitmap.data();
-                std::cout << "Going to print bitmap size "
-                          << " W = " << tW
-                          << " H = " << tH << std::endl;
-                displ.drawBitmap(0, 0, bitmapData, tW, tH, 1);
-
-
-            //displ.drawBitmap(43, 7, example_bmp, 42, 50, 1);
-
+            uint16_t tW = prop.imageW;
+            uint16_t tH = prop.imageH;
+            uint8_t* bitmapData = new uint8_t[tW * tH +1];
+            bitmapData = prop.bitmap.data();
+            std::cout << "Going to print bitmap size "
+                      << " W = " << tW
+                      << " H = " << tH << std::endl;
+            displ.drawBitmap((128 - tW)/2, (64 - tH)/2, bitmapData, tW, tH, 1);
+            delete bitmapData;
         }
         else if (actionType == MenuItemActionType::RunProgram)
         {
@@ -170,6 +188,8 @@ int main()
         }
         else if (actionType == MenuItemActionType::MenuDropdown)
         {
+            oledMode = rpibuttons::OledExecMode::MENU_MODE;
+
             uint32_t mId = (uint32_t)atoi(prop.childMenuId.c_str());
 
             MenuItem* activeItem = getItemById(menu, mId);
@@ -194,27 +214,8 @@ int main()
         //printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
         displ.printMenuList(activeItemRow);
-        /*
-        if(!historyStack.empty())
-        {
-            MenuItem* activeItem = historyStack.top();
-            historyStack.pop();
-            activeItem->setActive(true);
-            displ.resetCurrentActivePosition();
-            displ.printMenuList(activeItemRow);
-        }
-        else
-        {
-            std::cout << "History empty" << std::endl;
-            uint32_t activeItemId = getActiveId(menu);
-            MenuItem* activeItem = getItemById(menu, activeItemId);
-            //historyStack.push(activeItem);
-            std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-            //printMenuItemsRow(activeItemRow);
-            displ.resetCurrentActivePosition();
-            displ.printMenuList(activeItemRow);
-        }
-        */
+
+        oledMode = rpibuttons::OledExecMode::MENU_MODE;
     };
 
     std::map<int, std::string> mapButtonsFuncAssigned;

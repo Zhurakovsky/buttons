@@ -149,7 +149,12 @@ int main()
             std::cout << "Going to print bitmap size "
                       << " W = " << prop.imageW
                       << " H = " << prop.imageH << std::endl;
-            displ.drawBitmap((128 - tW)/2, (64 - tH)/2, prop.bitmap, prop.imageW, prop.imageH, 1);
+            displ.drawBitmap((128 - prop.imageW)/2,
+                             (64 - prop.imageH)/2,
+                             prop.bitmap,
+                             prop.imageW,
+                             prop.imageH,
+                             1);
         }
         else if (actionType == MenuItemActionType::RunProgram)
         {

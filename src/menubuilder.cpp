@@ -44,23 +44,10 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                 >> mps.rightItemId
                 >> mps.itemCaption
                 >> mps.itemActionType;
-        std::cout << " aaaaaaaaaaaaa Param string:" << paramString.c_str()  << std::endl;
         mps.itemActionParameter.append(paramString);
         menuItemParams.push_back(mps);
         MenuItem *mi = new MenuItem(mps.itemId);
         mi->setItemName(mps.itemCaption);
-
-
-        std::cout << "Parsed item parameters:" << std::endl;
-        std::cout << "itemId:" << mps.itemId << std::endl;
-        std::cout << "parentId:" << mps.parentId << std::endl;
-        std::cout << "leftId:" << mps.leftItemId << std::endl;
-        std::cout << "rightId:" << mps.rightItemId << std::endl;
-
-        std::cout << "Caption:" << mps.itemCaption.c_str() << std::endl;
-        std::cout << "ActionType:" << mps.itemActionType.c_str() << std::endl;
-        std::cout << "Action parameter:" << mps.itemActionParameter.c_str() << std::endl;
-
 
         MenuItemActionType miat;
         MenuItemActionProperties miaprop;
@@ -135,7 +122,6 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
                       records.push_back(st);
                     }
                 }
-                std::cout << "Loaded values:" << records.size() << std::endl;
                 for(std::string line : records)
                 {
                     uint8_t number = (uint8_t)strtol(line.c_str(), NULL, 0);
@@ -147,7 +133,6 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             {
                 std::cout << "Outer bitmap file " << graphicFilename.c_str() << " open ERROR" << std::endl;
             }
-            std::cout << "Vector bitmapper has  " << bitmapper.size() << " enties" << std::endl;
             //const uint8_t* pictureBitmap = bitmapper.data();
             for (uint8_t bm : bitmapper)
             {

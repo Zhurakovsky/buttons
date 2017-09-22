@@ -41,7 +41,7 @@ int main()
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
-    printMenu(menu);
+    //printMenu(menu);
     // Assign input GPIO PINS according to config
     // First argument - phisically pin number on RPi
     // Secong - bcm2835 shift value
@@ -59,7 +59,7 @@ int main()
             MenuItem* activeItem = getItemById(menu, activeItemId);
       //      historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-            printMenuItemsRow(activeItemRow);
+      //      printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();
             displ.printMenuList(activeItemRow);
         }
@@ -79,7 +79,7 @@ int main()
             MenuItem* activeItem = getItemById(menu, activeItemId);
        //     historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-            printMenuItemsRow(activeItemRow);
+        //    printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();
             displ.printMenuList(activeItemRow);
         }
@@ -99,7 +99,7 @@ int main()
             MenuItem* activeItem = getItemById(menu, activeItemId);
         //    historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-            printMenuItemsRow(activeItemRow);
+          //  printMenuItemsRow(activeItemRow);
             displ.decreaseCurrentActivePosition(activeItemRow);
             displ.printMenuList(activeItemRow);
         }
@@ -119,7 +119,7 @@ int main()
             MenuItem* activeItem = getItemById(menu, activeItemId);
          //   historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-            printMenuItemsRow(activeItemRow);
+          //  printMenuItemsRow(activeItemRow);
             displ.increaseCurrentActivePosition(activeItemRow);
             displ.printMenuList(activeItemRow);
         }
@@ -146,9 +146,6 @@ int main()
         {
             oledMode = rpibuttons::OledExecMode::GRAPHICS_MODE;
 
-            std::cout << "Going to print bitmap size "
-                      << " W = " << prop.imageW
-                      << " H = " << prop.imageH << std::endl;
             displ.drawBitmap((128 - prop.imageW)/2,
                              (64 - prop.imageH)/2,
                              prop.bitmap,
@@ -174,7 +171,7 @@ int main()
             activeItem->setActive(true);
       //      historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-            printMenuItemsRow(activeItemRow);
+       //     printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();
             displ.printMenuList(activeItemRow);
         }
@@ -183,8 +180,6 @@ int main()
     {
         std::cout << "Button ESC pressed" << std::endl;
 
-
-        std::cout << "Go to print menu" << std::endl;
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
         //historyStack.push(activeItem);

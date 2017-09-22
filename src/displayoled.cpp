@@ -174,7 +174,7 @@ void DisplayOled::resetCurrentActivePosition()
     m_currentMenuShift = 0;
 }
 
-void DisplayOled::drawBitmap(int16_t x, int16_t y, const std::vector<uint8_t>&bitmap, int16_t w, int16_t h, uint16_t color)
+void DisplayOled::drawBitmap(int16_t x, int16_t y, std::vector<uint8_t>&bitmap, int16_t w, int16_t h, uint16_t color)
 {
     //Store parameters of bitmap to local parameters
     //std::vector<uint8_t>bitmap;

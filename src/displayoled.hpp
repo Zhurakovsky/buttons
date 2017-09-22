@@ -69,6 +69,7 @@ private:
     int16_t m_x;
     int16_t m_y;
     std::vector<uint8_t>m_pictureBitmap;
+    //std::vector<uint8_t>bitmap;
     int16_t m_w;
     int16_t m_h;
     uint16_t m_color;

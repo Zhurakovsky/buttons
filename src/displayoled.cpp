@@ -174,25 +174,25 @@ void DisplayOled::resetCurrentActivePosition()
     m_currentMenuShift = 0;
 }
 
-void DisplayOled::drawBitmap(int16_t x, int16_t y, const uint8_t *bitmap, int16_t w, int16_t h, uint16_t color)
+void DisplayOled::drawBitmap(int16_t x, int16_t y, const std::vector<uint8_t>&bitmap, int16_t w, int16_t h, uint16_t color)
 {
     //Store parameters of bitmap to local parameters
+    //std::vector<uint8_t>bitmap;
     m_x = x;
     m_y = y;
-    int bitmapPixels = x * y;
-    for (int i = 0; i < bitmapPixels; i++)
-    {
-        uint8_t tmpChar = bitmap[i];
-        m_pictureBitmap.push_back(tmpChar);
-    }
     m_w = w;
     m_h = h;
     m_color = color;
 
-    clear();
-    display.drawBitmap(x, y, bitmap, w, h, 1);
-    display.display();
+    m_pictureBitmap.erase(m_pictureBitmap.begin(), m_pictureBitmap.end());
+    m_pictureBitmap = bitmap;
 
+    uint8_t* bitmapData = new uint8_t[m_w * m_h + 1];
+    bitmapData = m_pictureBitmap.data();
+
+    clear();
+    display.drawBitmap(m_x, m_y, bitmapData, m_w, m_h, 1);
+    display.display();
 }
 
 void DisplayOled::drawBitmap(int16_t shift_x, int16_t shift_y)
@@ -205,9 +205,10 @@ void DisplayOled::drawBitmap(int16_t shift_x, int16_t shift_y)
     {
         m_y += shift_y;
     }
-    uint8_t* bitmapData = new uint8_t[m_w * m_h +1];
+
+    uint8_t* bitmapData = new uint8_t[m_w * m_h + 1];
     bitmapData = m_pictureBitmap.data();
-    bitmapData[m_w * m_h +1] = '\0';
+
     clear();
     display.drawBitmap(m_x, m_y, bitmapData, m_w, m_h, m_color);
     display.display();

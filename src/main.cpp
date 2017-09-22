@@ -146,14 +146,10 @@ int main()
         {
             oledMode = rpibuttons::OledExecMode::GRAPHICS_MODE;
 
-            uint16_t tW = prop.imageW;
-            uint16_t tH = prop.imageH;
-            uint8_t* bitmapData = new uint8_t[tW * tH +1];
-            bitmapData = prop.bitmap.data();
             std::cout << "Going to print bitmap size "
                       << " W = " << tW
                       << " H = " << tH << std::endl;
-            displ.drawBitmap((128 - tW)/2, (64 - tH)/2, bitmapData, tW, tH, 1);
+            displ.drawBitmap((128 - tW)/2, (64 - tH)/2, prop.bitmap, prop.imageW, prop.imageH, 1);
         }
         else if (actionType == MenuItemActionType::RunProgram)
         {

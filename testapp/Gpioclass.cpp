@@ -7,7 +7,7 @@
 
 GPIOClass::GPIOClass()
 {
-    m_gpionum = "7";
+    m_gpionum = "4";
 }
 
 GPIOClass::GPIOClass(const string &gpionum)

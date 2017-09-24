@@ -54,7 +54,7 @@ int GPIOClass::unexport_gpio()
 
 int GPIOClass::setdir_gpio(std::string dir)
 {
-    std::string setdir_str ="/sys/class/gpio/gpio" + m_gpionum.c_str() + "/direction";
+    std::string setdir_str ="/sys/class/gpio/gpio" + m_gpionum + "/direction";
     std::cout << setdir_str.c_str() << std::endl;
     ofstream setdirgpio(setdir_str.c_str()); // open direction file for gpio
 
@@ -71,7 +71,7 @@ int GPIOClass::setdir_gpio(std::string dir)
 
 int GPIOClass::setval_gpio(string val)
 {
-    string setval_str = "/sys/class/gpio/gpio" + m_gpionum.c_str() + "/value";
+    string setval_str = "/sys/class/gpio/gpio" + m_gpionum + "/value";
     std::cout << setval_str.c_str() << std::endl;
     ofstream setvalgpio(setval_str.c_str()); // open value file for gpio
     if (setvalgpio < 0)

@@ -12,6 +12,8 @@ project(Buttons LANGUAGES CXX)
 
 #SET(CMAKE_SYSTEM_NAME Linux) 
 
+option(BUTTONS_BUILD_TESTS "Build blinker" ON)
+
 # -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -lbcm2835 -lArduiPi_OLED")
 
@@ -41,3 +43,7 @@ set(SOURCES
 add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} bcm2835 rt pthread)
+
+if(BUTTONS_BUILD_TESTS)
+    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/testapp")
+endif()

@@ -11,6 +11,7 @@
 #include <functional>
 #include <iterator>
 #include <string>
+#include <cstdlib>
 
 #include <bcm2835.h>
 
@@ -155,7 +156,21 @@ int main()
         }
         else if (actionType == MenuItemActionType::RunProgram)
         {
+            oledMode = rpibuttons::OledExecMode::EXEC_MODE;
 
+            std::string pathToApplication = "sudo ./testapp/" + prop.pathToApplication;
+
+            std;::cout << "Checking if processor is available..." << std::endl;
+             if (system(NULL))
+             {
+                 puts ("Ok");
+             }
+             else
+             {
+                 puts ("ERROR System call");
+                 exit (EXIT_FAILURE);
+             }
+            std::system(pathToApplication.c_str());
         }
         else if (actionType == MenuItemActionType::ClearScreen)
         {

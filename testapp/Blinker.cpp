@@ -31,7 +31,6 @@ int main(int argc, char *argv[])
         blinkCount = (uint32_t)atoi(argv[2]);
     }
 
-    std::string inputstate;
     GPIOClass *gpio4 = new GPIOClass(pinNumber);
     gpio4->export_gpio();
 
@@ -39,20 +38,21 @@ int main(int argc, char *argv[])
     gpio4->setdir_gpio("out"); // gpio4 set to output
 
     std::cout << "Set GPIO pin direction" << std::endl;
-
+    bool flag = true;
     while (blinkCount--)
     {
         usleep(500000);
-        gpio4->getval_gpio(inputstate);
 
-        std::cout << "Current input pin state is " << inputstate.c_str() << std::endl;
-        if(inputstate == "0") // if input pin is at state "0" i.e. button pressed
+
+        if(flag) // if input pin is at state "0" i.e. button pressed
         {
             gpio4->setval_gpio("1"); // turn LED ON
+            flag = false;
         }
-        else if (inputstate == "1")
+        else
         {
             gpio4->setval_gpio("0");
+            flag = true;
         }
     }
 

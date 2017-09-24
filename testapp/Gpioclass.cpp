@@ -13,6 +13,7 @@ GPIOClass::GPIOClass()
 GPIOClass::GPIOClass(const string &gpionum)
 {
     m_gpionum = gpionum;
+    std::cout << "From constructor Pin = " << m_gpionum.c_str() << std::endl;
 }
 
 GPIOClass::~GPIOClass()
@@ -30,8 +31,10 @@ int GPIOClass::export_gpio()
         return -1;
     }
 
-    exportgpio << m_gpionum;
+    exportgpio << m_gpionum.c_str();
     exportgpio.close();
+
+    std::cout << "Pin exported" << std::endl;
 
     return 0;
 }

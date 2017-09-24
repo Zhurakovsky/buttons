@@ -158,7 +158,7 @@ int main()
         {
             oledMode = rpibuttons::OledExecMode::EXEC_MODE;
 
-            std::string pathToApplication = "sudo ./testapp/" + prop.pathToApplication + "&";
+            std::string pathToApplication = "sudo ./testapp/" + prop.pathToApplication + " 4 100 &";
 
             std::cout << "Checking if processor is available..." << std::endl;
              if (system(NULL))

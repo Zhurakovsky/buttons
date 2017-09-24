@@ -108,3 +108,8 @@ int GPIOClass::getval_gpio(string &val)
     getvalgpio.close(); //close the value file
     return 0;
 }
+
+string GPIOClass::get_gpionum()
+{
+    return m_gpionum;
+}

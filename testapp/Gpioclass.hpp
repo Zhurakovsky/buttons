@@ -19,7 +19,7 @@ public:
     int setval_gpio(std::string val);
     int getval_gpio(std::string& val);
 
-    std::get_gpionum();
+    std::string get_gpionum();
 
 private:
     std::string m_gpionum;

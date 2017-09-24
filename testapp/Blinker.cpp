@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
     else
     {
         pinNumber = argv[1];
-        blinkCount = (uint32)atoi(argv[2]);
+        blinkCount = (uint32_t)atoi(argv[2]);
     }
 
     std::string inputstate;

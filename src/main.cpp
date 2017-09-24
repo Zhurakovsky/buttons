@@ -160,7 +160,7 @@ int main()
 
             std::string pathToApplication = "sudo ./testapp/" + prop.pathToApplication;
 
-            std;::cout << "Checking if processor is available..." << std::endl;
+            std::cout << "Checking if processor is available..." << std::endl;
              if (system(NULL))
              {
                  puts ("Ok");

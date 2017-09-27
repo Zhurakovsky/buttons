@@ -27,8 +27,8 @@ namespace rpibuttons
 class DisplayOled
 {
 public:
-    DisplayOled(const DisplayOled&) = delete;
-    DisplayOled& operator=(const DisplayOled&) = delete;
+    //DisplayOled(const DisplayOled&) = delete;
+    //DisplayOled& operator=(const DisplayOled&) = delete;
 
     DisplayOled();
     ~DisplayOled();
@@ -55,7 +55,7 @@ public:
     void printText(const std::string &textToPrint);
 
 private:
-
+    //std::mutex m_mtx;
     // default options values
     s_opts m_opts;
     // Instantiate the display

@@ -24,7 +24,7 @@ set(HEADERS
     "${CMAKE_SOURCE_DIR}/src/commontypes.hpp"
     "${CMAKE_SOURCE_DIR}/src/menuitem.hpp"
     "${CMAKE_SOURCE_DIR}/src/menubuilder.hpp"
-    #"${CMAKE_SOURCE_DIR}/src/menuprocessor.hpp"
+    #"${CMAKE_SOURCE_DIR}/src/terminalmenu.hpp"
     "${CMAKE_SOURCE_DIR}/src/configparser.hpp"
     "${CMAKE_SOURCE_DIR}/src/displayoled.hpp"
 )
@@ -35,7 +35,7 @@ set(SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/src/buttonListener.cpp"
     "${CMAKE_SOURCE_DIR}/src/menuitem.cpp"
     "${CMAKE_SOURCE_DIR}/src/menubuilder.cpp"
-    #"${CMAKE_SOURCE_DIR}/src/menuprocessor.cpp"
+    #"${CMAKE_SOURCE_DIR}/src/terminalmenu.cpp"
     "${CMAKE_SOURCE_DIR}/src/configparser.cpp"
     "${CMAKE_SOURCE_DIR}/src/displayoled.cpp"
 )

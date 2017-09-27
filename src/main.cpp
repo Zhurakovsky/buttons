@@ -4,6 +4,7 @@
 #include "menuitem.hpp"
 #include "menubuilder.hpp"
 #include "displayoled.hpp"
+//#include "terminalmenu.hpp"
 //#include <stack>
 #include <vector>
 #include <map>
@@ -11,6 +12,7 @@
 #include <functional>
 #include <iterator>
 #include <string>
+//#include <mutex>
 #include <cstdlib>
 
 #include <bcm2835.h>
@@ -28,6 +30,12 @@ void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirect
 MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId);
 std::vector<MenuItem*> getItemsRow(MenuItem *baseItem);
 
+void processButtonUp(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonDown(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonLeft(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonRight(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonEnter(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonEsc(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
 
 int main()
 {
@@ -36,19 +44,24 @@ int main()
  //   std::stack<MenuItem*> historyStack;
     DisplayOled displ;
     displ.init();
+    //mutable std::mutex main_mtx;
 
     rpibuttons::OledExecMode oledMode = rpibuttons::OledExecMode::MENU_MODE;
 
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
+
+    //TerminalMenu terMenu(displ, menu);
     //printMenu(menu);
     // Assign input GPIO PINS according to config
     // First argument - phisically pin number on RPi
     // Secong - bcm2835 shift value
     std::map<int, int> mapPinGpio;
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
-    std::function<void()> callbackButtonUp = [&]()
+    std::function<void()> callbackButtonUp = processButtonUp;
+    /*
+            [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
 
@@ -69,7 +82,10 @@ int main()
             displ.drawBitmap(0, -1);
         }
     };
-    std::function<void()> callbackButtonDown = [&]()
+            */
+    std::function<void()> callbackButtonDown = processButtonUp;
+    /*
+    [&]()
     {
         std::cout << "Button DOWN pressed" << std::endl;
         if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
@@ -89,7 +105,10 @@ int main()
             displ.drawBitmap(0, 1);
         }
      };
-    std::function<void()> callbackButtonLeft = [&]()
+     */
+    std::function<void()> callbackButtonLeft = processButtonLeft;
+    /*
+    [&]()
     {
         std::cout << "Button LEFT pressed" << std::endl;
         if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
@@ -109,7 +128,10 @@ int main()
             displ.drawBitmap(-1, 0);
         }
     };
-    std::function<void()> callbackButtonRight = [&]()
+    */
+    std::function<void()> callbackButtonRight = processButtonRight;
+    /*
+    [&]()
     {
         std::cout << "Button RIGHT pressed" << std::endl;
         if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
@@ -129,7 +151,11 @@ int main()
             displ.drawBitmap(1, 0);
         }
     };
-    std::function<void()> callbackButtonEnter = [&]()
+    */
+
+    std::function<void()> callbackButtonEnter = processButtonEnter;
+    /*
+    [&]()
     {
         std::cout << "Button ENTER pressed" << std::endl;
         uint32_t activeItemId = getActiveId(menu);
@@ -191,7 +217,10 @@ int main()
             displ.printMenuList(activeItemRow);
         }
     };
-    std::function<void()> callbackButtonEsc = [&]()
+    */
+    std::function<void()> callbackButtonEsc = processButtonEsc;
+    /*
+    [&]()
     {
         std::cout << "Button ESC pressed" << std::endl;
 
@@ -205,7 +234,7 @@ int main()
 
         oledMode = rpibuttons::OledExecMode::MENU_MODE;
     };
-
+    */
     std::map<int, std::string> mapButtonsFuncAssigned;
     mBuilder.buildButtonsFuncAssigned(configFile, mapButtonsFuncAssigned);
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
@@ -274,13 +303,57 @@ int main()
     //printMenuItemsRow(activeItemRow);
     displ.resetCurrentActivePosition();
     displ.printMenuList(acItemRow);
-    while(1)
+    bool m_bStillRead = true;
+    while(m_bStillRead)
     {
-        char c = getchar();
-        if (c == 'q')
+        if (getch() == '\033') // if the first value is esc
         {
-            break;
+            getch(); // skip the [
+            switch(getch()) // the real value
+            {
+            case 'A':
+                std::cout << "Keyboard UP pressed" << std::endl;
+                processButtonUp(menu, displ, oledMode);
+                // code for arrow up
+                break;
+            case 'B':
+                std::cout << "Keyboard DOWN pressed" << std::endl;
+                processButtonDown(menu, displ, oledMode);
+                // code for arrow down
+                break;
+            case 'C':
+                std::cout << "Keyboard RIGHT pressed" << std::endl;
+                processButtonRight(menu, displ, oledMode);
+                // code for arrow right
+                break;
+            case 'D':
+                std::cout << "Keyboard LEFT pressed" << std::endl;
+                processButtonLeft(menu, displ, oledMode);
+                // code for arrow left
+                break;
+            case 27:
+                std::cout << "Keyboard ESC pressed" << std::endl;
+                processButtonEsc(menu, displ, oledMode);
+                // code for arrow ESC
+                break;
+            case '\n':
+                std::cout << "Keyboard ENTER pressed" << std::endl;
+                processButtonEnter(menu, displ, oledMode);
+                // code for arrow ESC
+                break;
+            }
+            else if (getch() == 'q')
+            {
+                m_bStillRead = false;
+            }
         }
+
+
+//        char c = getchar();
+//        if (c == 'q')
+//        {
+//            break;
+//        }
     }
     return 0;
 }
@@ -513,3 +586,168 @@ void printMenuItemsRow(const std::vector<MenuItem*> &menuItems)
     }
 }
 
+
+void processButtonUp(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+{
+    std::cout << "Button UP pressed" << std::endl;
+
+    if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
+    {
+        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::PARENT;
+        setNeighbourActive(menu, findDirection);
+        uint32_t activeItemId = getActiveId(menu);
+        MenuItem* activeItem = getItemById(menu, activeItemId);
+  //      historyStack.push(activeItem);
+        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+  //      printMenuItemsRow(activeItemRow);
+        displ.resetCurrentActivePosition();
+        displ.printMenuList(activeItemRow);
+    }
+    else if (oledMode == rpibuttons::OledExecMode::GRAPHICS_MODE)
+    {
+        displ.drawBitmap(0, -1);
+    }
+}
+
+
+void processButtonDown(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+{
+    std::cout << "Button DOWN pressed" << std::endl;
+    if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
+    {
+        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::CHILD;
+        setNeighbourActive(menu, findDirection);
+        uint32_t activeItemId = getActiveId(menu);
+        MenuItem* activeItem = getItemById(menu, activeItemId);
+   //     historyStack.push(activeItem);
+        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+    //    printMenuItemsRow(activeItemRow);
+        displ.resetCurrentActivePosition();
+        displ.printMenuList(activeItemRow);
+    }
+    else if (oledMode == rpibuttons::OledExecMode::GRAPHICS_MODE)
+    {
+        displ.drawBitmap(0, 1);
+    }
+}
+
+void processButtonLeft(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+{
+    std::cout << "Button LEFT pressed" << std::endl;
+    if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
+    {
+        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::LEFT;
+        setNeighbourActive(menu, findDirection);
+        uint32_t activeItemId = getActiveId(menu);
+        MenuItem* activeItem = getItemById(menu, activeItemId);
+    //    historyStack.push(activeItem);
+        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+      //  printMenuItemsRow(activeItemRow);
+        displ.decreaseCurrentActivePosition(activeItemRow);
+        displ.printMenuList(activeItemRow);
+    }
+    else if (oledMode == rpibuttons::OledExecMode::GRAPHICS_MODE)
+    {
+        displ.drawBitmap(-1, 0);
+    }
+}
+
+
+void processButtonRight(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+{
+    std::cout << "Button RIGHT pressed" << std::endl;
+    if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
+    {
+        MenuFindDirection findDirection = rpibuttons::MenuFindDirection::RIGHT;
+        setNeighbourActive(menu, findDirection);
+        uint32_t activeItemId = getActiveId(menu);
+        MenuItem* activeItem = getItemById(menu, activeItemId);
+     //   historyStack.push(activeItem);
+        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+      //  printMenuItemsRow(activeItemRow);
+        displ.increaseCurrentActivePosition(activeItemRow);
+        displ.printMenuList(activeItemRow);
+    }
+    else if (oledMode == rpibuttons::OledExecMode::GRAPHICS_MODE)
+    {
+        displ.drawBitmap(1, 0);
+    }
+}
+
+void processButtonEnter(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+{
+    std::cout << "Button ENTER pressed" << std::endl;
+    uint32_t activeItemId = getActiveId(menu);
+    MenuItem* activeItem = getItemById(menu, activeItemId);
+  //  historyStack.push(activeItem);
+    MenuItemActionType actionType = activeItem->getActionType();
+    MenuItemActionProperties prop = activeItem->getMenuItemProperties();
+
+    if(actionType == MenuItemActionType::DisplayText)
+    {
+        std::string textForDisplay = prop.textToShow;
+        displ.printText(textForDisplay);
+    }
+    else if (actionType == MenuItemActionType::DisplayGraphics)
+    {
+        oledMode = rpibuttons::OledExecMode::GRAPHICS_MODE;
+
+        displ.drawBitmap((128 - prop.imageW)/2,
+                         (64 - prop.imageH)/2,
+                         prop.bitmap,
+                         prop.imageW,
+                         prop.imageH,
+                         1);
+    }
+    else if (actionType == MenuItemActionType::RunProgram)
+    {
+        oledMode = rpibuttons::OledExecMode::EXEC_MODE;
+
+        std::string pathToApplication = "sudo ./testapp/" + prop.pathToApplication + " 4 100 &";
+
+        std::cout << "Checking if processor is available..." << std::endl;
+         if (system(NULL))
+         {
+             puts ("Ok");
+         }
+         else
+         {
+             puts ("ERROR System call");
+             exit (EXIT_FAILURE);
+         }
+        std::system(pathToApplication.c_str());
+    }
+    else if (actionType == MenuItemActionType::ClearScreen)
+    {
+        displ.clear();
+    }
+    else if (actionType == MenuItemActionType::MenuDropdown)
+    {
+        oledMode = rpibuttons::OledExecMode::MENU_MODE;
+
+        uint32_t mId = (uint32_t)atoi(prop.childMenuId.c_str());
+
+        MenuItem* activeItem = getItemById(menu, mId);
+        activeItem->setActive(true);
+  //      historyStack.push(activeItem);
+        std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+   //     printMenuItemsRow(activeItemRow);
+        displ.resetCurrentActivePosition();
+        displ.printMenuList(activeItemRow);
+    }
+}
+
+void processButtonEsc(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+{
+    std::cout << "Button ESC pressed" << std::endl;
+
+    uint32_t activeItemId = getActiveId(menu);
+    MenuItem* activeItem = getItemById(menu, activeItemId);
+    //historyStack.push(activeItem);
+    std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
+    //printMenuItemsRow(activeItemRow);
+    displ.resetCurrentActivePosition();
+    displ.printMenuList(activeItemRow);
+
+    oledMode = rpibuttons::OledExecMode::MENU_MODE;
+}

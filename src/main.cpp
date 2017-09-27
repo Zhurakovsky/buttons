@@ -30,6 +30,13 @@ void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirect
 MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId);
 std::vector<MenuItem*> getItemsRow(MenuItem *baseItem);
 
+void fnProcessButtonUp();
+void fnProcessButtonDown();
+void fnProcessButtonLeft();
+void fnProcessButtonRight();
+void fnProcessButtonEnter();
+void fnProcessButtonEsc();
+
 void processButtonUp(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
 void processButtonDown(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
 void processButtonLeft(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
@@ -59,7 +66,7 @@ int main()
     // Secong - bcm2835 shift value
     std::map<int, int> mapPinGpio;
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
-    std::function<void()> callbackButtonUp = processButtonUp;
+    std::function<void()> callbackButtonUp = fnProcessButtonUp;
     /*
             [&]()
     {
@@ -83,7 +90,7 @@ int main()
         }
     };
             */
-    std::function<void()> callbackButtonDown = processButtonUp;
+    std::function<void()> callbackButtonDown = fnProcessButtonUp;
     /*
     [&]()
     {
@@ -106,7 +113,7 @@ int main()
         }
      };
      */
-    std::function<void()> callbackButtonLeft = processButtonLeft;
+    std::function<void()> callbackButtonLeft = fnProcessButtonLeft;
     /*
     [&]()
     {
@@ -129,7 +136,7 @@ int main()
         }
     };
     */
-    std::function<void()> callbackButtonRight = processButtonRight;
+    std::function<void()> callbackButtonRight = fnProcessButtonRight;
     /*
     [&]()
     {
@@ -153,7 +160,7 @@ int main()
     };
     */
 
-    std::function<void()> callbackButtonEnter = processButtonEnter;
+    std::function<void()> callbackButtonEnter = fnProcessButtonEnter;
     /*
     [&]()
     {
@@ -218,7 +225,7 @@ int main()
         }
     };
     */
-    std::function<void()> callbackButtonEsc = processButtonEsc;
+    std::function<void()> callbackButtonEsc = fnProcessButtonEsc;
     /*
     [&]()
     {
@@ -306,7 +313,8 @@ int main()
     bool m_bStillRead = true;
     while(m_bStillRead)
     {
-        if (getch() == '\033') // if the first value is esc
+        char ch = getch();
+        if ( ch == '\033') // if the first value is esc
         {
             getch(); // skip the [
             switch(getch()) // the real value
@@ -342,10 +350,12 @@ int main()
                 // code for arrow ESC
                 break;
             }
-            else if (getch() == 'q')
-            {
-                m_bStillRead = false;
-            }
+
+
+        }
+        else if ( ch == 'q')
+        {
+            m_bStillRead = false;
         }
 
 
@@ -750,4 +760,29 @@ void processButtonEsc(const std::vector<MenuItem*> &menu, const DisplayOled &dis
     displ.printMenuList(activeItemRow);
 
     oledMode = rpibuttons::OledExecMode::MENU_MODE;
+}
+
+void fnProcessButtonUp()
+{
+    processButtonUp(menu, displ, oledMode);
+}
+void fnProcessButtonDown()
+{
+    processButtonDown(menu, displ, oledMode);
+}
+void fnProcessButtonLeft()
+{
+    processButtonLeft(menu, displ, oledMode);
+}
+void fnProcessButtonRight()
+{
+    processButtonRight(menu, displ, oledMode);
+}
+void fnProcessButtonEnter()
+{
+    processButtonEnter(menu, displ, oledMode);
+}
+void fnProcessButtonEsc()
+{
+    processButtonEsc(menu, displ, oledMode);
 }

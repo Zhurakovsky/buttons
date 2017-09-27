@@ -358,7 +358,7 @@ int main()
             case '\n':
                 std::cout << "Keyboard ENTER pressed" << std::endl;
                 processButtonEnter(menu, displ, oledMode);
-                // code for arrow ESC
+                // code for arrow ENTER
                 break;
             default:
                 continue;
@@ -372,6 +372,19 @@ int main()
             m_bStillRead = false;
             bt.on();
         }
+        else if (ch == '\n')
+        {
+            std::cout << "Keyboard ENTER pressed 2" << std::endl;
+            processButtonEnter(menu, displ, oledMode);
+            // code for arrow ENTER
+        }
+        if (ch == 27)
+        {
+            std::cout << "Keyboard ESC pressed 2" << std::endl;
+            processButtonEsc(menu, displ, oledMode);
+            // code for arrow ESC
+        }
+
 
 
 //        char c = getchar();

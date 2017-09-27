@@ -13,6 +13,7 @@
 #include <iterator>
 #include <string>
 #include <termios.h>
+#include <bits/termios.h>
 
 //#include <mutex>
 #include <cstdlib>
@@ -37,7 +38,8 @@ class BufferToggle
         {
             tcgetattr(STDIN_FILENO, &t); //get the current terminal I/O structure
             t.c_lflag &= ~ICANON; //Manipulate the flag bits to do what you want it to do
-            tcsetattr(STDIN_FILENO, TSCANOW, &t); //Apply the new settings
+            tcsetattr(STDIN_FILENO, TCSANOW, &t); //Apply the new settings
+
         }
 
         /* Enables buffered input */
@@ -45,7 +47,7 @@ class BufferToggle
         {
             tcgetattr(STDIN_FILENO, &t); //get the current terminal I/O structure
             t.c_lflag |= ICANON; //Manipulate the flag bits to do what you want it to do
-            tcsetattr(STDIN_FILENO, TSCANOW, &t); //Apply the new settings
+            tcsetattr(STDIN_FILENO, TCSANOW, &t); //Apply the new settings
         }
 };
 

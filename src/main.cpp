@@ -378,7 +378,7 @@ int main()
             processButtonEnter(menu, displ, oledMode);
             // code for arrow ENTER
         }
-        if (ch == 27)
+        else if (ch == 27)
         {
             std::cout << "Keyboard ESC pressed 2" << std::endl;
             processButtonEsc(menu, displ, oledMode);

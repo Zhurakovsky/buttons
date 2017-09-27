@@ -13,7 +13,6 @@
 #include <iterator>
 #include <string>
 #include <termios.h>
-#include <bits/termios.h>
 
 //#include <mutex>
 #include <cstdlib>

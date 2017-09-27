@@ -12,6 +12,8 @@
 #include <functional>
 #include <iterator>
 #include <string>
+#include <termios.h>
+
 //#include <mutex>
 #include <cstdlib>
 
@@ -21,6 +23,32 @@ const std::string configFile = "config.txt";
 
 using namespace std;
 using namespace rpibuttons;
+
+class BufferToggle
+{
+    private:
+        struct termios t;
+
+    public:
+        /* Disables buffered input */
+        void off(void)
+        {
+            tcgetattr(STDIN_FILENO, &t); //get the current terminal I/O structure
+            t.c_lflag &= ~ICANON; //Manipulate the flag bits to do what you want it to do
+            tcsetattr(STDIN_FILENO, TSCANOW, &t); //Apply the new settings
+        }
+
+        /* Enables buffered input */
+        void on(void)
+        {
+            tcgetattr(STDIN_FILENO, &t); //get the current terminal I/O structure
+            t.c_lflag |= ICANON; //Manipulate the flag bits to do what you want it to do
+            tcsetattr(STDIN_FILENO, TSCANOW, &t); //Apply the new settings
+        }
+};
+
+
+
 
 void printMenu(const std::vector<MenuItem*> &menu);
 void printMenuItemsRow(const std::vector<MenuItem*> &menuItems);
@@ -39,6 +67,7 @@ void processButtonEsc(const std::vector<MenuItem*> &menu, const DisplayOled &dis
 
 int main()
 {
+    BufferToggle bt;
     ButtonListener bl;
     std::vector<MenuItem*> menu;
  //   std::stack<MenuItem*> historyStack;
@@ -291,11 +320,12 @@ int main()
     bool m_bStillRead = true;
     while(m_bStillRead)
     {
-        char ch = getch();
+        bt.off();
+        char ch = getchar();
         if ( ch == '\033') // if the first value is esc
         {
-            getch(); // skip the [
-            switch(getch()) // the real value
+            getchar(); // skip the [
+            switch(getchar()) // the real value
             {
             case 'A':
                 std::cout << "Keyboard UP pressed" << std::endl;
@@ -327,6 +357,9 @@ int main()
                 processButtonEnter(menu, displ, oledMode);
                 // code for arrow ESC
                 break;
+            default:
+                continue;
+                break;
             }
 
 
@@ -334,6 +367,7 @@ int main()
         else if ( ch == 'q')
         {
             m_bStillRead = false;
+            bt.on();
         }
 
 

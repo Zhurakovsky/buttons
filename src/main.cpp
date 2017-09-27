@@ -16,10 +16,10 @@
 
 //#include <mutex>
 #include <cstdlib>
+#include <unistd.h>
+#include <stdio.h>
 
 #include <bcm2835.h>
-
-#define ICANON	0000002
 
 const std::string configFile = "config.txt";
 

@@ -19,6 +19,8 @@
 
 #include <bcm2835.h>
 
+#define ICANON	0000002
+
 const std::string configFile = "config.txt";
 
 using namespace std;
@@ -58,12 +60,12 @@ void setNeighbourActive(const std::vector<MenuItem*> &menu, const MenuFindDirect
 MenuItem* getItemById(const std::vector<MenuItem*> &menu, uint32_t itemId);
 std::vector<MenuItem*> getItemsRow(MenuItem *baseItem);
 
-void processButtonUp(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
-void processButtonDown(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
-void processButtonLeft(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
-void processButtonRight(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
-void processButtonEnter(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
-void processButtonEsc(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonUp(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonDown(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonLeft(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonRight(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+void processButtonEsc(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
 
 int main()
 {
@@ -609,7 +611,7 @@ void printMenuItemsRow(const std::vector<MenuItem*> &menuItems)
 }
 
 
-void processButtonUp(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+void processButtonUp(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
 {
     std::cout << "Button UP pressed" << std::endl;
 
@@ -631,8 +633,7 @@ void processButtonUp(const std::vector<MenuItem*> &menu, const DisplayOled &disp
     }
 }
 
-
-void processButtonDown(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+void processButtonDown(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
 {
     std::cout << "Button DOWN pressed" << std::endl;
     if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
@@ -653,7 +654,7 @@ void processButtonDown(const std::vector<MenuItem*> &menu, const DisplayOled &di
     }
 }
 
-void processButtonLeft(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+void processButtonLeft(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
 {
     std::cout << "Button LEFT pressed" << std::endl;
     if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
@@ -674,8 +675,7 @@ void processButtonLeft(const std::vector<MenuItem*> &menu, const DisplayOled &di
     }
 }
 
-
-void processButtonRight(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+void processButtonRight(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
 {
     std::cout << "Button RIGHT pressed" << std::endl;
     if ( oledMode == rpibuttons::OledExecMode::MENU_MODE)
@@ -696,7 +696,7 @@ void processButtonRight(const std::vector<MenuItem*> &menu, const DisplayOled &d
     }
 }
 
-void processButtonEnter(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
 {
     std::cout << "Button ENTER pressed" << std::endl;
     uint32_t activeItemId = getActiveId(menu);
@@ -759,7 +759,7 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, const DisplayOled &d
     }
 }
 
-void processButtonEsc(const std::vector<MenuItem*> &menu, const DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
+void processButtonEsc(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode)
 {
     std::cout << "Button ESC pressed" << std::endl;
 

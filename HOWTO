@@ -12,9 +12,11 @@
 
 7. cp ../config.txt .
 
-8. cp ../images/*.h .
+8. cp ../weather.sh testapp/
 
-9. ./Buttons
+9. cp ../images/*.h .
+
+10. ./Buttons
 
 *****************************************
 

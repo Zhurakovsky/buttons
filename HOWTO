@@ -34,3 +34,11 @@ const unsigned char picture [] =
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
 0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00
 }
+
+*****************************************
+After start application you will see on screen of terminal the same menu, as on OLED display.
+Use standard arrows to navigate through menu.
+Use ENTER button to execute action from menu
+Use ESC button to escape
+
+Use 'q' key to quit from application.

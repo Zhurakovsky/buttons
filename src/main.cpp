@@ -358,6 +358,12 @@ int main()
                  std::cout << "You pressed ESC key" << std::endl;
                  processButtonEsc(menu, displ, oledMode);
              }
+             else if(ch=='q')
+             {
+                 std::cout << "Exiting..." << std::endl;
+                 m_bStillRead = false;
+                 break;
+             }
 
 
             }while(ch!='q');

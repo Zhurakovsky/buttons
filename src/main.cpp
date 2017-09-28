@@ -324,72 +324,109 @@ int main()
     while(m_bStillRead)
     {
         bt.off();
-        char ch = getchar();
+        //char ch = getchar();
+        char ch;
+        do{
+             ch=getchar();
+             if(ch==65)
+             {
+                std::cout << "You pressed UP key" << std::endl;
+                processButtonUp(menu, displ, oledMode);
+             }
+                else if(ch==66)
+             {
+                 std::cout << "You pressed DOWN key" << std::endl;
+                 processButtonDown(menu, displ, oledMode);
+             }
+             else if(ch==67)
+             {
+                 std::cout << "You pressed RIGHT key" << std::endl;
+                 processButtonRight(menu, displ, oledMode);
+             }
+             else if(ch==68)
+             {
+                 std::cout << "You pressed LEFT key" << std::endl;
+                 processButtonLeft(menu, displ, oledMode);
+             }
+                 else if(ch=='\n')
+             {
+                 std::cout << "You pressed ENTER key" << std::endl;
+                 processButtonEnter(menu, displ, oledMode);
+             }
+             else if(ch==27)
+             {
+                 std::cout << "You pressed ESC key" << std::endl;
+                 processButtonEsc(menu, displ, oledMode);
+             }
 
-        if ( ch == 27) // if the first value is esc
-        {
-            char ch1 = getchar(); // skip the [
-            if (ch1 == 91)
-            {
-                char ch2 = getchar();
-                switch(ch2) // the real value
-                {
-                case 'A':
-                    std::cout << "Keyboard UP pressed" << std::endl;
-                    processButtonUp(menu, displ, oledMode);
-                    // code for arrow up
-                    continue;
-                case 'B':
-                    std::cout << "Keyboard DOWN pressed" << std::endl;
-                    processButtonDown(menu, displ, oledMode);
-                    // code for arrow down
-                    continue;
-                case 'C':
-                    std::cout << "Keyboard RIGHT pressed" << std::endl;
-                    processButtonRight(menu, displ, oledMode);
-                    // code for arrow right
-                    continue;
-                case 'D':
-                    std::cout << "Keyboard LEFT pressed" << std::endl;
-                    processButtonLeft(menu, displ, oledMode);
-                    // code for arrow left
-                    continue;
-    //            case 27:
-    //                std::cout << "Keyboard ESC pressed" << std::endl;
-    //                processButtonEsc(menu, displ, oledMode);
-    //                // code for arrow ESC
-    //                break;
-    //            case '\n':
-    //                std::cout << "Keyboard ENTER pressed" << std::endl;
-    //                processButtonEnter(menu, displ, oledMode);
-    //                // code for arrow ENTER
-    //                break;
-                default:
-                        //continue;
-                    break;
-                }
-            }
-        }
-        else if ( ch == 'q')
-        {
-            m_bStillRead = false;
-            bt.on();
-            continue;
-        }
-        else if (ch == '\n')
-        {
-            std::cout << "Keyboard ENTER pressed" << std::endl;
-            processButtonEnter(menu, displ, oledMode);
-            // code for arrow ENTER
-            continue;
-        }
-        if ( ch == 27)
-        {
-            std::cout << "Keyboard ESC pressed " << std::endl;
-            processButtonEsc(menu, displ, oledMode);
-            continue;
-            // code for arrow ESC
-        }
+
+            }while(ch!='q');
+        bt.on();
+
+//        if ( ch == 27) // if the first value is esc
+//        {
+//            char ch1 = getchar(); // skip the [
+//            if (ch1 == 91)
+//            {
+//                char ch2 = getchar();
+//                switch(ch2) // the real value
+//                {
+//                case 'A':
+//                    std::cout << "Keyboard UP pressed" << std::endl;
+//                    processButtonUp(menu, displ, oledMode);
+//                    // code for arrow up
+//                    continue;
+//                case 'B':
+//                    std::cout << "Keyboard DOWN pressed" << std::endl;
+//                    processButtonDown(menu, displ, oledMode);
+//                    // code for arrow down
+//                    continue;
+//                case 'C':
+//                    std::cout << "Keyboard RIGHT pressed" << std::endl;
+//                    processButtonRight(menu, displ, oledMode);
+//                    // code for arrow right
+//                    continue;
+//                case 'D':
+//                    std::cout << "Keyboard LEFT pressed" << std::endl;
+//                    processButtonLeft(menu, displ, oledMode);
+//                    // code for arrow left
+//                    continue;
+//    //            case 27:
+//    //                std::cout << "Keyboard ESC pressed" << std::endl;
+//    //                processButtonEsc(menu, displ, oledMode);
+//    //                // code for arrow ESC
+//    //                break;
+//    //            case '\n':
+//    //                std::cout << "Keyboard ENTER pressed" << std::endl;
+//    //                processButtonEnter(menu, displ, oledMode);
+//    //                // code for arrow ENTER
+//    //                break;
+//                default:
+//                        //continue;
+//                    break;
+//                }
+//            }
+//        }
+//        else if ( ch == 'q')
+//        {
+//            m_bStillRead = false;
+//            bt.on();
+//            continue;
+//        }
+//        else if (ch == '\n')
+//        {
+//            std::cout << "Keyboard ENTER pressed" << std::endl;
+//            processButtonEnter(menu, displ, oledMode);
+//            // code for arrow ENTER
+//            continue;
+//        }
+//        if ( ch == 27)
+//        {
+//            std::cout << "Keyboard ESC pressed " << std::endl;
+//            processButtonEsc(menu, displ, oledMode);
+//            continue;
+//            // code for arrow ESC
+//        }
     }
     return 0;
 }

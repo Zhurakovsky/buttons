@@ -325,6 +325,14 @@ int main()
     {
         bt.off();
         char ch = getchar();
+        if (ch == 27)
+        {
+            ch = 0;
+            std::cout << "Keyboard ESC pressed " << std::endl;
+            processButtonEsc(menu, displ, oledMode);
+            // code for arrow ESC
+        }
+
         if ( ch == '\033') // if the first value is esc
         {
             getchar(); // skip the [
@@ -350,11 +358,11 @@ int main()
                 processButtonLeft(menu, displ, oledMode);
                 // code for arrow left
                 break;
-            case 27:
-                std::cout << "Keyboard ESC pressed" << std::endl;
-                processButtonEsc(menu, displ, oledMode);
-                // code for arrow ESC
-                break;
+//            case 27:
+//                std::cout << "Keyboard ESC pressed" << std::endl;
+//                processButtonEsc(menu, displ, oledMode);
+//                // code for arrow ESC
+//                break;
 //            case '\n':
 //                std::cout << "Keyboard ENTER pressed" << std::endl;
 //                processButtonEnter(menu, displ, oledMode);
@@ -376,12 +384,6 @@ int main()
             processButtonEnter(menu, displ, oledMode);
             // code for arrow ENTER
         }
-//        else if (ch == 27)
-//        {
-//            std::cout << "Keyboard ESC pressed 2" << std::endl;
-//            processButtonEsc(menu, displ, oledMode);
-//            // code for arrow ESC
-//        }
     }
     return 0;
 }

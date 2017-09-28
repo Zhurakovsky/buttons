@@ -317,7 +317,7 @@ int main()
     MenuItem* acItem = getItemById(menu, actItemId);
  // historyStack.push(activeItem);
     std::vector<MenuItem*> acItemRow = getItemsRow(acItem);
-    printMenuItemsRow(activeItemRow);
+    printMenuItemsRow(acItemRow);
     displ.resetCurrentActivePosition();
     displ.printMenuList(acItemRow);
     bool m_bStillRead = true;

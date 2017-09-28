@@ -325,35 +325,33 @@ int main()
     {
         bt.off();
         char ch = getchar();
-        if (ch == 27)
-        {
-            ch = 0;
-            std::cout << "Keyboard ESC pressed " << std::endl;
-            processButtonEsc(menu, displ, oledMode);
-            // code for arrow ESC
-        }
-
+        int k = 0;
         if ( ch == '\033') // if the first value is esc
         {
             getchar(); // skip the [
-            switch(getchar()) // the real value
+            char ch2 = getchar();
+            switch(ch2) // the real value
             {
             case 'A':
+                k = 1;
                 std::cout << "Keyboard UP pressed" << std::endl;
                 processButtonUp(menu, displ, oledMode);
                 // code for arrow up
                 break;
             case 'B':
+                k = 1;
                 std::cout << "Keyboard DOWN pressed" << std::endl;
                 processButtonDown(menu, displ, oledMode);
                 // code for arrow down
                 break;
             case 'C':
+                k = 1;
                 std::cout << "Keyboard RIGHT pressed" << std::endl;
                 processButtonRight(menu, displ, oledMode);
                 // code for arrow right
                 break;
             case 'D':
+                k = 1;
                 std::cout << "Keyboard LEFT pressed" << std::endl;
                 processButtonLeft(menu, displ, oledMode);
                 // code for arrow left
@@ -369,7 +367,16 @@ int main()
 //                // code for arrow ENTER
 //                break;
             default:
-                continue;
+                if ( ch = 27 && k == 0)
+                {
+                    std::cout << "Keyboard ESC pressed " << std::endl;
+                    processButtonEsc(menu, displ, oledMode);
+                    // code for arrow ESC
+                }
+                else
+                {
+                    continue;
+                }
                 break;
             }
         }
@@ -380,7 +387,7 @@ int main()
         }
         else if (ch == '\n')
         {
-            std::cout << "Keyboard ENTER pressed 2" << std::endl;
+            std::cout << "Keyboard ENTER pressed" << std::endl;
             processButtonEnter(menu, displ, oledMode);
             // code for arrow ENTER
         }

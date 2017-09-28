@@ -734,7 +734,7 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
     {
         oledMode = rpibuttons::OledExecMode::EXEC_MODE;
 
-        std::string pathToApplication = "sudo ./testapp/" + prop.pathToApplication + " 4 100 &";
+        std::string pathToApplication = "./testapp/" + prop.pathToApplication + " &";
 
         //std::cout << "Checking if processor is available..." << std::endl;
          if (system(NULL))
@@ -760,9 +760,9 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
 
         MenuItem* activeItem = getItemById(menu, mId);
         activeItem->setActive(true);
-  //      historyStack.push(activeItem);
+  //    historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-   //     printMenuItemsRow(activeItemRow);
+        printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
         displ.printMenuList(activeItemRow);
     }
@@ -776,7 +776,7 @@ void processButtonEsc(const std::vector<MenuItem*> &menu, DisplayOled &displ, rp
     MenuItem* activeItem = getItemById(menu, activeItemId);
     //historyStack.push(activeItem);
     std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-    //printMenuItemsRow(activeItemRow);
+    printMenuItemsRow(activeItemRow);
     displ.resetCurrentActivePosition();
     displ.printMenuList(activeItemRow);
 

@@ -632,7 +632,7 @@ void processButtonUp(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpi
         MenuItem* activeItem = getItemById(menu, activeItemId);
   //      historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-  //      printMenuItemsRow(activeItemRow);
+        printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
         displ.printMenuList(activeItemRow);
     }
@@ -653,7 +653,7 @@ void processButtonDown(const std::vector<MenuItem*> &menu, DisplayOled &displ, r
         MenuItem* activeItem = getItemById(menu, activeItemId);
    //     historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-    //    printMenuItemsRow(activeItemRow);
+        printMenuItemsRow(activeItemRow);
         displ.resetCurrentActivePosition();
         displ.printMenuList(activeItemRow);
     }
@@ -674,7 +674,7 @@ void processButtonLeft(const std::vector<MenuItem*> &menu, DisplayOled &displ, r
         MenuItem* activeItem = getItemById(menu, activeItemId);
     //    historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-      //  printMenuItemsRow(activeItemRow);
+        printMenuItemsRow(activeItemRow);
         displ.decreaseCurrentActivePosition(activeItemRow);
         displ.printMenuList(activeItemRow);
     }
@@ -695,7 +695,7 @@ void processButtonRight(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
         MenuItem* activeItem = getItemById(menu, activeItemId);
      //   historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-      //  printMenuItemsRow(activeItemRow);
+        printMenuItemsRow(activeItemRow);
         displ.increaseCurrentActivePosition(activeItemRow);
         displ.printMenuList(activeItemRow);
     }

@@ -325,7 +325,7 @@ int main()
     {
         bt.off();
         char ch = getchar();
-        int k = 0;
+
         if ( ch == '\033') // if the first value is esc
         {
             getchar(); // skip the [
@@ -333,29 +333,25 @@ int main()
             switch(ch2) // the real value
             {
             case 'A':
-                k = 1;
                 std::cout << "Keyboard UP pressed" << std::endl;
                 processButtonUp(menu, displ, oledMode);
                 // code for arrow up
-                break;
+                continue;
             case 'B':
-                k = 1;
                 std::cout << "Keyboard DOWN pressed" << std::endl;
                 processButtonDown(menu, displ, oledMode);
                 // code for arrow down
-                break;
+                continue;
             case 'C':
-                k = 1;
                 std::cout << "Keyboard RIGHT pressed" << std::endl;
                 processButtonRight(menu, displ, oledMode);
                 // code for arrow right
-                break;
+                continue;
             case 'D':
-                k = 1;
                 std::cout << "Keyboard LEFT pressed" << std::endl;
                 processButtonLeft(menu, displ, oledMode);
                 // code for arrow left
-                break;
+                continue;
 //            case 27:
 //                std::cout << "Keyboard ESC pressed" << std::endl;
 //                processButtonEsc(menu, displ, oledMode);
@@ -367,16 +363,7 @@ int main()
 //                // code for arrow ENTER
 //                break;
             default:
-                if ( ch = 27 && k == 0)
-                {
-                    std::cout << "Keyboard ESC pressed " << std::endl;
-                    processButtonEsc(menu, displ, oledMode);
-                    // code for arrow ESC
-                }
-                else
-                {
                     continue;
-                }
                 break;
             }
         }
@@ -384,12 +371,21 @@ int main()
         {
             m_bStillRead = false;
             bt.on();
+            continue;
         }
         else if (ch == '\n')
         {
             std::cout << "Keyboard ENTER pressed" << std::endl;
             processButtonEnter(menu, displ, oledMode);
             // code for arrow ENTER
+            continue;
+        }
+        if ( ch == 27)
+        {
+            std::cout << "Keyboard ESC pressed " << std::endl;
+            processButtonEsc(menu, displ, oledMode);
+            continue;
+            // code for arrow ESC
         }
     }
     return 0;

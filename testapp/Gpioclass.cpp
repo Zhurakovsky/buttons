@@ -13,7 +13,7 @@ GPIOClass::GPIOClass()
 GPIOClass::GPIOClass(const string &gpionum)
 {
     m_gpionum = gpionum;
-    std::cout << "From constructor Pin = " << m_gpionum.c_str() << std::endl;
+    //std::cout << "From constructor Pin = " << m_gpionum.c_str() << std::endl;
 }
 
 GPIOClass::~GPIOClass()
@@ -34,7 +34,7 @@ int GPIOClass::export_gpio()
     exportgpio << m_gpionum.c_str();
     exportgpio.close();
 
-    std::cout << "Pin exported" << std::endl;
+    //std::cout << "Pin exported" << std::endl;
 
     return 0;
 }
@@ -58,7 +58,7 @@ int GPIOClass::unexport_gpio()
 int GPIOClass::setdir_gpio(std::string dir)
 {
     std::string setdir_str ="/sys/class/gpio/gpio" + m_gpionum + "/direction";
-    std::cout << setdir_str.c_str() << std::endl;
+    //std::cout << setdir_str.c_str() << std::endl;
     ofstream setdirgpio(setdir_str.c_str()); // open direction file for gpio
 
     if (setdirgpio < 0)
@@ -75,7 +75,7 @@ int GPIOClass::setdir_gpio(std::string dir)
 int GPIOClass::setval_gpio(string val)
 {
     string setval_str = "/sys/class/gpio/gpio" + m_gpionum + "/value";
-    std::cout << setval_str.c_str() << std::endl;
+    //std::cout << setval_str.c_str() << std::endl;
     ofstream setvalgpio(setval_str.c_str()); // open value file for gpio
     if (setvalgpio < 0)
     {

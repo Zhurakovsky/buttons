@@ -16,11 +16,11 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
     std::vector<std::string> menuList;
     std::vector<menuParserString> menuItemParams;
     menuList = confParser.getConfigStrings(fileName, searchPattern);
-    std::cout << "Read from config:" << std::endl;
-    for (std::string listItem : menuList)
-    {
-        std::cout << listItem.c_str() << std::endl;
-    }
+//    std::cout << "Read from config:" << std::endl;
+//    for (std::string listItem : menuList)
+//    {
+//        //std::cout << listItem.c_str() << std::endl;
+//    }
 
     for(auto it = menuList.begin(); it != menuList.end(); ++it )
     {
@@ -30,8 +30,8 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         std::string paramString = tmpString.substr(foundFirst + 1, (foundLast - foundFirst - 1));
         tmpString = tmpString.substr(0, (foundFirst-1));
 
-        std::cout << "Param String: " << paramString.c_str() << std::endl;
-        std::cout << "Work String: " << tmpString.c_str() << std::endl;
+//        std::cout << "Param String: " << paramString.c_str() << std::endl;
+//        std::cout << "Work String: " << tmpString.c_str() << std::endl;
 
         std::istringstream iss(tmpString);
 
@@ -103,7 +103,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
 
             if (inputFile.is_open())
             {
-                std::cout << "File open" << std::endl;
+                //std::cout << "File open" << std::endl;
                 while (!inputFile.eof())
                 {
                     std::string line;
@@ -131,7 +131,7 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             }
             else
             {
-                std::cout << "Outer bitmap file " << graphicFilename.c_str() << " open ERROR" << std::endl;
+                //std::cout << "Outer bitmap file " << graphicFilename.c_str() << " open ERROR" << std::endl;
             }
             //const uint8_t* pictureBitmap = bitmapper.data();
             for (uint8_t bm : bitmapper)
@@ -211,13 +211,13 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
     }
     //int menuItemCount = menuItemParams.size();
     //std::cout << "/nCreated " << menuItemCount << " menu items" << std::endl;
-    for(auto it = menu.begin(); it != menu.end(); ++it)
-    {
-        MenuItem *menuItem = *it;
-        std::string itemName = menuItem->itemName();
-        std::cout << itemName.c_str() << ", ";
-        std::cout << ((menuItem->isActive()) ? "Active" : "Passive") << std::endl;
-    }
+//    for(auto it = menu.begin(); it != menu.end(); ++it)
+//    {
+//        MenuItem *menuItem = *it;
+//       std::string itemName = menuItem->itemName();
+//        std::cout << itemName.c_str() << ", ";
+//        std::cout << ((menuItem->isActive()) ? "Active" : "Passive") << std::endl;
+//    }
 }
 
 void MenuBuilder::buildPinGpioMap(const std::string &fileName, std::map<int, int> &mapPinGpio)

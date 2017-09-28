@@ -103,7 +103,7 @@ int main()
             MenuItem* activeItem = getItemById(menu, activeItemId);
       //      historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-      //      printMenuItemsRow(activeItemRow);
+      //    printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();
             displ.printMenuList(activeItemRow);
         }
@@ -124,7 +124,7 @@ int main()
             MenuItem* activeItem = getItemById(menu, activeItemId);
        //     historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-        //    printMenuItemsRow(activeItemRow);
+       //   printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();
             displ.printMenuList(activeItemRow);
         }
@@ -144,7 +144,7 @@ int main()
             MenuItem* activeItem = getItemById(menu, activeItemId);
         //    historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-          //  printMenuItemsRow(activeItemRow);
+        //  printMenuItemsRow(activeItemRow);
             displ.decreaseCurrentActivePosition(activeItemRow);
             displ.printMenuList(activeItemRow);
         }
@@ -164,7 +164,7 @@ int main()
             MenuItem* activeItem = getItemById(menu, activeItemId);
          //   historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-          //  printMenuItemsRow(activeItemRow);
+         // printMenuItemsRow(activeItemRow);
             displ.increaseCurrentActivePosition(activeItemRow);
             displ.printMenuList(activeItemRow);
         }
@@ -179,7 +179,7 @@ int main()
         std::cout << "Button ENTER pressed" << std::endl;
         uint32_t activeItemId = getActiveId(menu);
         MenuItem* activeItem = getItemById(menu, activeItemId);
-      //  historyStack.push(activeItem);
+    //  historyStack.push(activeItem);
         MenuItemActionType actionType = activeItem->getActionType();
         MenuItemActionProperties prop = activeItem->getMenuItemProperties();
 
@@ -205,8 +205,8 @@ int main()
 
             std::string pathToApplication = "sudo ./testapp/" + prop.pathToApplication + " 4 100 &";
 
-            std::cout << "Checking if processor is available..." << std::endl;
-             if (system(NULL))
+            //std::cout << "Checking if processor is available..." << std::endl;
+            if (system(NULL))
              {
                  puts ("Ok");
              }
@@ -229,9 +229,9 @@ int main()
 
             MenuItem* activeItem = getItemById(menu, mId);
             activeItem->setActive(true);
-      //      historyStack.push(activeItem);
+      //    historyStack.push(activeItem);
             std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
-       //     printMenuItemsRow(activeItemRow);
+       //   printMenuItemsRow(activeItemRow);
             displ.resetCurrentActivePosition();
             displ.printMenuList(activeItemRow);
         }
@@ -259,13 +259,13 @@ int main()
         uint32_t pinAssigned = it->first;
         uint32_t purePinAssigned = 0;
         purePinAssigned |= (pinAssigned & 0x00FF);
-        std::string withPullUp = ((pinAssigned == purePinAssigned) ? " with pull-down" : " with pull-up");
+//        std::string withPullUp = ((pinAssigned == purePinAssigned) ? " with pull-down" : " with pull-up");
         const std::string funcAssigned(it->second);
 
-        std::cout << purePinAssigned << " pin assigned to func "
-                  << funcAssigned.c_str()
-                  << withPullUp.c_str()
-                  << std::endl;
+//        std::cout << purePinAssigned << " pin assigned to func "
+//                  << funcAssigned.c_str()
+//                  << withPullUp.c_str()
+//                  << std::endl;
 
         auto iter = mapPinGpio.find(purePinAssigned);
         if (iter != mapPinGpio.end())
@@ -315,7 +315,7 @@ int main()
     bl.run();
     uint32_t actItemId = getActiveId(menu);
     MenuItem* acItem = getItemById(menu, actItemId);
- //   historyStack.push(activeItem);
+ // historyStack.push(activeItem);
     std::vector<MenuItem*> acItemRow = getItemsRow(acItem);
     //printMenuItemsRow(activeItemRow);
     displ.resetCurrentActivePosition();
@@ -325,6 +325,7 @@ int main()
     {
         bt.off();
         char ch = getchar();
+        int k = 0;
         if ( ch == '\033') // if the first value is esc
         {
             getchar(); // skip the [
@@ -334,38 +335,40 @@ int main()
                 std::cout << "Keyboard UP pressed" << std::endl;
                 processButtonUp(menu, displ, oledMode);
                 // code for arrow up
+                k = 1;
                 break;
             case 'B':
                 std::cout << "Keyboard DOWN pressed" << std::endl;
                 processButtonDown(menu, displ, oledMode);
                 // code for arrow down
+                k = 1;
                 break;
             case 'C':
                 std::cout << "Keyboard RIGHT pressed" << std::endl;
                 processButtonRight(menu, displ, oledMode);
                 // code for arrow right
+                k = 1;
                 break;
             case 'D':
                 std::cout << "Keyboard LEFT pressed" << std::endl;
                 processButtonLeft(menu, displ, oledMode);
                 // code for arrow left
+                k = 1;
                 break;
-            case 27:
-                std::cout << "Keyboard ESC pressed" << std::endl;
-                processButtonEsc(menu, displ, oledMode);
-                // code for arrow ESC
-                break;
-            case '\n':
-                std::cout << "Keyboard ENTER pressed" << std::endl;
-                processButtonEnter(menu, displ, oledMode);
-                // code for arrow ENTER
-                break;
+//            case 27:
+//                std::cout << "Keyboard ESC pressed" << std::endl;
+//                processButtonEsc(menu, displ, oledMode);
+//                // code for arrow ESC
+//                break;
+//            case '\n':
+//                std::cout << "Keyboard ENTER pressed" << std::endl;
+//                processButtonEnter(menu, displ, oledMode);
+//                // code for arrow ENTER
+//                break;
             default:
                 continue;
                 break;
             }
-
-
         }
         else if ( ch == 'q')
         {
@@ -378,20 +381,12 @@ int main()
             processButtonEnter(menu, displ, oledMode);
             // code for arrow ENTER
         }
-        else if (ch == 27)
+        else if (ch == 27 && k == 0)
         {
             std::cout << "Keyboard ESC pressed 2" << std::endl;
             processButtonEsc(menu, displ, oledMode);
             // code for arrow ESC
         }
-
-
-
-//        char c = getchar();
-//        if (c == 'q')
-//        {
-//            break;
-//        }
     }
     return 0;
 }
@@ -741,7 +736,7 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
 
         std::string pathToApplication = "sudo ./testapp/" + prop.pathToApplication + " 4 100 &";
 
-        std::cout << "Checking if processor is available..." << std::endl;
+        //std::cout << "Checking if processor is available..." << std::endl;
          if (system(NULL))
          {
              puts ("Ok");

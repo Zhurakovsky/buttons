@@ -6,6 +6,7 @@ namespace rpibuttons
 DisplayOled::DisplayOled()
     : m_textSize(2)
 {
+    std::cout << "[LOGS:DisplayOled] Constructor" << std::endl;
     m_opts.oled = OLED_ADAFRUIT_I2C_128x64;
     m_opts.verbose = 0;
     m_currentActivePosition = 0;
@@ -16,6 +17,7 @@ DisplayOled::DisplayOled()
 
 DisplayOled::~DisplayOled()
 {
+    std::cout << "[LOGS:DisplayOled] Destructor" << std::endl;
     display.clearDisplay();   // clears the screen  buffer
     display.display();        // display it (clear display)
     display.close();
@@ -23,6 +25,7 @@ DisplayOled::~DisplayOled()
 
 void DisplayOled::init()
 {
+    std::cout << "[LOGS:DisplayOled] Init()" << std::endl;
     // I2C change parameters to fit to your LCD
     if ( !display.init(OLED_I2C_RESET, m_opts.oled) )
     {

@@ -70,12 +70,16 @@ void processButtonEsc(const std::vector<MenuItem*> &menu, DisplayOled &displ, rp
 
 int main()
 {
+    std::cout << "[LOGS:Main]Step 1" << std::endl;
     BufferToggle bt;
     ButtonListener bl;
     std::vector<MenuItem*> menu;
  //   std::stack<MenuItem*> historyStack;
     DisplayOled displ;
     displ.init();
+
+    std::cout << "[LOGS:Main]Step 2. After Display init" << std::endl;
+
     //mutable std::mutex main_mtx;
 
     rpibuttons::OledExecMode oledMode = rpibuttons::OledExecMode::MENU_MODE;
@@ -84,6 +88,8 @@ int main()
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
 
+    std::cout << "[LOGS:Main]Step 3. After Menu complete" << std::endl;
+
     //TerminalMenu terMenu(displ, menu);
     //printMenu(menu);
     // Assign input GPIO PINS according to config
@@ -91,6 +97,9 @@ int main()
     // Secong - bcm2835 shift value
     std::map<int, int> mapPinGpio;
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
+
+    std::cout << "[LOGS:Main]Step 4. After pins assigned" << std::endl;
+
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
@@ -252,6 +261,8 @@ int main()
         oledMode = rpibuttons::OledExecMode::MENU_MODE;
     };
 
+    std::cout << "[LOGS:Main]Step 5. After callbacks assigned" << std::endl;
+
     std::map<int, std::string> mapButtonsFuncAssigned;
     mBuilder.buildButtonsFuncAssigned(configFile, mapButtonsFuncAssigned);
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
@@ -312,7 +323,11 @@ int main()
         }
     }
 
+    std::cout << "[LOGS:Main]Step 6. After functions assigned and subscribed" << std::endl;
+
     bl.run();
+
+    std::cout << "[LOGS:Main]Step 7. After runned" << std::endl;
     uint32_t actItemId = getActiveId(menu);
     MenuItem* acItem = getItemById(menu, actItemId);
  // historyStack.push(activeItem);

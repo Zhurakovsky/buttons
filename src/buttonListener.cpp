@@ -21,7 +21,7 @@ ButtonListener::ButtonListener() :
     m_isRunning(false),
     m_isInit(false)
 {
-
+    std::cout << "[LOGS:ButtonListener] Constructor" << std::endl;
 }
 
 ButtonListener::~ButtonListener()
@@ -32,6 +32,7 @@ ButtonListener::~ButtonListener()
     {
         m_gpioThread.join();
     }
+    std::cout << "[LOGS:ButtonListener] Destructor" << std::endl;
 }
 
 bool ButtonListener::run()
@@ -45,6 +46,7 @@ bool ButtonListener::run()
     m_gpioThread = std::thread(&ButtonListener::gpioListen, this);
     m_condVar.wait(lock, [&]() { return m_isInit; });
     return m_isRunning;
+    std::cout << "[LOGS:ButtonListener] Run completed" << std::endl;
 }
 
 bool ButtonListener::isRunning() const
@@ -111,6 +113,7 @@ void ButtonListener::gpioListen()
         m_isInit = true;
         m_condVar.notify_one();
     }
+    std::cout << "[LOGS:ButtonListener] ButtonListener() Before thread's loop" << std::endl;
     while (m_isRunning)
     {
         uint32_t returnedPinMask = 0;
@@ -153,6 +156,7 @@ bool ButtonListener::subscribeOnPin(const uint32_t &pinNumber, const std::functi
 
 void ButtonListener::processButton(const uint32_t &valueMask)
 {
+    std::cout << "[LOGS:ButtonListener] Start processbutton" << std::endl;
     int pinsPressed = getPinsPressed(valueMask);
     if (pinsPressed <= 1)
     {

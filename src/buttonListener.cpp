@@ -45,8 +45,9 @@ bool ButtonListener::run()
     }
     m_gpioThread = std::thread(&ButtonListener::gpioListen, this);
     m_condVar.wait(lock, [&]() { return m_isInit; });
-    return m_isRunning;
     std::cout << "[LOGS:ButtonListener] Run completed" << std::endl;
+    return m_isRunning;
+
 }
 
 bool ButtonListener::isRunning() const

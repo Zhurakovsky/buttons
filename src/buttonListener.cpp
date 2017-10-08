@@ -158,7 +158,6 @@ bool ButtonListener::subscribeOnPin(const uint32_t &pinNumber, const std::functi
 
 void ButtonListener::processButton(const uint32_t &valueMask)
 {
-    std::cout << "[LOGS:ButtonListener] Start processbutton" << std::endl;
     int pinsPressed = getPinsPressed(valueMask);
     if (pinsPressed <= 1)
     {

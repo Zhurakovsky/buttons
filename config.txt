@@ -51,12 +51,12 @@ M	13	3	9	10	Blinker	RunProgram	"Blinker 4 50"
 # // 2. GPIO pin
 # // 3. Assigned function
 # // 4. Type of connection. 1 means pull-up, 0 means pull-down
-I	8	UP	0
-I	10	DOWN	0
-I	12	LEFT	0
-I	18	RIGHT	0
-I	22	ENTER	0
-I	24	ESC 0
+I	8	UP	1
+I	10	DOWN	1
+I	12	LEFT	1
+I	18	RIGHT	1
+I	22	ENTER	1
+I	24	ESC 1
 #
 #
 #

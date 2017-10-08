@@ -21,7 +21,7 @@ ButtonListener::ButtonListener() :
     m_isRunning(false),
     m_isInit(false)
 {
-
+    std::cout << "[LOGS:ButtonListener] Constructor" << std::endl;
 }
 
 ButtonListener::~ButtonListener()
@@ -32,6 +32,7 @@ ButtonListener::~ButtonListener()
     {
         m_gpioThread.join();
     }
+    std::cout << "[LOGS:ButtonListener] Destructor" << std::endl;
 }
 
 bool ButtonListener::run()
@@ -44,7 +45,9 @@ bool ButtonListener::run()
     }
     m_gpioThread = std::thread(&ButtonListener::gpioListen, this);
     m_condVar.wait(lock, [&]() { return m_isInit; });
+    std::cout << "[LOGS:ButtonListener] Run completed" << std::endl;
     return m_isRunning;
+
 }
 
 bool ButtonListener::isRunning() const
@@ -111,6 +114,7 @@ void ButtonListener::gpioListen()
         m_isInit = true;
         m_condVar.notify_one();
     }
+    std::cout << "[LOGS:ButtonListener] ButtonListener() Before thread's loop" << std::endl;
     while (m_isRunning)
     {
         uint32_t returnedPinMask = 0;
@@ -141,18 +145,21 @@ void ButtonListener::gpioListen()
 
 bool ButtonListener::subscribeOnPin(const uint32_t &pinNumber, const std::function<void()> &cbFunc)
 {
+    std::cout << "[LOGS:ButtonListener] Subscribe on pin " << pinNumber << std::endl;
     uint32_t purePin = 0; // without pull info
-    purePin |= (pinNumber & 0xFF);
+    purePin |= (pinNumber & 0x00FF);
     if ((pinNumber >> 8) == 1)
     {
         pullUpPinsSet.insert(purePin);
     }
     m_mapOfPrevValues.emplace(std::make_pair(purePin,0));
+    std::cout << "[LOGS:ButtonListener] Emplaced pin:: " << purePin << std::endl;
     return m_mapOfCallbacks.emplace(std::make_pair(purePin,cbFunc)).second;
 }
 
 void ButtonListener::processButton(const uint32_t &valueMask)
 {
+    std::cout << "[LOGS:ButtonListener] Start processbutton" << std::endl;
     int pinsPressed = getPinsPressed(valueMask);
     if (pinsPressed <= 1)
     {

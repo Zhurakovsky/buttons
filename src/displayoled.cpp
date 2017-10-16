@@ -27,16 +27,22 @@ void DisplayOled::init()
 {
     std::cout << "[LOGS:DisplayOled] Init()" << std::endl;
     // I2C change parameters to fit to your LCD
-    if ( !display.init(OLED_I2C_RESET, m_opts.oled) )
+    if ( !display.init(25, m_opts.oled) ) // OLED_I2C_RESET
     {
         std::cout << "Error Init Display" << std::endl;
         exit(EXIT_FAILURE); // TODO: do we need exit? I guess - yes
+    }
+    else
+    {
+        std::cout << "[DIsplayOled.cpp]OK Init Display" << std::endl;
     }
     display.begin();
 
     // init done
     display.clearDisplay();   // clears the screen  buffer
     display.display();        // display it (clear display)
+
+    std::cout << "[DIsplayOled.cpp]Init Complete" << std::endl;
 }
 
 void DisplayOled::initTest()

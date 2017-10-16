@@ -23,6 +23,8 @@ namespace rpibuttons
 #define LOGO16_GLCD_HEIGHT 16
 #define LOGO16_GLCD_WIDTH  16
 
+#define OLED_ADAFRUIT_I2C_128x64  3
+
 
 class DisplayOled
 {
@@ -59,7 +61,7 @@ private:
     // default options values
     s_opts m_opts;
     // Instantiate the display
-    ::ArduiPi_OLED display;
+    ArduiPi_OLED display;
     uint32_t m_textSize;
     uint32_t m_linesOnScreen;
     uint32_t m_currentActivePosition;

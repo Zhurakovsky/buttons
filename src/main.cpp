@@ -5,7 +5,6 @@
 #include "menubuilder.hpp"
 #include "displayoled.hpp"
 //#include "terminalmenu.hpp"
-//#include <stack>
 #include <vector>
 #include <map>
 #include <iterator>
@@ -67,6 +66,10 @@ void processButtonLeft(const std::vector<MenuItem*> &menu, DisplayOled &displ, r
 void processButtonRight(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
 void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
 void processButtonEsc(const std::vector<MenuItem*> &menu, DisplayOled &displ, rpibuttons::OledExecMode &oledMode);
+
+std::vector<std::string> getTextFromApplication(const std::string &pathToApp, const uint16_t &numberOfLines);
+
+std::vector<std::string> getTextFromFile(const std::string &pathToFile, const uint16_t &numberOfLines);
 
 int main()
 {
@@ -194,8 +197,51 @@ int main()
 
         if(actionType == MenuItemActionType::DisplayText)
         {
-            std::string textForDisplay = prop.textToShow;
-            displ.printText(textForDisplay);
+            displ.setTextSize(prop.textSize);
+            uint16_t numberOfLines = prop.textLineCount;
+            std::vector<std::string> textToPrint;
+
+            if (prop.textType == rpibuttons::TextDisplayType::APP_TYPE)
+            {
+                std::string pathToApp = prop.pathToApplication;
+                textToPrint = getTextFromApplication(pathToApp, numberOfLines);
+                if (textToPrint.size() > 0)
+                {
+                    displ.printText(textToPrint);
+                }
+                else
+                {
+                    //TODO: Log error
+                    std::string textForDisplay = "ErrorReadApp";
+                    displ.printText(textForDisplay);
+                }
+            }
+            else if (prop.textType == rpibuttons::TextDisplayType::FILE_TYPE)
+            {
+                std::string pathToFile = prop.pathToTextFile;
+                textToPrint = getTextFromFile(pathToFile, numberOfLines);
+                if (textToPrint.size() > 0)
+                {
+                    displ.printText(textToPrint);
+                }
+                else
+                {
+                    //TODO: Log error
+                    std::string textForDisplay = "ErrorReadFile";
+                    displ.printText(textForDisplay);
+                }
+            }
+            else if (prop.textType == rpibuttons::TextDisplayType::TEXT_TYPE)
+            {
+                std::string textForDisplay = prop.textToShow;
+                displ.printText(textForDisplay);
+            }
+            else if (prop.textType == rpibuttons::TextDisplayType::FILE_TYPE)
+            {
+                //TODO:: Print logs output about error
+                std::string textForDisplay = prop.textToShow;
+                displ.printText(textForDisplay);
+            }
         }
         else if (actionType == MenuItemActionType::DisplayGraphics)
         {
@@ -289,32 +335,32 @@ int main()
             if (funcAssigned == UP)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonUp);
-                //std::cout << " found assign!!! " << UP << std::endl;
+                std::cout << " found assign!!! " << UP << std::endl;
             }
             else if (funcAssigned == DOWN)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonDown);
-                //std::cout << " found assign!!! " << DOWN << std::endl;
+                std::cout << " found assign!!! " << DOWN << std::endl;
             }
             else if (funcAssigned == LEFT)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonLeft);
-                //std::cout << " found assign!!! " << LEFT << std::endl;
+                std::cout << " found assign!!! " << LEFT << std::endl;
             }
             else if (funcAssigned == RIGHT)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonRight);
-                //std::cout << " found assign!!! " << RIGHT << std::endl;
+                std::cout << " found assign!!! " << RIGHT << std::endl;
             }
             else if (funcAssigned == ENTER)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEnter);
-                //std::cout << " found assign!!! " << ENTER << std::endl;
+                std::cout << " found assign!!! " << ENTER << std::endl;
             }
             else if (funcAssigned == ESC)
             {
                 bl.subscribeOnPin(shiftAssigned, callbackButtonEsc);
-                //std::cout << " found assign!!! " << ESC << std::endl;
+                std::cout << " found assign!!! " << ESC << std::endl;
             }
             else
             {
@@ -323,7 +369,7 @@ int main()
         }
     }
 
-    //std::cout << "[LOGS:Main]Step 6. After functions assigned and subscribed" << std::endl;
+    std::cout << "[LOGS:Main]Step 6. After functions assigned and subscribed" << std::endl;
 
     bl.run();
 
@@ -712,8 +758,51 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
 
     if(actionType == MenuItemActionType::DisplayText)
     {
-        std::string textForDisplay = prop.textToShow;
-        displ.printText(textForDisplay);
+        displ.setTextSize(prop.textSize);
+        uint16_t numberOfLines = prop.textLineCount;
+        std::vector<std::string> textToPrint;
+
+        if (prop.textType == rpibuttons::TextDisplayType::APP_TYPE)
+        {
+            std::string pathToApp = prop.pathToApplication;
+            textToPrint = getTextFromApplication(pathToApp, numberOfLines);
+            if (textToPrint.size() > 0)
+            {
+                displ.printText(textToPrint);
+            }
+            else
+            {
+                //TODO: Log error
+                std::string textForDisplay = "ErrorReadApp";
+                displ.printText(textForDisplay);
+            }
+        }
+        else if (prop.textType == rpibuttons::TextDisplayType::FILE_TYPE)
+        {
+            std::string pathToFile = prop.pathToTextFile;
+            textToPrint = getTextFromFile(pathToFile, numberOfLines);
+            if (textToPrint.size() > 0)
+            {
+                displ.printText(textToPrint);
+            }
+            else
+            {
+                //TODO: Log error
+                std::string textForDisplay = "ErrorReadFile";
+                displ.printText(textForDisplay);
+            }
+        }
+        else if (prop.textType == rpibuttons::TextDisplayType::TEXT_TYPE)
+        {
+            std::string textForDisplay = prop.textToShow;
+            displ.printText(textForDisplay);
+        }
+        else if (prop.textType == rpibuttons::TextDisplayType::FILE_TYPE)
+        {
+            //TODO:: Print logs output about error
+            std::string textForDisplay = prop.textToShow;
+            displ.printText(textForDisplay);
+        }
     }
     else if (actionType == MenuItemActionType::DisplayGraphics)
     {
@@ -777,4 +866,54 @@ void processButtonEsc(const std::vector<MenuItem*> &menu, DisplayOled &displ, rp
     displ.printMenuList(activeItemRow);
 
     oledMode = rpibuttons::OledExecMode::MENU_MODE;
+}
+
+std::vector<std::string> getTextFromApplication(const std::string &pathToApp, const uint16_t &numberOfLines)
+{
+    std::vector<std::string>textToPrint;
+
+    FILE *fpipe;
+
+    char *command = (char *)pathToApp.c_str();
+    char line[256];
+
+    if ( !(fpipe = (FILE*)popen(command, "r")))
+    { // if fpipe is NULL
+        perror("Problem with pipe");
+        pclose(fpipe);
+        return textToPrint;
+        //exit(1);
+    }
+
+    uint16_t i = numberOfLines;
+    while ((fgets(line, sizeof line, fpipe)) && (i--))
+    {
+        textToPrint.push_back(std::string(line));
+    }
+    pclose(fpipe);
+
+    return textToPrint;
+}
+
+std::vector<std::string> getTextFromFile(const std::string &pathToFile, const uint16_t &numberOfLines)
+{
+    std::vector<std::string>textToPrint;
+
+    std::string filename = pathToFile;
+    std::ifstream source;
+    source.open(filename);
+    if (!source.is_open())
+    {
+        std::cout << "[LOGS::Main]getTextFromFile::Error opening file " << filename.c_str() << std::endl;
+        return textToPrint;
+    }
+    std::string line;
+    uint16_t i = numberOfLines;
+    while ((std::getline(source, line)) && (i--))
+    {
+        textToPrint.push_back(line);
+    }
+    source.close();
+
+    return textToPrint;
 }

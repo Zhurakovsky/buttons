@@ -6,7 +6,7 @@ namespace rpibuttons
 DisplayOled::DisplayOled()
     : m_textSize(2)
 {
-    std::cout << "[LOGS:DisplayOled] Constructor" << std::endl;
+    //std::cout << "[LOGS:DisplayOled] Constructor" << std::endl;
     m_opts.oled = OLED_ADAFRUIT_I2C_128x64;
     m_opts.verbose = 0;
     m_currentActivePosition = 0;
@@ -17,7 +17,7 @@ DisplayOled::DisplayOled()
 
 DisplayOled::~DisplayOled()
 {
-    std::cout << "[LOGS:DisplayOled] Destructor" << std::endl;
+    //std::cout << "[LOGS:DisplayOled] Destructor" << std::endl;
     display.clearDisplay();   // clears the screen  buffer
     display.display();        // display it (clear display)
     display.close();
@@ -25,7 +25,7 @@ DisplayOled::~DisplayOled()
 
 void DisplayOled::init()
 {
-    std::cout << "[LOGS:DisplayOled] Init()" << std::endl;
+    //std::cout << "[LOGS:DisplayOled] Init()" << std::endl;
     // I2C change parameters to fit to your LCD
     if ( !display.init(25, m_opts.oled) ) // OLED_I2C_RESET
     {
@@ -39,6 +39,18 @@ void DisplayOled::init()
     display.begin();
 
     // init done
+    display.setTextSize(2);
+    display.setTextColor(WHITE);
+    display.setCursor(0,0);
+    display.print("OLED Init...\n");
+    display.display();
+    sleep(2);
+    display.clearDisplay();
+    display.display();
+    display.setCursor(0,0);
+    display.print("OLED Ready.\n");
+    display.display();
+    sleep(2);
     display.clearDisplay();   // clears the screen  buffer
     display.display();        // display it (clear display)
 
@@ -96,7 +108,6 @@ void DisplayOled::setTextSize(uint32_t newSize)
 void DisplayOled::printMenuList(const std::vector<MenuItem *> &menuItems)
 {
     clear();
-    display.display();
     display.setTextSize(m_textSize);
     display.setCursor(0,0);
     display.setTextWrap(false);
@@ -237,6 +248,21 @@ void DisplayOled::printText(const std::string &textToPrint)
     display.setCursor(0,0);
     display.setTextWrap(true);
     display.print(textToPrint.c_str());
+    display.display();
+}
+
+void DisplayOled::printText(const std::vector<std::string> &textToPrint)
+{
+    clear();
+    display.setTextSize(m_textSize);
+    display.setTextColor(WHITE);
+    display.setCursor(0,0);
+    display.setTextWrap(true);
+
+    for (std::string str : textToPrint)
+    {
+        display.printf("%s\n", str.c_str());
+    }
     display.display();
 }
 

@@ -55,6 +55,8 @@ public:
     void drawBitmap(int16_t shift_x, int16_t shift_y);
     void clear();
     void printText(const std::string &textToPrint);
+    void printText(const std::vector<std::string> &textToPrint);
+
 
 private:
     //std::mutex m_mtx;

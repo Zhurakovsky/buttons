@@ -112,6 +112,14 @@ struct ScreenRect
     int h;
 };
 
+enum class TextDisplayType
+{
+    APP_TYPE,
+    FILE_TYPE,
+    TEXT_TYPE,
+    ERROR_TYPE
+};
+
 struct MenuItemActionProperties
 {
     std::string childMenuId;
@@ -123,11 +131,17 @@ struct MenuItemActionProperties
     uint16_t imageH;
     std::string pathToVideoFile;
     std::string pathToApplication;
+    std::string pathToTextFile;
+    TextDisplayType textType;
+    uint16_t textSize;
+    uint16_t textLineCount;
     void setScreenRect(const ScreenRect &sr)
     {
         rectToClear = sr;
     }
 };
+
+
 
 struct menuParserString
 {

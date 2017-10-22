@@ -16,11 +16,11 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
     std::vector<std::string> menuList;
     std::vector<menuParserString> menuItemParams;
     menuList = confParser.getConfigStrings(fileName, searchPattern);
-//    std::cout << "Read from config:" << std::endl;
-//    for (std::string listItem : menuList)
-//    {
-//        //std::cout << listItem.c_str() << std::endl;
-//    }
+    std::cout << "Read from config:" << std::endl;
+    for (std::string listItem : menuList)
+    {
+        std::cout << listItem.c_str() << std::endl;
+    }
 
     for(auto it = menuList.begin(); it != menuList.end(); ++it )
     {
@@ -30,8 +30,8 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         std::string paramString = tmpString.substr(foundFirst + 1, (foundLast - foundFirst - 1));
         tmpString = tmpString.substr(0, (foundFirst-1));
 
-//        std::cout << "Param String: " << paramString.c_str() << std::endl;
-//        std::cout << "Work String: " << tmpString.c_str() << std::endl;
+        std::cout << "Param String: " << paramString.c_str() << std::endl;
+        std::cout << "Work String: " << tmpString.c_str() << std::endl;
 
         std::istringstream iss(tmpString);
 
@@ -59,8 +59,43 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         }
         else if (mps.itemActionType == "DisplayText")
         {
+            /*
+             * # Text parameters: [<t>ext | <f>ile | <a>pplication],
+             *  [text | filename | appname],
+             *  [number of string],
+             *  [fontsize]
+             */
+            std::istringstream iss_parameters(mps.itemActionParameter);
             miat = MenuItemActionType::DisplayText;
-            miaprop.textToShow = mps.itemActionParameter;
+            std::string textTypeParam;
+            std::string textValueParam;
+            uint16_t linesToShow;
+            uint16_t textSize;
+
+            iss_parameters >> textTypeParam >> textValueParam >> linesToShow >> textSize;
+            miaprop.textLineCount = linesToShow;
+            miaprop.textSize = textSize;
+
+            if (textTypeParam == "a")
+            {
+                miaprop.textType = rpibuttons::TextDisplayType::APP_TYPE;
+                miaprop.pathToApplication = textValueParam;
+            }
+            else if (textTypeParam == "f")
+            {
+                miaprop.textType = rpibuttons::TextDisplayType::FILE_TYPE;
+                miaprop.pathToTextFile = textValueParam;
+            }
+            else if (textTypeParam == "t")
+            {
+                miaprop.textType = rpibuttons::TextDisplayType::TEXT_TYPE;
+                miaprop.textToShow = textValueParam;
+            }
+            else
+            {
+                miaprop.textType = rpibuttons::TextDisplayType::ERROR_TYPE;
+                miaprop.textToShow = "ErrorConfig";
+            }
         }
         else if (mps.itemActionType == "DisplayGraphics")
         {
@@ -237,7 +272,14 @@ void MenuBuilder::buildPinGpioMap(const std::string &fileName, std::map<int, int
         std::string tmpG;
         iss >> tmpG >> pinNumber >> pinDescription;
 
-        mapPinGpio.emplace(std::make_pair(pinNumber, pinDescription));
+        if (!mapPinGpio.emplace(std::make_pair(pinNumber, pinDescription)).second)
+        {
+            std::cout << "[menubuilder.cpp]buildPinGpioMap:: Error emplacing Pinnumber:" << pinNumber << " pinDescroption: " << pinDescription << std::endl;
+        }
+        else
+        {
+            std::cout << "[menubuilder.cpp]buildPinGpioMap:: OK emplacing Pinnumber" << std::endl;
+        }
     }
 }
 
@@ -263,7 +305,16 @@ void MenuBuilder::buildButtonsFuncAssigned(const std::string &fileName, std::map
         {
             pinNumber |= (pullUpDown << 8);
         }
-        mapButtonsFuncAssigned.emplace(std::make_pair(pinNumber, funcAssigned));
+        if (!mapButtonsFuncAssigned.emplace(std::make_pair(pinNumber, funcAssigned)).second)
+        {
+            std::cout << "[menubuilder.cpp]buildButtonsFuncAssigned:: Error emplacing Pinnumber:" << pinNumber << std::endl;
+        }
+        else
+        {
+            std::cout << "[menubuilder.cpp]buildButtonsFuncAssigned:: OK emplacing Pinnumber" << std::endl;
+        }
+
+
     }
 }
 

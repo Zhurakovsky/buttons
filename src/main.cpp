@@ -220,13 +220,20 @@ int main()
             {
                 std::string pathToFile = prop.pathToTextFile;
                 textToPrint = getTextFromFile(pathToFile, numberOfLines);
+
                 if (textToPrint.size() > 0)
                 {
+//                    std::cout << "Will be printed:" << std::endl;
+//                    for (std::string it : textToPrint)
+//                    {
+//                        std::cout << it.c_str() << std::endl;
+//                    }
                     displ.printText(textToPrint);
                 }
                 else
                 {
                     //TODO: Log error
+                    std::cout << "Nothing to print. Error reading file" << std::endl;
                     std::string textForDisplay = "ErrorReadFile";
                     displ.printText(textForDisplay);
                 }
@@ -234,9 +241,10 @@ int main()
             else if (prop.textType == rpibuttons::TextDisplayType::TEXT_TYPE)
             {
                 std::string textForDisplay = prop.textToShow;
+                //std::cout << "Will be printed: " << textForDisplay.c_str() << std::endl;
                 displ.printText(textForDisplay);
             }
-            else if (prop.textType == rpibuttons::TextDisplayType::FILE_TYPE)
+            else if (prop.textType == rpibuttons::TextDisplayType::ERROR_TYPE)
             {
                 //TODO:: Print logs output about error
                 std::string textForDisplay = prop.textToShow;
@@ -246,7 +254,7 @@ int main()
         else if (actionType == MenuItemActionType::DisplayGraphics)
         {
             oledMode = rpibuttons::OledExecMode::GRAPHICS_MODE;
-
+            displ.setTextSize(2);
             displ.drawBitmap((128 - prop.imageW)/2,
                              (64 - prop.imageH)/2,
                              prop.bitmap,
@@ -301,6 +309,7 @@ int main()
         //historyStack.push(activeItem);
         std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
         printMenuItemsRow(activeItemRow);
+        displ.setTextSize(2);
         displ.resetCurrentActivePosition();
         displ.printMenuList(activeItemRow);
 
@@ -783,11 +792,17 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
             textToPrint = getTextFromFile(pathToFile, numberOfLines);
             if (textToPrint.size() > 0)
             {
+                //std::cout << "Will be printed from file: " << std::endl;
+//                for (std::string it : textToPrint)
+//                {
+//                    std::cout << it.c_str() << std::endl;
+//                }
                 displ.printText(textToPrint);
             }
             else
             {
                 //TODO: Log error
+                std::cout << "Nothing to pront. Error reading textfile" << std::endl;
                 std::string textForDisplay = "ErrorReadFile";
                 displ.printText(textForDisplay);
             }
@@ -795,9 +810,10 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
         else if (prop.textType == rpibuttons::TextDisplayType::TEXT_TYPE)
         {
             std::string textForDisplay = prop.textToShow;
+            //std::cout << "Will be printed: " << textForDisplay.c_str() << std::endl;
             displ.printText(textForDisplay);
         }
-        else if (prop.textType == rpibuttons::TextDisplayType::FILE_TYPE)
+        else if (prop.textType == rpibuttons::TextDisplayType::ERROR_TYPE)
         {
             //TODO:: Print logs output about error
             std::string textForDisplay = prop.textToShow;
@@ -807,7 +823,7 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
     else if (actionType == MenuItemActionType::DisplayGraphics)
     {
         oledMode = rpibuttons::OledExecMode::GRAPHICS_MODE;
-
+        displ.setTextSize(2);
         displ.drawBitmap((128 - prop.imageW)/2,
                          (64 - prop.imageH)/2,
                          prop.bitmap,
@@ -862,6 +878,7 @@ void processButtonEsc(const std::vector<MenuItem*> &menu, DisplayOled &displ, rp
     //historyStack.push(activeItem);
     std::vector<MenuItem*> activeItemRow = getItemsRow(activeItem);
     printMenuItemsRow(activeItemRow);
+    displ.setTextSize(2);
     displ.resetCurrentActivePosition();
     displ.printMenuList(activeItemRow);
 
@@ -909,7 +926,7 @@ std::vector<std::string> getTextFromFile(const std::string &pathToFile, const ui
     }
     std::string line;
     uint16_t i = numberOfLines;
-    while ((std::getline(source, line)) && (i--))
+    while ((std::getline(source, line)) && (i-- > 0))
     {
         textToPrint.push_back(line);
     }

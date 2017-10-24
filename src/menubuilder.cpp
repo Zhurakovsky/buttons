@@ -30,8 +30,8 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
         std::string paramString = tmpString.substr(foundFirst + 1, (foundLast - foundFirst - 1));
         tmpString = tmpString.substr(0, (foundFirst-1));
 
-        std::cout << "Param String: " << paramString.c_str() << std::endl;
-        std::cout << "Work String: " << tmpString.c_str() << std::endl;
+        //std::cout << "Param String: " << paramString.c_str() << std::endl;
+        //std::cout << "Work String: " << tmpString.c_str() << std::endl;
 
         std::istringstream iss(tmpString);
 
@@ -73,26 +73,34 @@ void MenuBuilder::buildMenu(const std::string &fileName, std::vector<MenuItem*> 
             uint16_t textSize;
 
             iss_parameters >> textTypeParam >> textValueParam >> linesToShow >> textSize;
+            //std::cout << "Text param = " << textTypeParam.c_str() << std::endl;
+//            std::cout << "TextValueParam = " << textValueParam.c_str() << std::endl;
+//            std::cout << "LinesToShow = " << linesToShow << std::endl;
+//            std::cout << "TextSize = " << textSize << std::endl;
             miaprop.textLineCount = linesToShow;
             miaprop.textSize = textSize;
 
-            if (textTypeParam == "a")
+            if (textTypeParam[0] == 'a')
             {
+                //std::cout << "Recognized a " << std::endl;
                 miaprop.textType = rpibuttons::TextDisplayType::APP_TYPE;
                 miaprop.pathToApplication = textValueParam;
             }
-            else if (textTypeParam == "f")
+            else if (textTypeParam[0] == 'f')
             {
+                //std::cout << "Recognized f " << std::endl;
                 miaprop.textType = rpibuttons::TextDisplayType::FILE_TYPE;
                 miaprop.pathToTextFile = textValueParam;
             }
-            else if (textTypeParam == "t")
+            else if (textTypeParam[0] == 't')
             {
+                //std::cout << "Recognized t " << std::endl;
                 miaprop.textType = rpibuttons::TextDisplayType::TEXT_TYPE;
                 miaprop.textToShow = textValueParam;
             }
             else
             {
+                //std::cout << "Recognized error " << std::endl;
                 miaprop.textType = rpibuttons::TextDisplayType::ERROR_TYPE;
                 miaprop.textToShow = "ErrorConfig";
             }

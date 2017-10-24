@@ -112,7 +112,7 @@ void ButtonListener::gpioListen()
             auto iter = pullUpPinsSet.find(tmpPin);
             if (iter != pullUpPinsSet.end())
             {
-                //bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
+                bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
                 std::cout << "Set gpio UP for PIN " << tmpPin << std::endl;
                 // And a low detect enable
                 bcm2835_gpio_len(tmpPin);

@@ -1,49 +1,60 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.0.0)
 
-project(Buttons LANGUAGES CXX)
+project(logger VERSION 0.0.1 LANGUAGES CXX)
 
+if(NOT DEFINED COMMON_API_DIR)
+    set(COMMON_API_DIR "${CMAKE_CURRENT_SOURCE_DIR}/pub")
+endif()
 
-#SET(TOOLROOT /home/yzhurakovskyi/opt/gcc-4.7-linaro-rpi-gnueabihf/arm-linux-gnueabihf)
+message(STATUS "Using commmon-api in ${COMMON_API_DIR}")
 
-# specify the cross compiler
-#SET(CMAKE_C_COMPILER   ${TOOLROOT}/bin/gcc)
-#SET(CMAKE_CXX_COMPILER ${TOOLROOT}/bin/g++)
-
-
-#SET(CMAKE_SYSTEM_NAME Linux) 
-
+option(BUILD_TESTS "Build test" ON)
 option(BUTTONS_BUILD_TESTS "Build blinker" ON)
 
-# -mfpu=vfp -mfloat-abi=hard -march=armv6zk -mtune=arm1176jzf-s
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -lbcm2835 -lArduiPi_OLED")
 
-include_directories("${CMAKE_SOURCE_DIR}/src")
+include_directories(
+    ${COMMON_API_DIR}
+)
+
+set(PUBLIC_HEADERS
+    "${COMMON_API_DIR}/ILogger.hpp"
+)
 
 set(HEADERS
-    "${CMAKE_SOURCE_DIR}/src/buttonListener.hpp"
-    "${CMAKE_SOURCE_DIR}/src/commontypes.hpp"
-    "${CMAKE_SOURCE_DIR}/src/menuitem.hpp"
-    "${CMAKE_SOURCE_DIR}/src/menubuilder.hpp"
-    #"${CMAKE_SOURCE_DIR}/src/terminalmenu.hpp"
-    "${CMAKE_SOURCE_DIR}/src/configparser.hpp"
-    "${CMAKE_SOURCE_DIR}/src/displayoled.hpp"
+    ${PUBLIC_HEADERS}
+    "${CMAKE_CURRENT_SOURCE_DIR}/lib/Logger.hpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/lib/LogHandler.hpp"
 )
 
 set(SOURCES
     ${HEADERS}
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp"
-    "${CMAKE_CURRENT_SOURCE_DIR}/src/buttonListener.cpp"
-    "${CMAKE_SOURCE_DIR}/src/menuitem.cpp"
-    "${CMAKE_SOURCE_DIR}/src/menubuilder.cpp"
-    #"${CMAKE_SOURCE_DIR}/src/terminalmenu.cpp"
-    "${CMAKE_SOURCE_DIR}/src/configparser.cpp"
-    "${CMAKE_SOURCE_DIR}/src/displayoled.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/lib/Logger.cpp"
+    "${CMAKE_CURRENT_SOURCE_DIR}/lib/LogHandler.cpp"
 )
 
-add_executable(${PROJECT_NAME} ${SOURCES})
+add_library(${PROJECT_NAME} SHARED "${SOURCES}")
+target_link_libraries(${PROJECT_NAME}
+    pthread
+)
 
-target_link_libraries(${PROJECT_NAME} bcm2835 rt pthread)
+target_include_directories(${PROJECT_NAME} INTERFACE ${COMMON_API_DIR})
 
-if(BUTTONS_BUILD_TESTS)
-    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/testapp")
+set_target_properties(${PROJECT_NAME} PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    PUBLIC_HEADER ${PUBLIC_HEADERS}
+)
+
+install(TARGETS ${PROJECT_NAME}
+    LIBRARY DESTINATION lib
+    PUBLIC_HEADER DESTINATION include
+)
+
+
+if(BUILD_TESTS)
+    add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/test")
 endif()
+add_subdirectory("${CMAKE_CURRENT_SOURCE_DIR}/app")
+

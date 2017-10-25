@@ -4,7 +4,8 @@
 #include "menuitem.hpp"
 #include "menubuilder.hpp"
 #include "displayoled.hpp"
-//#include "terminalmenu.hpp"
+#include "ILogger.hpp"
+
 #include <vector>
 #include <map>
 #include <iterator>
@@ -24,6 +25,7 @@ const std::string configFile = "config.txt";
 
 using namespace std;
 using namespace rpibuttons;
+using namespace logspace;
 
 class BufferToggle
 {
@@ -49,9 +51,6 @@ class BufferToggle
         }
 };
 
-
-
-
 void printMenu(const std::vector<MenuItem*> &menu);
 void printMenuItemsRow(const std::vector<MenuItem*> &menuItems);
 uint32_t getActiveId(const std::vector<MenuItem*> &menu);
@@ -74,6 +73,10 @@ std::vector<std::string> getTextFromFile(const std::string &pathToFile, const ui
 int main()
 {
     //std::cout << "[LOGS:Main]Step 1" << std::endl;
+    std::string filename{"logfile.txt"};
+    logspace::ILogger *logger = logspace::CreateLoggerInstance();
+    logger->initLogger(filename);
+
     BufferToggle bt;
     ButtonListener bl;
     std::vector<MenuItem*> menu;
@@ -81,6 +84,7 @@ int main()
     DisplayOled displ;
     displ.init();
 
+    logger->writeLog("Step 2. After Display init");
     //std::cout << "[LOGS:Main]Step 2. After Display init" << std::endl;
 
     //mutable std::mutex main_mtx;
@@ -90,6 +94,8 @@ int main()
     //Build menu
     MenuBuilder mBuilder;
     mBuilder.buildMenu(configFile, menu);
+
+    logger->writeLog("Step 3. After Menu complete");
 
     //std::cout << "[LOGS:Main]Step 3. After Menu complete" << std::endl;
 
@@ -102,7 +108,7 @@ int main()
     mBuilder.buildPinGpioMap(configFile, mapPinGpio);
 
     //std::cout << "[LOGS:Main]Step 4. After pins assigned" << std::endl;
-
+    logger->writeLog("4. After pins assigned");
     std::function<void()> callbackButtonUp = [&]()
     {
         std::cout << "Button UP pressed" << std::endl;
@@ -233,7 +239,8 @@ int main()
                 else
                 {
                     //TODO: Log error
-                    std::cout << "Nothing to print. Error reading file" << std::endl;
+                    logger->writeLog("Nothing to print. Error reading file");
+                    //std::cout << "Nothing to print. Error reading file" << std::endl;
                     std::string textForDisplay = "ErrorReadFile";
                     displ.printText(textForDisplay);
                 }
@@ -275,7 +282,8 @@ int main()
              }
              else
              {
-                 puts ("ERROR System call");
+                logger->writeLog("ERROR System call");
+                puts ("ERROR System call");
                  exit (EXIT_FAILURE);
              }
             std::system(pathToApplication.c_str());
@@ -317,7 +325,7 @@ int main()
     };
 
     //std::cout << "[LOGS:Main]Step 5. After callbacks assigned" << std::endl;
-
+    logger->writeLog("Step 5. After callbacks assigned");
     std::map<int, std::string> mapButtonsFuncAssigned;
     mBuilder.buildButtonsFuncAssigned(configFile, mapButtonsFuncAssigned);
     for (auto it = mapButtonsFuncAssigned.begin(); it != mapButtonsFuncAssigned.end(); ++it)
@@ -377,11 +385,11 @@ int main()
             }
         }
     }
-
-    std::cout << "[LOGS:Main]Step 6. After functions assigned and subscribed" << std::endl;
+    logger->writeLog("Step 6. After functions assigned and subscribed");
+    //std::cout << "[LOGS:Main]Step 6. After functions assigned and subscribed" << std::endl;
 
     bl.run();
-
+    logger->writeLog("Step 7. After runned");
     //std::cout << "[LOGS:Main]Step 7. After runned" << std::endl;
     uint32_t actItemId = getActiveId(menu);
     MenuItem* acItem = getItemById(menu, actItemId);
@@ -783,6 +791,7 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
             {
                 //TODO: Log error
                 std::string textForDisplay = "ErrorReadApp";
+                logger->writeLog("ErrorReadApp from config");
                 displ.printText(textForDisplay);
             }
         }
@@ -802,7 +811,8 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
             else
             {
                 //TODO: Log error
-                std::cout << "Nothing to pront. Error reading textfile" << std::endl;
+                //std::cout << "Nothing to print. Error reading textfile" << std::endl;
+                logger->writeLog("Nothing to print. Error reading textfile");
                 std::string textForDisplay = "ErrorReadFile";
                 displ.printText(textForDisplay);
             }

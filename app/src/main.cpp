@@ -791,7 +791,7 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
             {
                 //TODO: Log error
                 std::string textForDisplay = "ErrorReadApp";
-                logger->writeLog("ErrorReadApp from config");
+                //logspace::logger->writeLog("ErrorReadApp from config");
                 displ.printText(textForDisplay);
             }
         }
@@ -812,7 +812,7 @@ void processButtonEnter(const std::vector<MenuItem*> &menu, DisplayOled &displ, 
             {
                 //TODO: Log error
                 //std::cout << "Nothing to print. Error reading textfile" << std::endl;
-                logger->writeLog("Nothing to print. Error reading textfile");
+                //logspace::logger->writeLog("Nothing to print. Error reading textfile");
                 std::string textForDisplay = "ErrorReadFile";
                 displ.printText(textForDisplay);
             }

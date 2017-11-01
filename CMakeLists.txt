@@ -12,7 +12,7 @@ option(BUILD_TESTS "Build test" ON)
 option(BUTTONS_BUILD_TESTS "Build blinker" ON)
 
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Werror -Wall")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -lbcm2835 -lArduiPi_OLED")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Werror -lArduiPi_OLED")
 
 include_directories(
     ${COMMON_API_DIR}

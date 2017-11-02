@@ -40,7 +40,7 @@ set(APP_SOURCES
 
 add_executable(Buttons ${APP_SOURCES})
 
-target_link_libraries(Buttons rt pthread logger)
+target_link_libraries(Buttons bcm2835 rt pthread logger)
 
 if(BUTTONS_BUILD_TESTS)
     add_subdirectory("${CMAKE_SOURCE_DIR}/app/testapp")

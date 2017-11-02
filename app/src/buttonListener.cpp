@@ -66,24 +66,24 @@ void ButtonListener::gpioListen()
 
         if (!bcm2835_init())
         {
-            //std::cout << "[LOGS:ButtonListener]bcm2835_init fails" << std::endl;
+            std::cout << "[LOGS:ButtonListener]bcm2835_init fails" << std::endl;
             m_condVar.notify_one();
             return;
         }
         else
         {
-            //std::cout << "[LOGS:ButtonListener]bcm2835_init OK" << std::endl;
+            std::cout << "[LOGS:ButtonListener]bcm2835_init OK" << std::endl;
         }
         if( !getPinMask(maskGpioTest))
         {
-            //std::cout << "[LOGS:ButtonListener]getPinMask failed" << std::endl;
+            std::cout << "[LOGS:ButtonListener]getPinMask failed" << std::endl;
             m_condVar.notify_one();
             bcm2835_close();
             return;
         }
         else
         {
-            //std::cout << "[LOGS:ButtonListener]getPinMask OK" << std::endl;
+            std::cout << "[LOGS:ButtonListener]getPinMask OK" << std::endl;
         }
         // Set RPI subscribed pins to be an input
         // Do this for all pins from subscription
@@ -91,12 +91,12 @@ void ButtonListener::gpioListen()
         {
             m_condVar.notify_one();
             bcm2835_close();
-            //std::cout << "[LOGS:ButtonListener]List of subscribers empty" << std::endl;
+            std::cout << "[LOGS:ButtonListener]List of subscribers empty" << std::endl;
             return;
         }
         else
         {
-            //std::cout << "[LOGS:ButtonListener]List of subscribers OK" << std::endl;
+            std::cout << "[LOGS:ButtonListener]List of subscribers OK" << std::endl;
         }
 
         //std::vector<int> tmpPins = {8, 10, 12, 16, 18, 22};
@@ -112,7 +112,7 @@ void ButtonListener::gpioListen()
             auto iter = pullUpPinsSet.find(tmpPin);
             if (iter != pullUpPinsSet.end())
             {
-                //bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
+                bcm2835_gpio_set_pud(tmpPin, BCM2835_GPIO_PUD_UP);
                 std::cout << "Set gpio UP for PIN " << tmpPin << std::endl;
                 // And a low detect enable
                 bcm2835_gpio_len(tmpPin);
